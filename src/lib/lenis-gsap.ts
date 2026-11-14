@@ -27,15 +27,15 @@ export function initSmoothScroll(options = {}) {
     return null;
   }
 
-  // Initialize Lenis with crisp native touch behavior on mobile (syncTouch: false)
+  // Initialize Lenis with crisp, responsive scrolling
   lenisInstance = new Lenis({
-    duration: 1.15,
+    duration: 0.7,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
     syncTouch: false, // Preserves native touch scrolling on mobile devices
-    touchMultiplier: 1.5,
+    touchMultiplier: 1.0,
     wheelMultiplier: 1.0,
     infinite: false,
     ...options,

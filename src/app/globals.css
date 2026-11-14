@@ -133,14 +133,7 @@
 }
 
 /* Parallax GPU Acceleration & Performance Optimizations */
-.parallax-img,
-.parallax-bg,
-.parallax-float-slow,
-.parallax-float-fast,
-.parallax-card-odd,
-.parallax-card-even,
-.parallax-header,
-[data-parallax-y] {
+.parallax-bg {
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;

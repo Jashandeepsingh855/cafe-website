@@ -316,7 +316,7 @@ export default function HomePage() {
       <section className="relative w-full overflow-hidden bg-[#F2EEE9] text-[#18120F] min-h-[720px] lg:min-h-[820px] flex flex-col justify-between pt-6 sm:pt-8 pb-4 border-b border-[#E5E2DD]">
         
         {/* Dynamic Sweeping Organic Curved Arc (matching Pinterest reference) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 parallax-bg" data-parallax-y="50">
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 parallax-bg">
           <svg
             className="w-full h-full object-cover scale-110 sm:scale-100 transition-all duration-1000 ease-in-out"
             viewBox="0 0 1440 900"
@@ -366,10 +366,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 items-center">
             
             {/* 1. Left Column: Large Commanding Focal Dish (Arrives from Top-Right and Grows Big) */}
-            <div
-              className="lg:col-span-5 order-1 flex items-center justify-center relative min-h-[300px] sm:min-h-[420px] lg:min-h-[500px]"
-              data-parallax-y="-35"
-            >
+            <div className="lg:col-span-5 order-1 flex items-center justify-center relative min-h-[300px] sm:min-h-[420px] lg:min-h-[500px]">
               
               {/* Left Vertical Index (01 / 04) on Desktop */}
               <div className="hidden xl:flex flex-col items-center gap-2 absolute -left-6 top-1/2 -translate-y-1/2 text-xs font-bold text-[#857D77] z-10">
@@ -509,13 +506,10 @@ export default function HomePage() {
             </div>
 
             {/* 3. Right Column: Floating Glassmorphic Info Card & Cafe Interior Stage */}
-            <div
-              className="lg:col-span-3 order-3 relative flex flex-col items-start justify-center"
-              data-parallax-y="28"
-            >
+            <div className="lg:col-span-3 order-3 relative flex flex-col items-start justify-center">
               
               {/* Minimalist Hanging Pendant Lamp (top right) */}
-              <div className="hidden lg:flex flex-col items-center absolute -top-16 right-6 z-30 pointer-events-none parallax-float-slow">
+              <div className="hidden lg:flex flex-col items-center absolute -top-16 right-6 z-30 pointer-events-none">
                 <div className="w-0.5 h-28 bg-[#18120F]"></div>
                 <div className="w-7 h-9 bg-[#18120F] rounded-b-xl shadow-lg"></div>
               </div>
@@ -627,7 +621,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       <section className="w-full py-14 sm:py-16 bg-white border-b border-[#E5E2DD]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-10 parallax-header">
+          <div className="text-center max-w-2xl mx-auto mb-10">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2">
               <ShoppingBag className="w-3.5 h-3.5" />
               <span>Doorstep Kitchen Delivery</span>
@@ -642,7 +636,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Zomato Card */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#E23744]/40 hover:shadow-md transition-all flex flex-col justify-between group parallax-card-odd">
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#E23744]/40 hover:shadow-md transition-all flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="px-3.5 py-1.5 rounded-full bg-[#E23744] text-white text-xs font-black tracking-wider uppercase">
@@ -674,7 +668,7 @@ export default function HomePage() {
             </div>
 
             {/* Swiggy Card */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#FC8019]/40 hover:shadow-md transition-all flex flex-col justify-between group parallax-card-even">
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#FC8019]/40 hover:shadow-md transition-all flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="px-3.5 py-1.5 rounded-full bg-[#FC8019] text-white text-xs font-black tracking-wider uppercase">
@@ -706,7 +700,7 @@ export default function HomePage() {
             </div>
 
             {/* WhatsApp Direct Barista Card */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#25D366]/40 hover:shadow-md transition-all flex flex-col justify-between group parallax-card-odd">
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#25D366]/40 hover:shadow-md transition-all flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="px-3.5 py-1.5 rounded-full bg-[#25D366] text-white text-xs font-black tracking-wider uppercase">
@@ -747,7 +741,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
           
           {/* Header celebrating full cafe menu */}
-          <div className="text-center max-w-3xl flex flex-col items-center gap-2 mb-8 parallax-header">
+          <div className="text-center max-w-3xl flex flex-col items-center gap-2 mb-8">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C8652D]/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#C8652D]/20">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Full Cafe &amp; Fast Food Kitchen</span>
@@ -780,13 +774,11 @@ export default function HomePage() {
 
           {/* 4x2 Responsive Grid of Cafe Food & Drinks */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-            {displayedCafeItems.map((item, idx) => (
+            {displayedCafeItems.map((item) => (
               <div
                 key={item.id}
                 onClick={() => setSelectedDish(item)}
-                className={`group relative bg-white border border-[#E5E2DD] rounded-3xl p-4 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#C8652D]/50 transition-all duration-300 cursor-pointer ${
-                  idx % 2 === 0 ? 'parallax-card-odd' : 'parallax-card-even'
-                }`}
+                className="group relative bg-white border border-[#E5E2DD] rounded-3xl p-4 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#C8652D]/50 transition-all duration-300 cursor-pointer"
               >
                 {/* Favorite button */}
                 <button
@@ -806,7 +798,7 @@ export default function HomePage() {
                     src={item.image}
                     alt={item.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 parallax-img"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
                   {/* Category Pill Tag */}
@@ -873,7 +865,7 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             {/* Left Column: Kitchen & Roastery Philosophy */}
-            <div className="lg:col-span-6 flex flex-col justify-center" data-parallax-y="-25">
+            <div className="lg:col-span-6 flex flex-col justify-center">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-white/15 mb-3 w-fit">
                 <Flame className="w-3.5 h-3.5" />
                 <span>Wood-Hearth &amp; Roastery Alchemy</span>
@@ -935,13 +927,13 @@ export default function HomePage() {
 
             {/* Right Column: Visual Collage of Food & Drinks */}
             <div className="lg:col-span-6 grid grid-cols-2 gap-4">
-              <div className="space-y-4 parallax-card-odd">
+              <div className="space-y-4">
                 <div className="h-64 sm:h-72 rounded-3xl overflow-hidden relative shadow-lg border border-white/10 group">
                   <Image
                     src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=800&auto=format&fit=crop&q=80"
                     alt="Wood-Fired Margherita Pizza"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 parallax-img"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
                     <span className="text-xs font-bold text-white">Wood-Fired Pizza</span>
@@ -953,7 +945,7 @@ export default function HomePage() {
                     src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&auto=format&fit=crop&q=80"
                     alt="Peri Peri Fries"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 parallax-img"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
                     <span className="text-xs font-bold text-white">Peri Peri Fries</span>
@@ -961,13 +953,13 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="space-y-4 pt-6 parallax-card-even">
+              <div className="space-y-4 pt-6">
                 <div className="h-44 sm:h-52 rounded-3xl overflow-hidden relative shadow-lg border border-white/10 group">
                   <Image
                     src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80"
                     alt="Paneer Smash Burger"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 parallax-img"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
                     <span className="text-xs font-bold text-white">Smash Burger</span>
@@ -979,7 +971,7 @@ export default function HomePage() {
                     src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
                     alt="Pour Over Coffee"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500 parallax-img"
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
                     <span className="text-xs font-bold text-white">Single-Origin Roast</span>
@@ -997,7 +989,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       <section className="w-full py-16 sm:py-20 bg-[#F6F3EE] border-b border-[#E5E2DD]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12 parallax-header">
+          <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2">
               <Utensils className="w-3.5 h-3.5" />
               <span>Perfect Cafe Pairings</span>
@@ -1043,9 +1035,7 @@ export default function HomePage() {
             ].map((combo, idx) => (
               <div
                 key={idx}
-                className={`bg-white rounded-3xl p-5 border border-[#E5E2DD] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group ${
-                  idx % 2 === 0 ? 'parallax-card-odd' : 'parallax-card-even'
-                }`}
+                className="bg-white rounded-3xl p-5 border border-[#E5E2DD] shadow-sm hover:shadow-md transition-all flex flex-col justify-between group"
               >
                 <div>
                   <div className="relative w-full h-44 rounded-2xl overflow-hidden mb-4 border border-[#E5E2DD]">
@@ -1053,7 +1043,7 @@ export default function HomePage() {
                       src={combo.image}
                       alt={combo.title}
                       fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-500 parallax-img"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                     <span className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-[#18120F] text-white text-[10px] font-extrabold uppercase tracking-wider">
                       {combo.tag}
@@ -1090,7 +1080,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       <section className="w-full py-16 sm:py-20 bg-white border-b border-[#E5E2DD]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12 parallax-header">
+          <div className="text-center max-w-2xl mx-auto mb-12">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C8652D]/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#C8652D]/20 mb-3">
               <Star className="w-3.5 h-3.5 fill-[#C8652D]" />
               <span>4.9 ★ Rating • 1,240+ Verified Reviews</span>
@@ -1105,14 +1095,14 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Review 1 */}
-            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm parallax-card-odd">
+            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
               <div className="flex flex-col items-center shrink-0">
                 <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white shadow-inner relative border border-[#E5E2DD]">
                   <Image
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE1Y4JWHR4G8Novk9zPiCzyn3KI3_CAHMFq02CSRqh_FOhYOX1EyWZWM5HE3WXkMDwm3FeF4hMirvFqwx8lILgWn6FdZu5FHQyI7LVc3XxVbTNIhFl6GrHZK4TZ7H9YeFMjdh1gc19p_kWvwX-OvfL9hL9vTQDXoQPuRZY1GBpDwQSM06g1jE2rFrQyCLDKx7rYBqwEamqCZMSS7_tuLJCD9oHeeeQH5i3PuzhbB4"
                     alt="Emma Wilson"
                     fill
-                    className="object-cover parallax-img"
+                    className="object-cover"
                   />
                 </div>
                 <span className="mt-2 text-center text-sm font-bold text-[#18120F]">Emma Wilson</span>
@@ -1132,14 +1122,14 @@ export default function HomePage() {
             </div>
 
             {/* Review 2 */}
-            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm parallax-card-even">
+            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
               <div className="flex flex-col items-center shrink-0">
                 <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white shadow-inner relative border border-[#E5E2DD]">
                   <Image
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbvPgWKhwNdDV4mviWxmR1SACzHj4LUbfjhwKMRdCYxAm_FFQm0k4-WC-AhfWFLOPprqlbQNb_mTtlTl9LpoXS0fgoJpHTSupv75zgBabO6r_zcRnFgCclu-t_HKZgXIRH3To1-FyvZpE_PQFfu2ZW-bUiauHX_4QV_8N_sP2CXTDNxhplI_UUbTSRP9W7Zpr6iLFcXmiYHCD3iSYNYfWKZ1U8die_RnkzEyOvlXY"
                     alt="Rohan Kapoor"
                     fill
-                    className="object-cover parallax-img"
+                    className="object-cover"
                   />
                 </div>
                 <span className="mt-2 text-center text-sm font-bold text-[#18120F]">Rohan Kapoor</span>
@@ -1179,7 +1169,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       <section className="w-full py-16 sm:py-20 bg-[#FAF7F2] pb-24 sm:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 parallax-header">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2">
                 <Camera className="w-3.5 h-3.5" />
@@ -1214,7 +1204,7 @@ export default function HomePage() {
           </div>
 
           {/* Interactive Polaroid Line Carousel Component */}
-          <div className="w-full my-4" data-parallax-y="-20">
+          <div className="w-full my-4">
             <PolaroidLineCarousel
               height="500px"
               cardWidth={270}

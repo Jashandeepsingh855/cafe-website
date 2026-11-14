@@ -51,14 +51,13 @@ export default function RoasteryPage() {
       <section className="relative w-full bg-[#18120F] text-[#FAF7F2] py-20 sm:py-28 overflow-hidden">
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center opacity-30 mix-blend-luminosity scale-110 parallax-bg"
-          data-parallax-y="50"
           style={{
             backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgB5Dju61f1AZ7w8ZZkunbc_VPRKRw7tF1CcWK56UO3X8JE7-yB85nH1tZrKCOPh-VWK7jkpZqA_GdSsaJw6UySmzgxlkxGofYUL-SkdiK7IbpFC0dI8lylMLtInAWzr2I7UGbeXcs8qd1k3uztGOAl95EdgjxsONqSRAYVJse5XLRBNeyFnruaW1evnwGybvkFkWOidlKlrZhRCQbS0w0RhKiduw4D_c1DNwTgqk')`,
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#18120F] via-[#18120F]/80 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl parallax-header">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-wider mb-4 border border-white/15">
             <Sparkles className="w-3.5 h-3.5 text-[#C8652D]" />
             <span>The Roastery Architecture</span>
@@ -76,7 +75,7 @@ export default function RoasteryPage() {
       {/* Philosophy Triad */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10 w-full">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-3 parallax-card-odd">
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-3">
             <div className="w-12 h-12 rounded-2xl bg-[#18120F] text-[#C8652D] flex items-center justify-center">
               <Coffee className="w-6 h-6" />
             </div>
@@ -86,7 +85,7 @@ export default function RoasteryPage() {
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-3 parallax-card-even">
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-3">
             <div className="w-12 h-12 rounded-2xl bg-[#18120F] text-[#C8652D] flex items-center justify-center">
               <Flame className="w-6 h-6" />
             </div>
@@ -96,7 +95,7 @@ export default function RoasteryPage() {
             </p>
           </div>
 
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-3 parallax-card-odd">
+          <div className="bg-white p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-3">
             <div className="w-12 h-12 rounded-2xl bg-[#18120F] text-[#C8652D] flex items-center justify-center">
               <ShieldCheck className="w-6 h-6" />
             </div>
@@ -110,7 +109,7 @@ export default function RoasteryPage() {
 
       {/* Seating Spaces Showcase */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24 space-y-12">
-        <div className="text-center max-w-2xl mx-auto parallax-header">
+        <div className="text-center max-w-2xl mx-auto">
           <span className="text-xs font-bold uppercase tracking-wider text-[#C8652D]">
             Curated Environments
           </span>
@@ -126,16 +125,14 @@ export default function RoasteryPage() {
           {spaces.map((sp, i) => (
             <div
               key={i}
-              className={`group bg-white rounded-3xl overflow-hidden border border-[#E5E2DD] shadow-sm hover:shadow-md transition-all flex flex-col ${
-                i % 2 === 0 ? 'parallax-card-odd' : 'parallax-card-even'
-              }`}
+              className="group bg-white rounded-3xl border border-[#E5E2DD] shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden"
             >
               <div className="relative w-full aspect-[16/10] bg-[#E5E2DD] overflow-hidden">
                 <Image
                   src={sp.image}
                   alt={sp.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500 parallax-img"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-6 flex flex-col gap-2 flex-1 justify-between">

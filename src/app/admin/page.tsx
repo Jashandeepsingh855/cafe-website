@@ -219,7 +219,7 @@ export default function AdminPage() {
       <section className="w-full bg-[#18120F] text-[#FAF7F2] py-8 sm:py-10 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-center gap-4 parallax-header">
+            <div className="flex items-center gap-4">
               <div className="w-12 h-12 rounded-2xl bg-[#C8652D] flex items-center justify-center text-white shadow-md">
                 <Coffee className="w-6 h-6" />
               </div>
@@ -239,7 +239,7 @@ export default function AdminPage() {
             </div>
 
             {/* Quick Metrics Bar */}
-            <div className="grid grid-cols-3 gap-3 text-center sm:text-left" data-parallax-y="-12">
+            <div className="grid grid-cols-3 gap-3 text-center sm:text-left">
               <div className="bg-white/5 border border-white/10 rounded-xl p-3">
                 <span className="text-[10px] uppercase font-bold text-[#D4CECA] block">Active Menu</span>
                 <span className="text-lg font-extrabold text-[#FAF7F2]">
