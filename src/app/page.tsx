@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import {
@@ -21,9 +21,29 @@ import {
   Utensils,
   ExternalLink,
   ShieldCheck,
+  ShoppingBag,
+  Calendar,
+  Clock,
+  Users,
+  CheckCircle2,
+  Camera,
+  Upload,
+  X,
+  MessageCircle,
+  Sparkles,
+  Phone,
+  MapPin,
 } from 'lucide-react';
 import { MENU_ITEMS, MenuItem } from '@/data/menu';
-import { getWhatsAppOrderUrl } from '@/config/site';
+import {
+  DEFAULT_SITE_CONFIG,
+  getClientSiteConfig,
+  getWhatsAppOrderUrl,
+  getClientReservations,
+  saveClientReservations,
+  ReservationRecord,
+  SiteConfig,
+} from '@/config/site';
 import DishDetailModal from '@/components/DishDetailModal';
 
 // 4 Signature Rotational Showcase Dishes matching the interactive culinary reference
@@ -107,6 +127,7 @@ const HERO_ROTATIONAL_DISHES = [
 ];
 
 export default function HomePage() {
+  const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
   const [selectedDish, setSelectedDish] = useState<MenuItem | null>(null);
   const [activeCoffeeFilter, setActiveCoffeeFilter] = useState('All Coffee');
   const [activeFlavorFilter, setActiveFlavorFilter] = useState('Chocolate');
@@ -114,8 +135,60 @@ export default function HomePage() {
 
   // Hero Carousel State
   const [heroIndex, setHeroIndex] = useState(0);
-  const [heroCardTab, setHeroCardTab] = useState<'overview' | 'ingredients'>('overview');
   const [isPlaying, setIsPlaying] = useState(true);
+
+  // Home Reservation Widget State
+  const [reservePartySize, setReservePartySize] = useState('1-2');
+  const [reserveZone, setReserveZone] = useState('Al Fresco Veranda');
+  const [reserveDate, setReserveDate] = useState(() => {
+    const today = new Date();
+    return today.toISOString().split('T')[0];
+  });
+  const [reserveTimeSlot, setReserveTimeSlot] = useState('Morning Roast (08:30 AM)');
+  const [reserveGuestName, setReserveGuestName] = useState('');
+  const [reserveGuestPhone, setReserveGuestPhone] = useState('');
+  const [reserveSuccessRecord, setReserveSuccessRecord] = useState<ReservationRecord | null>(null);
+
+  // Gallery Upload Modal State
+  const [galleryModalOpen, setGalleryModalOpen] = useState(false);
+  const [uploadName, setUploadName] = useState('');
+  const [uploadCaption, setUploadCaption] = useState('');
+  const [uploadImagePreview, setUploadImagePreview] = useState<string | null>(null);
+  const [galleryImages, setGalleryImages] = useState<
+    Array<{ url: string; alt: string; author?: string; caption?: string }>
+  >([
+    {
+      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCR3ec3I9YAVVYVvSKs8OJDkCJBh18N4dIHNxR66dNlXk-ZEWtlXdQjtHPzELuMiYAxh8HnF1DOdiLVqohLlK2-6xO5z_H6M8UMI3F82O89T-uA3zbYgjkTEiMUZTjrdBNg354A4hBpHeOJ2oLfyR3n2F1emeCLkMaZlko2JAnxt_MUtRRcILy-D8O5y89tuRSP2TaOmUUVe81Zl-KxUa-sp0iViTTVwwitM5h44lk',
+      alt: 'Sunlit botanical courtyard patio at Daily Coffee Drip',
+      caption: 'Al Fresco Morning Sunshine',
+    },
+    {
+      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuBgB5Dju61f1AZ7w8ZZkunbc_VPRKRw7tF1CcWK56UO3X8JE7-yB85nH1tZrKCOPh-VWK7jkpZqA_GdSsaJw6UySmzgxlkxGofYUL-SkdiK7IbpFC0dI8lylMLtInAWzr2I7UGbeXcs8qd1k3uztGOAl95EdgjxsONqSRAYVJse5XLRBNeyFnruaW1evnwGybvkFkWOidlKlrZhRCQbS0w0RhKiduw4D_c1DNwTgqk',
+      alt: 'Artisan coffee bar interior with pour-over station',
+      caption: 'Manual V60 Station',
+    },
+    {
+      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuC95GcRC66ylQ06e9PGONOq8V1LDFcqECNN7hqDLhOa25cpnr2yNhcORdcs2nSZRaKogcvOTTbSFvwHUOBM08gHhxL3jJLuAX50uvfrqZT6FDkYqa2zg1RfYNwZmkpzjB02wyAWrN_EDJ7JjgIfrtYLDaIsOjYE2hHf027ULWymw-uBYlwkSaV7Px9z_pJsbNrQ_dubqWDTxa7ORmGqeZw3jOi0pIEQ11zVF5r1wmA',
+      alt: 'Attentive head barista crafting espresso',
+      caption: '9 Bar Extraction Dial',
+    },
+    {
+      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDNpPP_ko97XuvRcN5t7w0f4KzB3mF7VfqiVW_SmZIgsWr6Ne_-3XzHgR5wJO_1dlpob6DBI9WevfPGUEydADRVgmk8-CZ-TLqZ9rhHJjWM8WGh-u5k5kdcDqew0Y4fS9gCp2ahGG6K_XCpX16R0pRg9iEKhR1QMKAMXNzRR7t0uzfj9uVv4Sh9yDuq6MpjTqa61xU0cBtz1vGY-RImycGjo-zR0gXXVeODKZ2JVBM',
+      alt: 'Botanical stairway with cascading plants',
+      caption: 'Verdant Indiranagar Stairway',
+    },
+    {
+      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAHbU1SitFmrXgBFPy8tb_PAQw95Na-CSEE6WhDrcCJ9H9b2i5gW5Dj9iXwoYpdQy4eYW8mYEQLLZsOQi3olKuBT4D0I8G8L-3H-k8KevNzGx67ectn24sO6V1wO_Ys6B7N8wDJJosZRCMeqf5h5Y1D42rko9b9r0xIcOSFcqRObSCXB62ySPVit06AM_8amTYfxNFHwJuRQdSuhYKBu_LdLIRChD-fTAI25v3rMtw',
+      alt: 'Guest savoring morning cup in the al fresco veranda',
+      caption: 'Unhurried Weekend Connection',
+    },
+  ]);
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  useEffect(() => {
+    setSite(getClientSiteConfig());
+  }, []);
 
   // Auto-rotation timer (5.5s)
   useEffect(() => {
@@ -127,6 +200,7 @@ export default function HomePage() {
   }, [isPlaying]);
 
   const currentHeroDish = HERO_ROTATIONAL_DISHES[heroIndex];
+  const nextHeroDish = HERO_ROTATIONAL_DISHES[(heroIndex + 1) % HERO_ROTATIONAL_DISHES.length];
 
   const handlePrevHero = () => {
     setHeroIndex((prev) => (prev === 0 ? HERO_ROTATIONAL_DISHES.length - 1 : prev - 1));
@@ -161,6 +235,78 @@ export default function HomePage() {
     setLikedDishes((prev) => ({ ...prev, [id]: !prev[id] }));
   };
 
+  // Handle Home Reservation Booking Submit
+  const handleHomeReservationSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!reserveGuestName.trim() || !reserveGuestPhone.trim()) {
+      alert('Please enter your name and phone number to reserve a table.');
+      return;
+    }
+
+    const newRecord: ReservationRecord = {
+      id: `RES-${Date.now().toString().slice(-6)}`,
+      name: reserveGuestName,
+      whatsapp: reserveGuestPhone,
+      email: '',
+      partySize: `${reservePartySize} Guests`,
+      zone: reserveZone,
+      date: reserveDate,
+      timeSlot: reserveTimeSlot,
+      dietaryOptions: {
+        pureVeg: true,
+        strictJain: false,
+        nutFree: false,
+        celebration: false,
+      },
+      status: 'Pending',
+      createdAt: new Date().toISOString(),
+    };
+
+    const currentList = getClientReservations();
+    saveClientReservations([newRecord, ...currentList]);
+    setReserveSuccessRecord(newRecord);
+    setReserveGuestName('');
+    setReserveGuestPhone('');
+  };
+
+  // Handle Local Photo Selection Preview
+  const handlePhotoFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        if (event.target?.result) {
+          setUploadImagePreview(event.target.result as string);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Handle Add Photo to Gallery
+  const handleGalleryUploadSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!uploadImagePreview) {
+      alert('Please select a photo to share.');
+      return;
+    }
+
+    setGalleryImages((prev) => [
+      {
+        url: uploadImagePreview,
+        alt: uploadCaption || 'Guest moment at Daily Coffee Drip',
+        author: uploadName || 'Valued Patron',
+        caption: uploadCaption || 'Shared Roastery Moment',
+      },
+      ...prev,
+    ]);
+
+    setGalleryModalOpen(false);
+    setUploadName('');
+    setUploadCaption('');
+    setUploadImagePreview(null);
+  };
+
   // Filter items for the main Coffee Collection
   const coffeeCategories = ['All Coffee', 'Cappuccino', 'Latte', 'Cold Coffee', 'Hot Coffee'];
   const coffeeItems = MENU_ITEMS.filter((item) => {
@@ -185,11 +331,11 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col overflow-x-hidden">
       {/* ========================================================================= */}
-      {/* 1. INTERACTIVE ROTATIONAL SHOWCASE HERO (MATCHING USER VIDEO REFERENCE) */}
+      {/* 1. HERO SECTION: DIAGONAL TOP-RIGHT GLIDE DISH SHOWCASE (CLEAN & SPACIOUS) */}
       {/* ========================================================================= */}
       <section className="relative w-full overflow-hidden bg-[#F2EEE9] text-[#18120F] min-h-[720px] lg:min-h-[820px] flex flex-col justify-between pt-6 sm:pt-8 pb-4 border-b border-[#E5E2DD]">
         
-        {/* Dynamic Organic Sweeping Color Arc (matching video frames) */}
+        {/* Dynamic Sweeping Organic Curved Arc (matching Pinterest reference) */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-0">
           <svg
             className="w-full h-full object-cover scale-110 sm:scale-100 transition-all duration-1000 ease-in-out"
@@ -223,255 +369,238 @@ export default function HomePage() {
             </span>
             <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[#C8652D]"></span>
             <span className="hidden sm:inline-block text-[11px] font-bold text-[#857D77] uppercase tracking-wider">
-              Artisanal Roastery &amp; Craft Kitchen
+              100% Pure Vegetarian Roastery &amp; Craft Kitchen
             </span>
           </div>
 
           <div className="flex items-center gap-2 text-xs font-bold text-[#544E49]">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/80 border border-[#E5E2DD] shadow-sm">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/85 border border-[#E5E2DD] shadow-sm">
               <span className="w-2 h-2 rounded-full bg-[#C8652D] animate-ping"></span>
               {currentHeroDish.number} / 04 Selected
             </span>
           </div>
         </div>
 
-        {/* Centerpiece Split Layout */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-center py-4 lg:py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-6 items-center">
+        {/* Centerpiece Split Layout (Clean, Uncluttered, with Diagonal Incoming Plate) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-center py-4 lg:py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
             
-            {/* Left & Center: Rotational Circular Dish + Huge Typography + Carousel */}
-            <div className="lg:col-span-8 flex flex-col md:flex-row items-center md:items-start lg:items-center gap-8 lg:gap-10">
+            {/* Left Column: Bold Dual-Weight Title, Action Pills & Carousel Selector */}
+            <div className="lg:col-span-6 flex flex-col items-start text-left z-20">
               
-              {/* Circular Overhead Gourmet Plate */}
-              <div className="relative shrink-0">
-                {/* Main Plate Container with realistic drop shadow & ceramic border */}
-                <div
-                  key={currentHeroDish.id}
-                  className="w-64 h-64 sm:w-80 sm:h-80 md:w-88 md:h-88 lg:w-[420px] lg:h-[420px] rounded-full overflow-hidden shadow-[0_30px_70px_-15px_rgba(24,18,15,0.38)] border-4 sm:border-8 border-[#FAF7F2] ring-1 ring-black/5 relative group cursor-pointer transition-all duration-700 ease-out animate-in fade-in zoom-in-90"
+              {/* Category Eyebrow */}
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 border border-[#C8652D]/20 mb-3">
+                <span className="w-2 h-2 rounded-full bg-[#C8652D]"></span>
+                <span className="text-xs font-extrabold text-[#C8652D] tracking-wider uppercase">
+                  {currentHeroDish.categoryLabel}
+                </span>
+              </div>
+
+              {/* Massive 2-Tone Headline */}
+              <h1 className="flex flex-col tracking-tight leading-none text-[#18120F] mb-4">
+                <span className="font-light text-3xl sm:text-4xl lg:text-5xl tracking-wider uppercase text-[#544E49]">
+                  {currentHeroDish.titleLight}
+                </span>
+                <span className="font-extrabold text-4xl sm:text-6xl lg:text-7xl uppercase text-[#18120F] tracking-tighter mt-1">
+                  {currentHeroDish.titleBold}
+                </span>
+              </h1>
+
+              {/* Dish Overview & Price */}
+              <p className="text-sm sm:text-base text-[#544E49] leading-relaxed max-w-lg mb-4">
+                {currentHeroDish.overview}
+              </p>
+
+              <div className="flex items-center gap-3 mb-6">
+                <span className="text-2xl sm:text-3xl font-extrabold text-[#C8652D]">
+                  ₹{currentHeroDish.price}
+                </span>
+                <span className="text-xs text-[#857D77] font-medium bg-white px-2.5 py-1 rounded-full border border-[#E5E2DD]">
+                  Prep: {currentHeroDish.prepTime} • 100% Pure Veg
+                </span>
+              </div>
+
+              {/* Clean Action Links Strip */}
+              <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm font-bold text-[#18120F] mb-8">
+                <button
+                  type="button"
                   onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-white hover:bg-[#C8652D] transition-colors shadow-sm"
                 >
+                  <span className="text-[#C8652D]">▷</span>
+                  <span>View Craft Story</span>
+                </button>
+
+                <a
+                  href={site.links.zomato}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white text-[#E23744] border border-[#E5E2DD] hover:border-[#E23744] transition-colors shadow-sm"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <span>Zomato</span>
+                </a>
+
+                <a
+                  href={site.links.swiggy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white text-[#FC8019] border border-[#E5E2DD] hover:border-[#FC8019] transition-colors shadow-sm"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5" />
+                  <span>Swiggy</span>
+                </a>
+
+                <a
+                  href={getWhatsAppOrderUrl(
+                    `${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`,
+                    currentHeroDish.price
+                  )}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#25D366]/10 text-[#186a22] border border-[#25D366]/30 hover:bg-[#25D366]/20 transition-colors"
+                >
+                  <MessageCircle className="w-3.5 h-3.5" />
+                  <span>WhatsApp Direct</span>
+                </a>
+              </div>
+
+              {/* Horizontal Thumbnail Carousel Strip */}
+              <div className="flex items-center gap-2 sm:gap-3 pt-1 w-full max-w-lg">
+                <button
+                  type="button"
+                  onClick={handlePrevHero}
+                  aria-label="Previous offering"
+                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+
+                <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar py-1">
+                  {HERO_ROTATIONAL_DISHES.map((item, idx) => {
+                    const isActive = idx === heroIndex;
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={() => setHeroIndex(idx)}
+                        className={`cursor-pointer transition-all duration-300 flex flex-col items-center ${
+                          isActive
+                            ? 'bg-white rounded-2xl p-2 sm:p-2.5 shadow-md border border-[#C8652D]/50 scale-105'
+                            : 'opacity-70 hover:opacity-100 p-1.5'
+                        }`}
+                      >
+                        <div
+                          className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 shadow-sm relative shrink-0 ${
+                            isActive ? 'border-[#C8652D]' : 'border-white'
+                          }`}
+                        >
+                          <Image
+                            src={item.thumbImage}
+                            alt={item.shortName}
+                            fill
+                            className="object-cover"
+                            sizes="48px"
+                          />
+                        </div>
+                        <span
+                          className={`text-[10px] sm:text-[11px] font-bold mt-1.5 whitespace-nowrap ${
+                            isActive ? 'text-[#18120F]' : 'text-[#857D77]'
+                          }`}
+                        >
+                          {item.shortName}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={handleNextHero}
+                  aria-label="Next offering"
+                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+
+            {/* Right Column: Visual Stage with Diagonal Incoming Plate & Hanging Lamp */}
+            <div className="lg:col-span-6 relative flex items-center justify-center min-h-[360px] sm:min-h-[440px] lg:min-h-[500px]">
+              
+              {/* Sleek Hanging Pendant Lamp (top right) */}
+              <div className="hidden lg:flex flex-col items-center absolute -top-12 right-12 z-30 pointer-events-none">
+                <div className="w-0.5 h-28 bg-[#18120F]"></div>
+                <div className="w-7 h-9 bg-[#18120F] rounded-b-xl shadow-lg"></div>
+              </div>
+
+              {/* 1. UPCOMING QUEUE DISH: Peeking at Top-Right Corner / Edge along the arc */}
+              <div
+                onClick={handleNextHero}
+                title={`Next: ${nextHeroDish.titleLight} ${nextHeroDish.titleBold}`}
+                className="absolute -top-10 -right-8 sm:-top-8 sm:right-0 lg:top-0 lg:right-4 z-10 cursor-pointer group transition-transform hover:scale-105"
+              >
+                <div className="relative">
+                  <div className="w-32 h-32 sm:w-44 sm:h-44 lg:w-48 lg:h-48 rounded-full overflow-hidden shadow-xl border-4 border-white/90 ring-1 ring-black/5 opacity-85 group-hover:opacity-100 transition-opacity animate-queue-plate">
+                    <Image
+                      src={nextHeroDish.plateImage}
+                      alt={nextHeroDish.shortName}
+                      fill
+                      className="object-cover"
+                      sizes="192px"
+                    />
+                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
+                  </div>
+                  {/* Subtle Badge */}
+                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-sm border border-[#E5E2DD] text-[10px] font-bold text-[#544E49] shadow-sm whitespace-nowrap">
+                    Next up ↗
+                  </span>
+                </div>
+              </div>
+
+              {/* 2. ACTIVE FOCAL DISH: Gliding smoothly Diagonally from Top-Right into the Middle */}
+              <div
+                key={currentHeroDish.id}
+                onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
+                className="relative z-20 cursor-pointer animate-glide-diagonal"
+              >
+                <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px] rounded-full overflow-hidden shadow-[0_32px_75px_-12px_rgba(24,18,15,0.42)] border-4 sm:border-8 border-[#FAF7F2] ring-1 ring-black/5 group relative transition-transform duration-500 ease-out hover:scale-105">
                   <Image
                     src={currentHeroDish.plateImage}
                     alt={`${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`}
                     fill
                     priority
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    sizes="(max-width: 640px) 256px, (max-width: 1024px) 352px, 420px"
+                    className="object-cover"
+                    sizes="(max-width: 640px) 256px, (max-width: 1024px) 384px, 420px"
                   />
-                  {/* Subtle specular vignette overlay */}
+                  {/* Specular vignette */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none"></div>
-                </div>
 
-                {/* Left Vertical Index (01 / 04) on Desktop */}
-                <div className="hidden lg:flex flex-col items-center gap-2 absolute -left-12 top-1/2 -translate-y-1/2 text-xs font-bold text-[#857D77]">
-                  <span>{currentHeroDish.number}</span>
-                  <div className="w-0.5 h-10 bg-[#C8652D]/40"></div>
-                  <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 0 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
-                  <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 1 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
-                  <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 2 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
-                  <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 3 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
-                </div>
-              </div>
-
-              {/* Dish Titles, Action Links & Carousel Slider */}
-              <div className="flex flex-col items-start text-left flex-1 min-w-0">
-                {/* Category eyebrow */}
-                <span className="text-xs sm:text-sm font-bold text-[#C8652D] tracking-widest uppercase mb-1">
-                  {currentHeroDish.categoryLabel}
-                </span>
-
-                {/* Massive 2-Tone Headline */}
-                <h1 className="flex flex-col tracking-tight leading-none text-[#18120F] mb-4">
-                  <span className="font-light text-3xl sm:text-4xl lg:text-5xl tracking-wider uppercase text-[#544E49]">
-                    {currentHeroDish.titleLight}
-                  </span>
-                  <span className="font-extrabold text-4xl sm:text-6xl lg:text-7xl uppercase text-[#18120F] tracking-tighter mt-1">
-                    {currentHeroDish.titleBold}
-                  </span>
-                </h1>
-
-                {/* Action Links Strip (matching reference "▷ View reference | ◬ Explore dish") */}
-                <div className="flex flex-wrap items-center gap-5 text-xs sm:text-sm font-bold text-[#18120F] mb-6">
-                  <button
-                    type="button"
-                    onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
-                    className="flex items-center gap-1.5 hover:text-[#C8652D] transition-colors group"
-                  >
-                    <span className="text-[#C8652D] text-xs">▷</span>
-                    <span className="group-hover:underline">View Craft Story</span>
-                  </button>
-
-                  <a
-                    href={getWhatsAppOrderUrl(
-                      `${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`,
-                      currentHeroDish.price
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-[#C8652D] hover:underline"
-                  >
-                    <span>◬ Explore Dish &amp; Order</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-
-                {/* Carousel Horizontal Thumbnails Selector */}
-                <div className="flex items-center gap-2 sm:gap-3 pt-2 w-full">
-                  {/* Prev Button */}
-                  <button
-                    type="button"
-                    onClick={handlePrevHero}
-                    aria-label="Previous offering"
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0"
-                  >
-                    <ChevronLeft className="w-4 h-4" />
-                  </button>
-
-                  {/* 4 Circular Thumbnails */}
-                  <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar py-1">
-                    {HERO_ROTATIONAL_DISHES.map((item, idx) => {
-                      const isActive = idx === heroIndex;
-                      return (
-                        <div
-                          key={item.id}
-                          onClick={() => setHeroIndex(idx)}
-                          className={`cursor-pointer transition-all duration-300 flex flex-col items-center ${
-                            isActive
-                              ? 'bg-white rounded-2xl p-2 sm:p-2.5 shadow-md border border-[#C8652D]/40 scale-105'
-                              : 'opacity-70 hover:opacity-100 p-1.5'
-                          }`}
-                        >
-                          <div
-                            className={`w-11 h-11 sm:w-13 sm:h-13 rounded-full overflow-hidden border-2 shadow-sm relative shrink-0 ${
-                              isActive ? 'border-[#C8652D]' : 'border-white'
-                            }`}
-                          >
-                            <Image
-                              src={item.thumbImage}
-                              alt={item.shortName}
-                              fill
-                              className="object-cover"
-                              sizes="52px"
-                            />
-                          </div>
-                          <span
-                            className={`text-[10px] sm:text-[11px] font-bold mt-1.5 whitespace-nowrap ${
-                              isActive ? 'text-[#18120F]' : 'text-[#857D77]'
-                            }`}
-                          >
-                            {item.shortName}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-
-                  {/* Next Button */}
-                  <button
-                    type="button"
-                    onClick={handleNextHero}
-                    aria-label="Next offering"
-                    className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0"
-                  >
-                    <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Column: Architectural Hanging Lamp + Right Details Card */}
-            <div className="lg:col-span-4 flex flex-col items-center lg:items-end relative">
-              {/* Sleek Hanging Pendant Lamp (matching reference) */}
-              <div className="hidden lg:flex flex-col items-center absolute -top-16 right-10 z-20 pointer-events-none">
-                <div className="w-0.5 h-32 bg-[#18120F]"></div>
-                <div className="w-8 h-10 bg-[#18120F] rounded-b-xl shadow-lg"></div>
-              </div>
-
-              {/* Right Architectural Glass Detail Card */}
-              <div className="w-full max-w-sm bg-white/95 backdrop-blur-md rounded-3xl p-6 sm:p-7 shadow-xl border border-[#E5E2DD] flex flex-col gap-4 relative z-10 transition-all duration-300">
-                
-                {/* Card Top Tabs: Overview / Ingredients */}
-                <div className="flex items-center gap-6 border-b border-[#E5E2DD] pb-3 text-xs font-bold">
-                  <button
-                    type="button"
-                    onClick={() => setHeroCardTab('overview')}
-                    className={`transition-colors relative pb-1 ${
-                      heroCardTab === 'overview'
-                        ? 'text-[#18120F] border-b-2 border-[#18120F]'
-                        : 'text-[#857D77] hover:text-[#18120F]'
-                    }`}
-                  >
-                    Overview
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => setHeroCardTab('ingredients')}
-                    className={`transition-colors relative pb-1 ${
-                      heroCardTab === 'ingredients'
-                        ? 'text-[#18120F] border-b-2 border-[#18120F]'
-                        : 'text-[#857D77] hover:text-[#18120F]'
-                    }`}
-                  >
-                    Ingredients
-                  </button>
-                </div>
-
-                {/* Number Badge (01 / ★) */}
-                <div className="flex items-center justify-between">
-                  <div className={`w-14 h-14 rounded-2xl ${currentHeroDish.badgeColor} font-black text-2xl flex flex-col items-center justify-center shadow-sm`}>
-                    <span className="leading-none">{currentHeroDish.number}</span>
-                    <span className="text-xs">★</span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-2xl font-extrabold text-[#C8652D]">₹{currentHeroDish.price}</span>
-                    <span className="block text-[10px] text-[#857D77] font-medium">inclusive of taxes</span>
+                  {/* 1-Tap Overlay Cue */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity px-3.5 py-1 rounded-full bg-white/95 text-[#18120F] text-xs font-bold shadow-md">
+                    Tap to view craft story
                   </div>
                 </div>
-
-                {/* Headline & Description */}
-                <div>
-                  <h3 className="text-lg font-bold text-[#18120F] leading-snug">
-                    {currentHeroDish.subTitle}
-                  </h3>
-                  <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed">
-                    {heroCardTab === 'overview'
-                      ? currentHeroDish.overview
-                      : currentHeroDish.ingredients}
-                  </p>
-                </div>
-
-                {/* 1-Tap Direct Order CTA */}
-                <div className="pt-2 flex flex-col gap-2">
-                  <a
-                    href={getWhatsAppOrderUrl(
-                      `${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`,
-                      currentHeroDish.price
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="min-h-[46px] w-full rounded-full bg-[#18120F] hover:bg-[#C8652D] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
-                  >
-                    <span>Order on WhatsApp (₹{currentHeroDish.price})</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
-                    className="min-h-[40px] w-full rounded-full bg-[#F0EDE9] text-[#18120F] hover:bg-[#EBE8E3] font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-[#E5E2DD]"
-                  >
-                    <span>View Nutritional &amp; Craft Profile</span>
-                  </button>
-                </div>
               </div>
+
+              {/* Left Vertical Index (01 / 04) on Desktop */}
+              <div className="hidden lg:flex flex-col items-center gap-2 absolute -left-6 top-1/2 -translate-y-1/2 text-xs font-bold text-[#857D77] z-10">
+                <span>{currentHeroDish.number}</span>
+                <div className="w-0.5 h-10 bg-[#C8652D]/40"></div>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 0 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 1 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 2 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 3 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+              </div>
+
             </div>
 
           </div>
         </div>
 
-        {/* Foreground Kitchen Counter Bar Visual (matching showroom perspective) */}
-        <div className="relative z-0 w-full mt-4">
-          <div className="w-full h-8 sm:h-10 bg-gradient-to-r from-white via-[#FAF7F2] to-white border-t border-white/80 shadow-[0_-8px_20px_rgba(0,0,0,0.04)] flex items-center justify-between px-8"></div>
+        {/* Foreground Kitchen Counter Marble Top */}
+        <div className="relative z-10 w-full mt-2">
+          <div className="w-full h-8 sm:h-9 bg-gradient-to-r from-white via-[#FAF7F2] to-white border-t border-white/90 shadow-[0_-8px_20px_rgba(0,0,0,0.03)] flex items-center justify-between px-8"></div>
         </div>
 
         {/* Bottom Ticker / Status Bar */}
@@ -482,13 +611,13 @@ export default function HomePage() {
             className="flex items-center gap-2 font-bold text-[#18120F] hover:text-[#C8652D] transition-colors"
           >
             <Utensils className="w-4 h-4 text-[#C8652D]" />
-            <span>Our Menu (140+ Items)</span>
+            <span>Our Menu (142 Offerings)</span>
           </Link>
 
-          {/* Center: Roastery Motto */}
+          {/* Center: Roastery Delivery & Pure Veg Motto */}
           <div className="hidden md:flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-[#857D77]">
             <ShieldCheck className="w-4 h-4 text-[#186a22]" />
-            <span>100% Pure Vegetarian Kitchen • Indiranagar Bengaluru</span>
+            <span>100% Pure Vegetarian Kitchen • Online Delivery on Zomato &amp; Swiggy</span>
           </div>
 
           {/* Right: Play / Pause Auto-Cycle Toggle */}
@@ -514,7 +643,364 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 2. FILTERABLE PRODUCT SHOWCASE */}
+      {/* 2. ORDER ONLINE ON DELIVERY APPS (ZOMATO & SWIGGY & WHATSAPP) */}
+      {/* ========================================================================= */}
+      <section className="w-full py-14 sm:py-18 bg-white border-b border-[#E5E2DD]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2">
+              <ShoppingBag className="w-3.5 h-3.5" />
+              <span>Doorstep Roastery Delivery</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight">
+              Craving Daily Coffee Drip at Home?
+            </h2>
+            <p className="text-sm sm:text-base text-[#544E49] mt-2 leading-relaxed">
+              Order fresh single-origin brews, cloud cold brews, and wood-fired sourdough pizzas straight to your door across Indiranagar &amp; Central Bengaluru.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Zomato Card */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#E23744]/40 hover:shadow-md transition-all flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="px-3.5 py-1.5 rounded-full bg-[#E23744] text-white text-xs font-black tracking-wider uppercase">
+                    Zomato
+                  </div>
+                  <span className="text-xs font-bold text-[#544E49] bg-white px-2.5 py-1 rounded-full border border-[#E5E2DD]">
+                    ★ 4.8 Rating
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-[#18120F] group-hover:text-[#E23744] transition-colors">
+                  Order via Zomato
+                </h3>
+                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed">
+                  25–35 mins average delivery. 100% pure vegetarian spill-proof cups with tamper-evident seal.
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#E5E2DD]">
+                <a
+                  href={site.links.zomato}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-[44px] rounded-full bg-[#E23744] hover:bg-[#c92f3b] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
+                >
+                  <span>Order on Zomato</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+
+            {/* Swiggy Card */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#FC8019]/40 hover:shadow-md transition-all flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="px-3.5 py-1.5 rounded-full bg-[#FC8019] text-white text-xs font-black tracking-wider uppercase">
+                    Swiggy
+                  </div>
+                  <span className="text-xs font-bold text-[#544E49] bg-white px-2.5 py-1 rounded-full border border-[#E5E2DD]">
+                    Swiggy One
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-[#18120F] group-hover:text-[#FC8019] transition-colors">
+                  Order via Swiggy
+                </h3>
+                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed">
+                  Fast delivery across Indiranagar, Domlur, HAL, &amp; Koramangala. Hot bakes &amp; iced brews protected.
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#E5E2DD]">
+                <a
+                  href={site.links.swiggy}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-[44px] rounded-full bg-[#FC8019] hover:bg-[#e07014] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
+                >
+                  <span>Order on Swiggy</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </a>
+              </div>
+            </div>
+
+            {/* WhatsApp Direct Barista Card */}
+            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#25D366]/40 hover:shadow-md transition-all flex flex-col justify-between group">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="px-3.5 py-1.5 rounded-full bg-[#25D366] text-white text-xs font-black tracking-wider uppercase">
+                    WhatsApp Direct
+                  </div>
+                  <span className="text-xs font-bold text-[#186a22] bg-white px-2.5 py-1 rounded-full border border-[#E5E2DD]">
+                    Zero Markup
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold text-[#18120F] group-hover:text-[#186a22] transition-colors">
+                  Direct with Barista
+                </h3>
+                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed">
+                  Specify customized grind sizes, dietary preferences (Jain/Oat), and whole bean coffee bag deliveries.
+                </p>
+              </div>
+
+              <div className="mt-6 pt-4 border-t border-[#E5E2DD]">
+                <a
+                  href={getWhatsAppOrderUrl('Specialty Roastery Order', 250)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-[44px] rounded-full bg-[#18120F] hover:bg-[#186a22] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
+                >
+                  <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+                  <span>Chat &amp; Order on WhatsApp</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 3. INTERACTIVE TABLE RESERVATION SECTION DIRECTLY ON HOMEPAGE */}
+      {/* ========================================================================= */}
+      <section className="w-full py-16 sm:py-20 bg-[#FAF7F2]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            
+            {/* Left Column: Hospitality Narrative & Zone Guide */}
+            <div className="lg:col-span-5 space-y-5">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#C8652D]/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#C8652D]/20">
+                <Calendar className="w-3.5 h-3.5" />
+                <span>Reserve Your Table</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-[#18120F] tracking-tight leading-tight">
+                Unhurried Hospitality in Indiranagar
+              </h2>
+              <p className="text-sm sm:text-base text-[#544E49] leading-relaxed">
+                Whether you seek sunlit courtyard conversations, a focused workspace with high-speed fiber, or an evening tasting flight by the stone hearth, reserve your spot in advance.
+              </p>
+
+              {/* Seating Zones Quick Visual */}
+              <div className="space-y-3 pt-2">
+                {[
+                  { name: '🌿 Al Fresco Veranda', desc: 'Breezy outdoor garden canopy & pergolas' },
+                  { name: '🔥 Hearth & Banquette', desc: 'Plush velvet banquettes & acoustic warmth' },
+                  { name: '☕ Backlit Arch Bar', desc: 'Front-row sensory view of barista extractions' },
+                  { name: '💻 Quiet Creator Corner', desc: 'Dedicated brass task lights & power plugs' },
+                ].map((item, i) => (
+                  <div
+                    key={i}
+                    onClick={() => setReserveZone(item.name.replace(/^[^\w\s]+\s*/, ''))}
+                    className="p-3 rounded-2xl bg-white border border-[#E5E2DD] hover:border-[#C8652D]/50 cursor-pointer transition-all flex items-center justify-between"
+                  >
+                    <div>
+                      <h4 className="text-xs sm:text-sm font-bold text-[#18120F]">{item.name}</h4>
+                      <p className="text-[11px] text-[#857D77]">{item.desc}</p>
+                    </div>
+                    <span className="text-xs text-[#C8652D] font-bold">Select</span>
+                  </div>
+                ))}
+              </div>
+
+              <div className="pt-2">
+                <Link
+                  href="/reservation"
+                  className="text-xs font-bold text-[#C8652D] hover:underline inline-flex items-center gap-1.5"
+                >
+                  <span>View full reservation details &amp; group policies</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Column: Instant Booking Card */}
+            <div className="lg:col-span-7">
+              <div className="bg-white rounded-3xl p-6 sm:p-8 shadow-xl border border-[#E5E2DD]">
+                <div className="flex items-center justify-between border-b border-[#E5E2DD] pb-4 mb-6">
+                  <div>
+                    <h3 className="text-lg sm:text-xl font-bold text-[#18120F]">Instant Table Request</h3>
+                    <p className="text-xs text-[#857D77] mt-0.5">Complimentary reservation • Confirmed within 15 mins</p>
+                  </div>
+                  <span className="text-xs font-bold text-[#186a22] bg-[#CaEcc0]/40 px-3 py-1 rounded-full border border-[#186a22]/20">
+                    Pure Veg Kitchen
+                  </span>
+                </div>
+
+                <form onSubmit={handleHomeReservationSubmit} className="space-y-5">
+                  {/* Party Size Selector */}
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-2">
+                      Party Size
+                    </label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {[
+                        { id: '1-2', label: '1–2 Cozy' },
+                        { id: '3-4', label: '3–4 Group' },
+                        { id: '5-8', label: '5–8+ Feast' },
+                      ].map((size) => (
+                        <button
+                          key={size.id}
+                          type="button"
+                          onClick={() => setReservePartySize(size.id)}
+                          className={`min-h-[40px] px-3 py-2 rounded-xl text-xs font-bold transition-all border ${
+                            reservePartySize === size.id
+                              ? 'bg-[#18120F] text-white border-[#18120F]'
+                              : 'bg-[#FAF7F2] text-[#18120F] border-[#E5E2DD] hover:bg-[#EBE8E3]'
+                          }`}
+                        >
+                          {size.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Seating Zone Select */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-2">
+                        Preferred Zone
+                      </label>
+                      <select
+                        value={reserveZone}
+                        onChange={(e) => setReserveZone(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] text-xs font-semibold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]/40"
+                      >
+                        <option value="Al Fresco Veranda">Al Fresco Veranda (Garden)</option>
+                        <option value="Hearth & Banquette Salon">Hearth &amp; Banquette Salon</option>
+                        <option value="Backlit Arch Bar">Backlit Arch Bar (Espresso View)</option>
+                        <option value="Quiet Creator Corner">Quiet Creator Corner (Wi-Fi &amp; Plugs)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-2">
+                        Date
+                      </label>
+                      <input
+                        type="date"
+                        value={reserveDate}
+                        onChange={(e) => setReserveDate(e.target.value)}
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] text-xs font-semibold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]/40"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Time Slot Selection */}
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-2">
+                      Time Slot
+                    </label>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                      {[
+                        'Morning Roast (08:30 AM)',
+                        'Midday Drip (12:30 PM)',
+                        'Golden Hour (05:00 PM)',
+                        'Evening Hearth (08:00 PM)',
+                      ].map((slot) => (
+                        <button
+                          key={slot}
+                          type="button"
+                          onClick={() => setReserveTimeSlot(slot)}
+                          className={`min-h-[38px] p-2 rounded-xl text-[11px] font-bold text-center transition-all border ${
+                            reserveTimeSlot === slot
+                              ? 'bg-[#18120F] text-white border-[#18120F]'
+                              : 'bg-[#FAF7F2] text-[#18120F] border-[#E5E2DD] hover:bg-[#EBE8E3]'
+                          }`}
+                        >
+                          {slot}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Guest Info */}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-2">
+                        Your Full Name
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={reserveGuestName}
+                        onChange={(e) => setReserveGuestName(e.target.value)}
+                        placeholder="e.g. Vikram Sen"
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] text-xs font-medium text-[#18120F] placeholder:text-[#857D77] focus:outline-none focus:ring-2 focus:ring-[#C8652D]/40"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-2">
+                        WhatsApp / Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        required
+                        value={reserveGuestPhone}
+                        onChange={(e) => setReserveGuestPhone(e.target.value)}
+                        placeholder="e.g. +91 98765 43210"
+                        className="w-full px-4 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] text-xs font-medium text-[#18120F] placeholder:text-[#857D77] focus:outline-none focus:ring-2 focus:ring-[#C8652D]/40"
+                      />
+                    </div>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full min-h-[48px] rounded-full bg-[#C8652D] hover:bg-[#B45309] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md transition-all active:scale-[0.99]"
+                  >
+                    <CheckCircle2 className="w-4 h-4" />
+                    <span>Confirm Table Reservation</span>
+                  </button>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Reservation Success Modal */}
+      {reserveSuccessRecord && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-[#E5E2DD] text-center space-y-4">
+            <div className="w-16 h-16 rounded-full bg-[#CaEcc0] text-[#186a22] flex items-center justify-center mx-auto">
+              <CheckCircle2 className="w-8 h-8" />
+            </div>
+            <h3 className="text-2xl font-extrabold text-[#18120F]">Reservation Received!</h3>
+            <p className="text-xs sm:text-sm text-[#544E49] leading-relaxed">
+              Thank you, <strong className="text-[#18120F]">{reserveSuccessRecord.name}</strong>! Your table for{' '}
+              <strong className="text-[#18120F]">{reserveSuccessRecord.partySize}</strong> in the{' '}
+              <strong className="text-[#C8652D]">{reserveSuccessRecord.zone}</strong> on{' '}
+              <strong>{reserveSuccessRecord.date}</strong> ({reserveSuccessRecord.timeSlot}) has been logged.
+            </p>
+
+            <div className="pt-2 flex flex-col gap-2">
+              <a
+                href={`https://wa.me/${site.contact.whatsappRaw}?text=${encodeURIComponent(
+                  `Hello Daily Coffee Drip! I just booked a table for ${reserveSuccessRecord.name} (${reserveSuccessRecord.partySize}) on ${reserveSuccessRecord.date} at ${reserveSuccessRecord.timeSlot} in ${reserveSuccessRecord.zone}.`
+                )}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="min-h-[44px] rounded-full bg-[#25D366] text-white font-bold text-xs flex items-center justify-center gap-2 hover:bg-[#1ebd59] transition-colors"
+              >
+                <MessageCircle className="w-4 h-4" />
+                <span>Confirm Instantly on WhatsApp</span>
+              </a>
+
+              <button
+                type="button"
+                onClick={() => setReserveSuccessRecord(null)}
+                className="min-h-[40px] rounded-full bg-[#FAF7F2] text-[#18120F] text-xs font-semibold hover:bg-[#EBE8E3] transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ========================================================================= */}
+      {/* 4. FILTERABLE PRODUCT SHOWCASE */}
       {/* ========================================================================= */}
       <section className="w-full py-16 sm:py-20 bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
@@ -591,7 +1077,7 @@ export default function HomePage() {
               href="/menu"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-sm hover:bg-[#C8652D] transition-colors shadow-sm"
             >
-              <span>Explore All 140+ Offerings</span>
+              <span>Explore All 142 Offerings on Menu Page</span>
               <ArrowRight className="w-4 h-4" />
             </Link>
           </div>
@@ -599,7 +1085,7 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 3. ROASTING & EXTRACTION HIGHLIGHT */}
+      {/* 5. ROASTING & EXTRACTION HIGHLIGHT */}
       {/* ========================================================================= */}
       <section className="w-full bg-[#18120F] text-[#FAF7F2] overflow-hidden">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-12 min-h-[560px]">
@@ -659,7 +1145,7 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 4. SECONDARY TASTING GRID ('Different Flavor You can Choose Anytime') */}
+      {/* 6. SECONDARY TASTING GRID ('Different Flavor Notes You can Choose Anytime') */}
       {/* ========================================================================= */}
       <section className="w-full py-16 sm:py-20 bg-[#FAF7F2]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
@@ -733,218 +1219,28 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. QUALITY & TASTE PROMISE BANNER */}
+      {/* 7. CUSTOMER TESTIMONIALS (HOME PAGE REVIEWS ABOUT US) */}
       {/* ========================================================================= */}
-      <section className="w-full py-16 sm:py-20 bg-[#F6F3EE] border-y border-[#E5E2DD]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            {/* Left Headline */}
-            <div className="lg:col-span-8">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#18120F] tracking-tight leading-tight">
-                Our roastery crafts coffee with a rich taste and exquisite aroma that delights the senses.
-              </h2>
-            </div>
-
-            {/* Right 3 Benefits */}
-            <div className="lg:col-span-4 flex flex-col gap-8 sm:gap-10">
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#18120F] text-[#FAF7F2] flex items-center justify-center shrink-0 shadow-sm">
-                  <Gauge className="w-5 h-5 text-[#C8652D]" />
-                </div>
-                <div>
-                  <p className="text-base text-[#18120F] font-semibold leading-snug">
-                    Precise roast curve monitoring for maximum sweetness.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#18120F] text-[#FAF7F2] flex items-center justify-center shrink-0 shadow-sm">
-                  <Armchair className="w-5 h-5 text-[#C8652D]" />
-                </div>
-                <div>
-                  <p className="text-base text-[#18120F] font-semibold leading-snug">
-                    A comfortable sanctuary area crafted for slow unwinding.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#18120F] text-[#FAF7F2] flex items-center justify-center shrink-0 shadow-sm">
-                  <Cookie className="w-5 h-5 text-[#C8652D]" />
-                </div>
-                <div>
-                  <p className="text-base text-[#18120F] font-semibold leading-snug">
-                    Deep, rich flavor complemented by a silky, harmonious finish.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 6. MOST POPULAR AND DISCOUNTED COFFEE */}
-      {/* ========================================================================= */}
-      <section className="w-full py-16 sm:py-20 bg-[#FAF7F2]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center">
-          <div className="text-center max-w-2xl flex flex-col items-center gap-2 mb-6">
-            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight">
-              Most Popular and Discounted Coffee You may Like
-            </h2>
-            <p className="text-sm sm:text-base text-[#544E49] leading-relaxed">
-              Explore our roastery&apos;s unique coffee blends, each providing a distinct flavor experience with seasonal celebratory discounts.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
-            {discountedItems.map((item) => (
-              <div
-                key={item.id}
-                onClick={() => setSelectedDish(item)}
-                className="group relative bg-white border border-[#E5E2DD] rounded-2xl p-4 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#C8652D]/50 transition-all cursor-pointer"
-              >
-                {/* Discount Badge */}
-                <div className="absolute top-4 left-4 z-10 px-2.5 py-1 rounded bg-[#18120F] text-[#FAF7F2] font-bold text-xs">
-                  {item.discount}% off
-                </div>
-
-                <button
-                  type="button"
-                  onClick={(e) => toggleLike(e, item.id)}
-                  aria-label="Save to favorites"
-                  className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-[#FAF7F2]/90 backdrop-blur-md flex items-center justify-center text-[#544E49] hover:text-[#C8652D] transition-colors shadow-sm"
-                >
-                  <Heart
-                    className={`w-4 h-4 ${likedDishes[item.id] ? 'fill-[#C8652D] text-[#C8652D]' : ''}`}
-                  />
-                </button>
-
-                <div className="relative w-full aspect-square rounded-xl bg-[#FAF7F2] overflow-hidden flex items-center justify-center p-4">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    fill
-                    className="object-contain p-2 group-hover:scale-105 transition-transform duration-300"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                  />
-                </div>
-
-                <div className="flex items-center justify-between pt-4 px-1">
-                  <span className="font-bold text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors">
-                    {item.name}
-                  </span>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-lg text-[#C8652D]">₹{item.price}</span>
-                    <span className="text-xs text-[#857D77] line-through">
-                      ₹{Math.round(item.price * (1 + (item.discount || 15) / 100))}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 7. ROASTERY IMAGE GALLERY */}
-      {/* ========================================================================= */}
-      <section className="w-full py-16 sm:py-20 bg-[#FAF7F2] border-t border-[#E5E2DD]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-            <div>
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight mb-2">
-                Moments Inside Our Roastery
-              </h2>
-              <p className="text-sm sm:text-base text-[#544E49]">
-                Capture the joy of sipping single-origin roasts with friends in Bengaluru&apos;s botanical sanctuary.
-              </p>
-            </div>
-            <Link
-              href="/roastery"
-              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-sm hover:bg-[#C8652D] transition-colors shadow-sm shrink-0 min-h-[44px]"
-            >
-              <span>See All Moments</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-
-          {/* 5-Image Mosaic Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-4">
-            <div className="md:col-span-4 h-72 sm:h-80 md:h-[420px] rounded-2xl overflow-hidden shadow-sm group border border-[#E5E2DD] relative">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCR3ec3I9YAVVYVvSKs8OJDkCJBh18N4dIHNxR66dNlXk-ZEWtlXdQjtHPzELuMiYAxh8HnF1DOdiLVqohLlK2-6xO5z_H6M8UMI3F82O89T-uA3zbYgjkTEiMUZTjrdBNg354A4hBpHeOJ2oLfyR3n2F1emeCLkMaZlko2JAnxt_MUtRRcILy-D8O5y89tuRSP2TaOmUUVe81Zl-KxUa-sp0iViTTVwwitM5h44lk"
-                alt="Sunlit botanical courtyard patio at Daily Coffee Drip"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-            </div>
-
-            <div className="md:col-span-2 h-72 sm:h-80 md:h-[420px] rounded-2xl overflow-hidden shadow-sm group border border-[#E5E2DD] relative">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgB5Dju61f1AZ7w8ZZkunbc_VPRKRw7tF1CcWK56UO3X8JE7-yB85nH1tZrKCOPh-VWK7jkpZqA_GdSsaJw6UySmzgxlkxGofYUL-SkdiK7IbpFC0dI8lylMLtInAWzr2I7UGbeXcs8qd1k3uztGOAl95EdgjxsONqSRAYVJse5XLRBNeyFnruaW1evnwGybvkFkWOidlKlrZhRCQbS0w0RhKiduw4D_c1DNwTgqk"
-                alt="Artisan coffee bar interior with pour-over station"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 768px) 100vw, 20vw"
-              />
-            </div>
-
-            <div className="md:col-span-2 h-72 sm:h-80 md:h-[420px] rounded-2xl overflow-hidden shadow-sm group border border-[#E5E2DD] relative">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuC95GcRC66ylQ06e9PGONOq8V1LDFcqECNN7hqDLhOa25cpnr2yNhcORdcs2nSZRaKogcvOTTbSFvwHUOBM08gHhxL3jJLuAX50uvfrqZT6FDkYqa2zg1RfYNwZmkpzjB02wyAWrN_EDJ7JjgIfrtYLDaIsOjYE2hHf027ULWymw-uBYlwkSaV7Px9z_pJsbNrQ_dubqWDTxa7ORmGqeZw3jOi0pIEQ11zVF5r1wmA"
-                alt="Attentive head barista crafting espresso"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 768px) 100vw, 20vw"
-              />
-            </div>
-
-            <div className="md:col-span-2 h-72 sm:h-80 md:h-[420px] rounded-2xl overflow-hidden shadow-sm group border border-[#E5E2DD] relative">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNpPP_ko97XuvRcN5t7w0f4KzB3mF7VfqiVW_SmZIgsWr6Ne_-3XzHgR5wJO_1dlpob6DBI9WevfPGUEydADRVgmk8-CZ-TLqZ9rhHJjWM8WGh-u5k5kdcDqew0Y4fS9gCp2ahGG6K_XCpX16R0pRg9iEKhR1QMKAMXNzRR7t0uzfj9uVv4Sh9yDuq6MpjTqa61xU0cBtz1vGY-RImycGjo-zR0gXXVeODKZ2JVBM"
-                alt="Botanical stairway with cascading plants"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 768px) 100vw, 20vw"
-              />
-            </div>
-
-            <div className="md:col-span-2 h-72 sm:h-80 md:h-[420px] rounded-2xl overflow-hidden shadow-sm group border border-[#E5E2DD] relative">
-              <Image
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHbU1SitFmrXgBFPy8tb_PAQw95Na-CSEE6WhDrcCJ9H9b2i5gW5Dj9iXwoYpdQy4eYW8mYEQLLZsOQi3olKuBT4D0I8G8L-3H-k8KevNzGx67ectn24sO6V1wO_Ys6B7N8wDJJosZRCMeqf5h5Y1D42rko9b9r0xIcOSFcqRObSCXB62ySPVit06AM_8amTYfxNFHwJuRQdSuhYKBu_LdLIRChD-fTAI25v3rMtw"
-                alt="Guest savoring morning cup in the al fresco veranda"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-                sizes="(max-width: 768px) 100vw, 20vw"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================================================= */}
-      {/* 8. CUSTOMER TESTIMONIALS */}
-      {/* ========================================================================= */}
-      <section className="w-full py-16 sm:py-20 bg-[#FAF7F2] pb-24 sm:pb-28">
+      <section className="w-full py-16 sm:py-20 bg-white border-y border-[#E5E2DD]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C8652D]/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#C8652D]/20 mb-3">
+              <Star className="w-3.5 h-3.5 fill-[#C8652D]" />
+              <span>4.9 ★ Rating • 1,240+ Verified Reviews</span>
+            </div>
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight mb-2">
-              Customer Reviews
+              Customer Reviews from Bengaluru
             </h2>
             <p className="text-sm sm:text-base text-[#544E49]">
-              What our Bengaluru community says about their unhurried coffee &amp; pure vegetarian hearth experience.
+              What our neighborhood patrons say about our third-wave brews, sourdough hearth pizzas, and unhurried hospitality.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Review 1 */}
-            <div className="bg-white border border-[#E5E2DD] rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
+            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
               <div className="flex flex-col items-center shrink-0">
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-[#FAF7F2] shadow-inner relative">
+                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white shadow-inner relative border border-[#E5E2DD]">
                   <Image
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE1Y4JWHR4G8Novk9zPiCzyn3KI3_CAHMFq02CSRqh_FOhYOX1EyWZWM5HE3WXkMDwm3FeF4hMirvFqwx8lILgWn6FdZu5FHQyI7LVc3XxVbTNIhFl6GrHZK4TZ7H9YeFMjdh1gc19p_kWvwX-OvfL9hL9vTQDXoQPuRZY1GBpDwQSM06g1jE2rFrQyCLDKx7rYBqwEamqCZMSS7_tuLJCD9oHeeeQH5i3PuzhbB4"
                     alt="Emma Wilson"
@@ -953,24 +1249,25 @@ export default function HomePage() {
                   />
                 </div>
                 <span className="mt-2 text-center text-sm font-bold text-[#18120F]">Emma Wilson</span>
+                <span className="text-[11px] text-[#857D77]">Coffee Enthusiast</span>
               </div>
               <div className="flex flex-col gap-2">
-                <p className="text-sm sm:text-base text-[#18120F] leading-relaxed">
-                  &ldquo;The coffee is rich, smooth, and full of flavor. The 100% pure veg sourdough pizza was a wonderful surprise. It&apos;s my favorite spot in Indiranagar.&rdquo;
-                </p>
-                <div className="flex items-center gap-1.5 pt-1 text-[#C8652D]">
+                <div className="flex items-center gap-1 text-[#C8652D]">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-[#C8652D]" />
                   ))}
                   <span className="text-sm text-[#18120F] font-bold ml-1">5.0</span>
                 </div>
+                <p className="text-sm sm:text-base text-[#18120F] leading-relaxed">
+                  &ldquo;The coffee is rich, smooth, and full of flavor. The 100% pure veg sourdough pizza was a wonderful surprise. It&apos;s my favorite spot in Indiranagar.&rdquo;
+                </p>
               </div>
             </div>
 
             {/* Review 2 */}
-            <div className="bg-white border border-[#E5E2DD] rounded-2xl p-6 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
+            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
               <div className="flex flex-col items-center shrink-0">
-                <div className="w-20 h-20 rounded-xl overflow-hidden bg-[#FAF7F2] shadow-inner relative">
+                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white shadow-inner relative border border-[#E5E2DD]">
                   <Image
                     src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbvPgWKhwNdDV4mviWxmR1SACzHj4LUbfjhwKMRdCYxAm_FFQm0k4-WC-AhfWFLOPprqlbQNb_mTtlTl9LpoXS0fgoJpHTSupv75zgBabO6r_zcRnFgCclu-t_HKZgXIRH3To1-FyvZpE_PQFfu2ZW-bUiauHX_4QV_8N_sP2CXTDNxhplI_UUbTSRP9W7Zpr6iLFcXmiYHCD3iSYNYfWKZ1U8die_RnkzEyOvlXY"
                     alt="Rohan Kapoor"
@@ -979,22 +1276,194 @@ export default function HomePage() {
                   />
                 </div>
                 <span className="mt-2 text-center text-sm font-bold text-[#18120F]">Rohan Kapoor</span>
+                <span className="text-[11px] text-[#857D77]">Bengaluru Foodie</span>
               </div>
               <div className="flex flex-col gap-2">
-                <p className="text-sm sm:text-base text-[#18120F] leading-relaxed">
-                  &ldquo;From the first sip of the Lotus Biscoff cappuccino to the warm hearth acoustics, this is world-class specialty coffee craft.&rdquo;
-                </p>
-                <div className="flex items-center gap-1.5 pt-1 text-[#C8652D]">
+                <div className="flex items-center gap-1 text-[#C8652D]">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-4 h-4 fill-[#C8652D]" />
                   ))}
                   <span className="text-sm text-[#18120F] font-bold ml-1">4.9</span>
                 </div>
+                <p className="text-sm sm:text-base text-[#18120F] leading-relaxed">
+                  &ldquo;From the first sip of the Lotus Biscoff cappuccino to the warm hearth acoustics, this is world-class specialty coffee craft.&rdquo;
+                </p>
               </div>
             </div>
           </div>
+
+          <div className="mt-10 text-center">
+            <a
+              href={site.links.googleReview}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#18120F] text-white hover:bg-[#C8652D] text-xs font-bold shadow-sm transition-all"
+            >
+              <Star className="w-4 h-4 fill-[#C8652D] text-[#C8652D]" />
+              <span>Leave a Review on Google (4.9 ★)</span>
+              <ExternalLink className="w-3.5 h-3.5" />
+            </a>
+          </div>
         </div>
       </section>
+
+      {/* ========================================================================= */}
+      {/* 8. ROASTERY IMAGE GALLERY & MOMENT UPLOAD SECTION */}
+      {/* ========================================================================= */}
+      <section className="w-full py-16 sm:py-20 bg-[#FAF7F2] pb-24 sm:pb-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2">
+                <Camera className="w-3.5 h-3.5" />
+                <span>Patron &amp; Roastery Gallery</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight mb-2">
+                Moments Inside Our Roastery
+              </h2>
+              <p className="text-sm sm:text-base text-[#544E49]">
+                Sunlit courtyards, precision extraction, and community connection in Indiranagar.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => setGalleryModalOpen(true)}
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C8652D] text-white font-semibold text-xs hover:bg-[#B45309] transition-all shadow-sm"
+              >
+                <Upload className="w-3.5 h-3.5" />
+                <span>Share Your Roastery Photo</span>
+              </button>
+
+              <Link
+                href="/roastery"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-xs hover:bg-[#C8652D] transition-colors shadow-sm"
+              >
+                <span>Full Tour</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Mosaic Grid of Moments */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-4">
+            {galleryImages.slice(0, 5).map((img, i) => (
+              <div
+                key={i}
+                className={`${
+                  i === 0 ? 'md:col-span-4' : 'md:col-span-2'
+                } h-72 sm:h-80 md:h-[400px] rounded-2xl overflow-hidden shadow-sm group border border-[#E5E2DD] relative`}
+              >
+                <Image
+                  src={img.url}
+                  alt={img.alt}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
+                  <span className="text-xs font-bold">{img.caption || img.alt}</span>
+                  {img.author && <span className="text-[10px] text-white/80">Photo by {img.author}</span>}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Gallery Photo Upload Modal */}
+      {galleryModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#E5E2DD] space-y-4 relative">
+            <button
+              type="button"
+              onClick={() => setGalleryModalOpen(false)}
+              className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#FAF7F2] flex items-center justify-center text-[#544E49] hover:text-[#18120F]"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div>
+              <h3 className="text-xl font-extrabold text-[#18120F]">Share Your Roastery Moment</h3>
+              <p className="text-xs text-[#544E49] mt-1">
+                Upload your favourite photograph from Daily Coffee Drip to feature in our community reel.
+              </p>
+            </div>
+
+            <form onSubmit={handleGalleryUploadSubmit} className="space-y-4">
+              {/* Photo Input Area */}
+              <div
+                onClick={() => fileInputRef.current?.click()}
+                className="border-2 border-dashed border-[#D4CECA] hover:border-[#C8652D] rounded-2xl p-6 text-center cursor-pointer transition-colors bg-[#FAF7F2]"
+              >
+                {uploadImagePreview ? (
+                  <div className="relative w-full h-44 rounded-xl overflow-hidden">
+                    <Image
+                      src={uploadImagePreview}
+                      alt="Upload preview"
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="flex flex-col items-center gap-2 text-[#544E49]">
+                    <Camera className="w-8 h-8 text-[#C8652D]" />
+                    <span className="text-xs font-bold text-[#18120F]">Click to choose a photo from device</span>
+                    <span className="text-[11px] text-[#857D77]">JPEG, PNG, WebP supported</span>
+                  </div>
+                )}
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handlePhotoFileChange}
+                  className="hidden"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-1">
+                  Your Name
+                </label>
+                <input
+                  type="text"
+                  value={uploadName}
+                  onChange={(e) => setUploadName(e.target.value)}
+                  placeholder="e.g. Ananya Rao"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] text-xs font-medium text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]/40"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#544E49] mb-1">
+                  Caption / Moment Note
+                </label>
+                <input
+                  type="text"
+                  value={uploadCaption}
+                  onChange={(e) => setUploadCaption(e.target.value)}
+                  placeholder="e.g. Sunday Morning Pour-Over in the Veranda"
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] text-xs font-medium text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]/40"
+                />
+              </div>
+
+              <div className="p-3 rounded-xl bg-[#EBE8E3] text-[11px] text-[#544E49]">
+                Tag us on Instagram <strong className="text-[#18120F]">@dailycoffeedrip</strong> with hashtag{' '}
+                <strong className="text-[#C8652D]">#DailyCoffeeDripIndiranagar</strong>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full min-h-[44px] rounded-full bg-[#18120F] hover:bg-[#C8652D] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
+              >
+                <Upload className="w-3.5 h-3.5" />
+                <span>Publish to Roastery Moments</span>
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
       {/* Dish Detail Modal / Mobile Bottom Sheet */}
       <DishDetailModal item={selectedDish} onClose={() => setSelectedDish(null)} />

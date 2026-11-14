@@ -285,54 +285,65 @@ export default function MenuPage() {
                 </span>
               </div>
 
-              {/* Grid of Dishes */}
+              {/* Grid of Dishes with Smooth Animated Entrance */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {items.map((dish) => (
                   <div
                     key={dish.id}
                     onClick={() => setSelectedDish(dish)}
-                    className={`group bg-white border border-[#E5E2DD] rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#C8652D]/60 transition-all cursor-pointer relative ${
+                    className={`group bg-white border border-[#E5E2DD] rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#C8652D]/60 transition-all duration-300 cursor-pointer relative animate-in fade-in zoom-in-95 ${
                       dish.inStock === false ? 'opacity-70 bg-stone-50' : ''
                     }`}
                   >
-                    {/* Top Row */}
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2">
-                          <span className="w-2 h-2 rounded-full bg-[#186a22] shrink-0" />
-                          <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors leading-snug">
-                            {dish.name}
-                          </h3>
-                          {dish.inStock === false && (
-                            <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold uppercase tracking-wider">
-                              Sold Out
-                            </span>
-                          )}
-                        </div>
-                        <p className="text-xs sm:text-sm text-[#544E49] mt-2 line-clamp-2 leading-relaxed">
-                          {dish.description}
-                        </p>
+                    {/* Top Row: Dish Photo + Info */}
+                    <div className="flex items-start gap-4">
+                      {/* Dish Photo */}
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 relative bg-[#FAF7F2] border border-[#E5E2DD] shadow-inner group-hover:scale-105 transition-transform duration-300">
+                        <Image
+                          src={dish.image}
+                          alt={dish.name}
+                          fill
+                          className="object-cover"
+                          sizes="(max-width: 640px) 80px, 96px"
+                        />
+                        <div className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-[#186a22] ring-2 ring-white"></div>
                       </div>
 
-                      <div className="text-right shrink-0">
-                        <span className="font-extrabold text-lg sm:text-xl text-[#18120F]">
-                          ₹{dish.price}
-                        </span>
+                      {/* Dish Name & Description */}
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors leading-snug truncate">
+                            {dish.name}
+                          </h3>
+                          <span className="font-extrabold text-base sm:text-lg text-[#C8652D] shrink-0">
+                            ₹{dish.price}
+                          </span>
+                        </div>
+
+                        {dish.inStock === false && (
+                          <span className="inline-block mt-0.5 px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold uppercase tracking-wider">
+                            Sold Out
+                          </span>
+                        )}
+
+                        <p className="text-xs text-[#544E49] mt-1.5 line-clamp-2 leading-relaxed">
+                          {dish.description}
+                        </p>
                       </div>
                     </div>
 
                     {/* Bottom Action strip */}
                     <div className="flex items-center justify-between mt-4 pt-3 border-t border-[#E5E2DD]/60">
-                      <div className="flex items-center gap-1.5 text-[11px] font-semibold text-[#544E49]">
+                      <div className="flex flex-wrap items-center gap-1.5 text-[11px] font-semibold text-[#544E49]">
                         <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
                         <span>{dish.prepTime}</span>
                         {dish.tags.includes('pure-jain') && (
-                          <span className="ml-2 px-2 py-0.5 rounded-full bg-[#CaEcc0] text-[#186a22] text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-full bg-[#CaEcc0] text-[#186a22] text-[10px] font-bold">
                             Jain
                           </span>
                         )}
                         {dish.tags.includes('chef-special') && (
-                          <span className="ml-1 px-2 py-0.5 rounded-full bg-[#FFDBCB] text-[#944516] text-[10px] font-bold">
+                          <span className="px-2 py-0.5 rounded-full bg-[#FFDBCB] text-[#944516] text-[10px] font-bold">
                             Chef Special
                           </span>
                         )}
