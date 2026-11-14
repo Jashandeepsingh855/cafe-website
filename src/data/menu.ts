@@ -13,6 +13,7 @@ export interface MenuItem {
   spotlight?: boolean;
   discount?: number;
   flavor?: string;
+  inStock?: boolean;
 }
 
 export const MENU_CATEGORIES = [
@@ -1260,3 +1261,26 @@ export const MENU_ITEMS: MenuItem[] = [
     image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&auto=format&fit=crop&q=80',
   },
 ];
+
+export function getClientMenuItems(): MenuItem[] {
+  if (typeof window === 'undefined') return MENU_ITEMS;
+  try {
+    const saved = localStorage.getItem('dcd_menu_items');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (err) {
+    console.error('Failed to parse menu items from localStorage:', err);
+  }
+  return MENU_ITEMS;
+}
+
+export function saveClientMenuItems(items: MenuItem[]): void {
+  if (typeof window === 'undefined') return;
+  try {
+    localStorage.setItem('dcd_menu_items', JSON.stringify(items));
+  } catch (err) {
+    console.error('Failed to save menu items to localStorage:', err);
+  }
+}

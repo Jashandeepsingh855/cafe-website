@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import {
   Users,
@@ -20,6 +20,14 @@ import {
   Sunset,
   Music,
 } from 'lucide-react';
+import {
+  DEFAULT_SITE_CONFIG,
+  getClientSiteConfig,
+  getClientReservations,
+  saveClientReservations,
+  ReservationRecord,
+  SiteConfig,
+} from '@/config/site';
 
 export default function ReservationPage() {
   const [partySize, setPartySize] = useState('1-2');
@@ -39,6 +47,11 @@ export default function ReservationPage() {
     celebration: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
+
+  useEffect(() => {
+    setSite(getClientSiteConfig());
+  }, []);
 
   const zones = [
     {
@@ -84,6 +97,22 @@ export default function ReservationPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const zoneName = zones.find((z) => z.id === zone)?.name || zone;
+    const newReservation: ReservationRecord = {
+      id: 'RES-' + Math.floor(100000 + Math.random() * 900000).toString(),
+      name: name || 'Guest',
+      whatsapp: whatsapp || '',
+      email: email || '',
+      partySize: `${partySize} Guests`,
+      zone: zoneName,
+      date,
+      timeSlot,
+      dietaryOptions,
+      status: 'Pending',
+      createdAt: new Date().toISOString(),
+    };
+    const current = getClientReservations();
+    saveClientReservations([newReservation, ...current]);
     setSubmitted(true);
   };
 
@@ -429,11 +458,13 @@ export default function ReservationPage() {
                   <span className="text-[11px] font-bold text-[#C8652D] uppercase tracking-wider">
                     Roastery Presence
                   </span>
-                  <h3 className="text-lg font-bold text-[#18120F]">Daily Coffee Drip Roastery</h3>
+                  <h3 className="text-lg font-bold text-[#18120F]">{site.name}</h3>
                 </div>
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#CaEcc0] text-[#186a22] text-xs font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-[#186a22] animate-ping" />
-                  Open Now
+                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-bold ${
+                  site.hours.isOpenNow ? 'bg-[#CaEcc0] text-[#186a22]' : 'bg-red-100 text-red-700'
+                }`}>
+                  <span className={`w-1.5 h-1.5 rounded-full ${site.hours.isOpenNow ? 'bg-[#186a22] animate-ping' : 'bg-red-500'}`} />
+                  {site.hours.isOpenNow ? 'Open Now' : 'Closed for Today'}
                 </span>
               </div>
 
@@ -447,7 +478,7 @@ export default function ReservationPage() {
                 />
                 <div className="relative z-10 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-2 text-[#18120F] text-xs font-semibold">
                   <MapPin className="w-4 h-4 text-[#C8652D]" />
-                  <span>12th Main, HAL 2nd Stage, Indiranagar</span>
+                  <span>{site.address.line1}, {site.address.area}</span>
                 </div>
               </div>
 
@@ -457,7 +488,7 @@ export default function ReservationPage() {
                   <Clock className="w-4 h-4 text-[#C8652D] shrink-0" />
                   <div>
                     <p className="font-bold text-[#18120F]">Daily Operating Hours</p>
-                    <p className="text-[11px]">07:00 AM – 11:00 PM (Seven Days a Week)</p>
+                    <p className="text-[11px]">{site.hours.openTime} – {site.hours.closingTime} ({site.hours.days})</p>
                   </div>
                 </div>
 
@@ -479,7 +510,7 @@ export default function ReservationPage() {
               </div>
 
               <a
-                href="https://wa.me/914085550120"
+                href={`https://wa.me/${site.contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full min-h-[44px] py-2.5 px-4 rounded-full bg-[#F0EDE9] hover:bg-[#EBE8E3] text-[#18120F] border border-[#E5E2DD] text-xs font-bold flex items-center justify-center gap-2 transition-colors"

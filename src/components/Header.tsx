@@ -1,13 +1,19 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Coffee, Phone, Menu, X, ArrowRight, ShieldCheck, Heart } from 'lucide-react';
+import { Coffee, Phone, Menu, X, ArrowRight, ShieldCheck, Heart, SlidersHorizontal } from 'lucide-react';
+import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
   const pathname = usePathname();
+
+  useEffect(() => {
+    setSite(getClientSiteConfig());
+  }, []);
 
   const navLinks = [
     { name: 'Home', href: '/' },
@@ -27,10 +33,10 @@ export default function Header() {
             </div>
             <div className="flex flex-col">
               <span className="font-bold text-lg sm:text-[19px] tracking-tight leading-none text-[#18120F]">
-                Daily Coffee Drip
+                {site.name}
               </span>
               <span className="text-[10px] sm:text-[11px] font-bold text-[#C8652D] tracking-widest uppercase mt-1">
-                Artisanal Roastery &amp; Craft Kitchen
+                {site.tagline}
               </span>
             </div>
           </Link>
@@ -66,6 +72,19 @@ export default function Header() {
 
         {/* Actions & CTA */}
         <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          {/* Owner Admin link */}
+          <Link
+            href="/admin"
+            title="Owner Portal"
+            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
+              pathname.startsWith('/admin')
+                ? 'bg-[#C8652D] text-white shadow-sm'
+                : 'text-[#544E49] hover:bg-[#EBE8E3] hover:text-[#18120F]'
+            }`}
+          >
+            <SlidersHorizontal className="w-4 h-4" />
+          </Link>
+
           <Link
             href="/menu"
             aria-label="View favorite drinks"
@@ -78,11 +97,11 @@ export default function Header() {
           </Link>
 
           <a
-            href="tel:+914085550120"
+            href={`tel:${site.contact.phoneRaw}`}
             className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0EDE9] border border-[#E5E2DD] text-[#544E49] hover:border-[#C8652D]/50 transition-colors"
           >
             <Phone className="w-4 h-4 text-[#C8652D]" />
-            <span className="text-xs font-bold text-[#18120F]">(408) 555-0120</span>
+            <span className="text-xs font-bold text-[#18120F]">{site.contact.phone}</span>
           </a>
 
           <Link
@@ -138,6 +157,22 @@ export default function Header() {
                 </Link>
               );
             })}
+
+            <Link
+              href="/admin"
+              onClick={() => setMobileMenuOpen(false)}
+              className={`min-h-[48px] flex items-center justify-between px-4 py-3 rounded-xl font-bold text-base transition-colors ${
+                pathname.startsWith('/admin')
+                  ? 'bg-[#C8652D] text-white'
+                  : 'bg-[#EBE8E3] text-[#18120F] hover:bg-[#D4CECA]'
+              }`}
+            >
+              <div className="flex items-center gap-2">
+                <SlidersHorizontal className="w-4 h-4 text-[#C8652D]" />
+                <span>Café Owner Admin Portal</span>
+              </div>
+              <ArrowRight className="w-4 h-4 opacity-70" />
+            </Link>
           </nav>
 
           <div className="pt-2 flex flex-col gap-3">
@@ -151,7 +186,7 @@ export default function Header() {
             </Link>
 
             <a
-              href="https://wa.me/914085550120"
+              href={`https://wa.me/${site.contact.whatsappRaw}`}
               target="_blank"
               rel="noopener noreferrer"
               className="min-h-[48px] w-full rounded-full bg-[#F0EDE9] text-[#18120F] font-semibold text-sm flex items-center justify-center gap-2 border border-[#E5E2DD]"

@@ -1,9 +1,10 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { X, Clock, ShieldCheck, Sparkles, MessageCircle, ExternalLink } from 'lucide-react';
 import { MenuItem } from '@/data/menu';
+import { DEFAULT_SITE_CONFIG, getClientSiteConfig, getWhatsAppOrderUrl, SiteConfig } from '@/config/site';
 
 interface DishDetailModalProps {
   item: MenuItem | null;
@@ -11,6 +12,12 @@ interface DishDetailModalProps {
 }
 
 export default function DishDetailModal({ item, onClose }: DishDetailModalProps) {
+  const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
+
+  useEffect(() => {
+    setSite(getClientSiteConfig());
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -27,10 +34,7 @@ export default function DishDetailModal({ item, onClose }: DishDetailModalProps)
 
   if (!item) return null;
 
-  const whatsappMessage = encodeURIComponent(
-    `Hello Daily Coffee Drip! I would like to order: ${item.name} (₹${item.price}) from your Indiranagar Roastery.`
-  );
-  const whatsappUrl = `https://wa.me/914085550120?text=${whatsappMessage}`;
+  const whatsappUrl = getWhatsAppOrderUrl(item.name, item.price, site.contact.whatsappRaw);
 
   return (
     <div
@@ -102,6 +106,11 @@ export default function DishDetailModal({ item, onClose }: DishDetailModalProps)
                     <Sparkles className="w-3.5 h-3.5" /> Chef Special
                   </span>
                 )}
+                {item.inStock === false && (
+                  <span className="px-2.5 py-0.5 rounded-full bg-red-100 text-red-700 text-xs font-bold">
+                    Currently Sold Out
+                  </span>
+                )}
               </div>
             </div>
 
@@ -150,7 +159,7 @@ export default function DishDetailModal({ item, onClose }: DishDetailModalProps)
             {/* Swiggy & Zomato Options */}
             <div className="grid grid-cols-2 gap-3">
               <a
-                href="https://www.zomato.com/bangalore"
+                href={site.links.zomato}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-h-[44px] rounded-full bg-[#E23744] hover:bg-[#CB202D] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm"
@@ -159,7 +168,7 @@ export default function DishDetailModal({ item, onClose }: DishDetailModalProps)
                 <ExternalLink className="w-3.5 h-3.5 opacity-80" />
               </a>
               <a
-                href="https://www.swiggy.com"
+                href={site.links.swiggy}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="min-h-[44px] rounded-full bg-[#FC8019] hover:bg-[#E26E10] text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-colors shadow-sm"

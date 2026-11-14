@@ -1,12 +1,18 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { Coffee, ArrowRight, Share2, MapPin, Camera, Play, CheckCircle } from 'lucide-react';
+import { Coffee, ArrowRight, Share2, MapPin, Camera, Play, CheckCircle, SlidersHorizontal } from 'lucide-react';
+import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
 
 export default function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
+
+  useEffect(() => {
+    setSite(getClientSiteConfig());
+  }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,15 +33,15 @@ export default function Footer() {
                 <Coffee className="w-5 h-5 text-white" />
               </div>
               <span className="font-bold text-2xl tracking-tight text-[#FAF7F2]">
-                Daily Coffee Drip
+                {site.name}
               </span>
             </div>
             <p className="text-sm text-[#D4CECA] max-w-sm leading-relaxed">
-              Bengaluru&apos;s premier specialty coffee destination featuring precision micro-lot roasting &amp; artisanal wood-hearth craft kitchen. 100% Pure Vegetarian.
+              {site.subTagline}. Bengaluru&apos;s premier specialty coffee destination featuring precision micro-lot roasting &amp; artisanal wood-hearth craft kitchen.
             </p>
             <div className="flex items-center gap-2 pt-2">
               <a
-                href="https://instagram.com"
+                href={site.links.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -44,7 +50,7 @@ export default function Footer() {
                 <Camera className="w-4 h-4" />
               </a>
               <a
-                href="https://maps.google.com"
+                href={site.address.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Roastery Location"
@@ -53,7 +59,7 @@ export default function Footer() {
                 <MapPin className="w-4 h-4" />
               </a>
               <a
-                href="https://youtube.com"
+                href={site.links.youtube}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Brewing Rituals Video"
@@ -64,9 +70,10 @@ export default function Footer() {
               <button
                 type="button"
                 onClick={() => {
-                  if (navigator.share) {
+                  if (typeof navigator !== 'undefined' && navigator.share) {
                     navigator.share({
-                      title: 'Daily Coffee Drip',
+                      title: site.name,
+                      text: `${site.name} - ${site.tagline}`,
                       url: window.location.href,
                     }).catch(() => {});
                   }
@@ -124,21 +131,24 @@ export default function Footer() {
               <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider mb-1">Experience</span>
               <Link href="/reservation" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Table Booking</Link>
               <Link href="/roastery" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Cupping Lab</Link>
-              <Link href="/reservation" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Location</Link>
+              <a href={site.address.mapUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Find Location</a>
             </div>
 
             <div className="flex flex-col gap-2 col-span-2 sm:col-span-1">
               <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider mb-1">Concierge</span>
-              <a href="tel:+914085550120" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Direct Call</a>
-              <a href="https://wa.me/914085550120" target="_blank" rel="noopener noreferrer" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">WhatsApp</a>
-              <span className="text-xs text-[#857D77]">Indiranagar, Bangalore</span>
+              <a href={`tel:${site.contact.phoneRaw}`} className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Direct Call</a>
+              <a href={`https://wa.me/${site.contact.whatsappRaw}`} target="_blank" rel="noopener noreferrer" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">WhatsApp</a>
+              <Link href="/admin" className="text-xs text-[#C8652D] hover:underline flex items-center gap-1 mt-1">
+                <SlidersHorizontal className="w-3 h-3" />
+                <span>Owner Admin</span>
+              </Link>
             </div>
           </div>
         </div>
 
         {/* Copyright */}
         <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-[#D4CECA] text-xs border-t border-white/5">
-          <p>© {new Date().getFullYear()} Daily Coffee Drip. Artisanal Roastery &amp; Craft Kitchen. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} {site.name}. {site.tagline}. All rights reserved.</p>
           <div className="flex items-center gap-2">
             <Coffee className="w-4 h-4 text-[#C8652D]" />
             <span>Precision Roasted Micro-Lots • 100% Pure Vegetarian</span>

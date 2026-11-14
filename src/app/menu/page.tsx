@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
 import {
   Search,
@@ -13,15 +13,23 @@ import {
   Flame,
   Leaf,
 } from 'lucide-react';
-import { MENU_ITEMS, MENU_CATEGORIES, MenuItem } from '@/data/menu';
+import { MENU_ITEMS, MENU_CATEGORIES, MenuItem, getClientMenuItems } from '@/data/menu';
+import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
 import DishDetailModal from '@/components/DishDetailModal';
 
 export default function MenuPage() {
+  const [menuItems, setMenuItems] = useState<MenuItem[]>(MENU_ITEMS);
+  const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDietFilter, setSelectedDietFilter] = useState<'all' | 'pure-jain' | 'vegan-friendly' | 'chef-special'>('all');
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [selectedDish, setSelectedDish] = useState<MenuItem | null>(null);
   const [likedDishes, setLikedDishes] = useState<Record<string, boolean>>({});
+
+  useEffect(() => {
+    setMenuItems(getClientMenuItems());
+    setSite(getClientSiteConfig());
+  }, []);
 
   const toggleLike = (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -30,7 +38,7 @@ export default function MenuPage() {
 
   // Filtered menu items
   const filteredItems = useMemo(() => {
-    return MENU_ITEMS.filter((item) => {
+    return menuItems.filter((item) => {
       // 1. Dietary filter
       if (selectedDietFilter !== 'all') {
         if (!item.tags.includes(selectedDietFilter)) return false;
@@ -52,7 +60,7 @@ export default function MenuPage() {
       }
       return true;
     });
-  }, [searchQuery, selectedDietFilter, activeCategory]);
+  }, [menuItems, searchQuery, selectedDietFilter, activeCategory]);
 
   // Group items by category for structured browsing
   const groupedCategories = useMemo(() => {
@@ -72,12 +80,10 @@ export default function MenuPage() {
         <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-semibold text-[#544E49]">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-[#C8652D]"></span>
-            <span className="text-[#18120F] font-bold">Single Origin Chikmagalur Shade-Grown Beans</span>
-            <span className="hidden md:inline">•</span>
-            <span className="hidden md:inline">100% Pure Vegetarian Kitchen • Jain Adaptations</span>
+            <span className="text-[#18120F] font-bold">{site.tickerText}</span>
           </div>
           <div className="flex items-center gap-4">
-            <span className="text-[#C8652D] font-bold">142 Handcrafted Offerings</span>
+            <span className="text-[#C8652D] font-bold">{menuItems.length} Handcrafted Offerings</span>
           </div>
         </div>
       </div>
@@ -214,7 +220,7 @@ export default function MenuPage() {
             >
               <span>All Categories</span>
               <span className="px-1.5 py-0.5 rounded-full bg-white/20 text-[10px] font-bold">
-                {MENU_ITEMS.length}
+                {menuItems.length}
               </span>
             </button>
 
@@ -285,7 +291,9 @@ export default function MenuPage() {
                   <div
                     key={dish.id}
                     onClick={() => setSelectedDish(dish)}
-                    className="group bg-white border border-[#E5E2DD] rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#C8652D]/60 transition-all cursor-pointer relative"
+                    className={`group bg-white border border-[#E5E2DD] rounded-2xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-md hover:border-[#C8652D]/60 transition-all cursor-pointer relative ${
+                      dish.inStock === false ? 'opacity-70 bg-stone-50' : ''
+                    }`}
                   >
                     {/* Top Row */}
                     <div className="flex items-start justify-between gap-4">
@@ -295,6 +303,11 @@ export default function MenuPage() {
                           <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors leading-snug">
                             {dish.name}
                           </h3>
+                          {dish.inStock === false && (
+                            <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px] font-bold uppercase tracking-wider">
+                              Sold Out
+                            </span>
+                          )}
                         </div>
                         <p className="text-xs sm:text-sm text-[#544E49] mt-2 line-clamp-2 leading-relaxed">
                           {dish.description}
