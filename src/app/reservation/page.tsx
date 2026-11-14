@@ -120,7 +120,7 @@ export default function ReservationPage() {
     <div className="w-full bg-[#FAF7F2] min-h-screen pb-24 md:pb-16 flex flex-col">
       {/* Top Hero Story Ribbon */}
       <section className="relative w-full bg-[#F6F3EE] border-b border-[#E5E2DD] py-10 sm:py-14">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl parallax-header">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C8652D]/10 text-[#C8652D] mb-3 border border-[#C8652D]/20">
             <span className="w-2 h-2 rounded-full bg-[#C8652D] animate-pulse" />
             <span className="text-[11px] font-bold uppercase tracking-wider">
@@ -136,7 +136,7 @@ export default function ReservationPage() {
           </p>
 
           {/* Trust Badges Strip */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mt-6 sm:mt-8 text-left">
+          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mt-6 sm:mt-8 text-left" data-parallax-y="-12">
             {[
               { title: 'Instant Confirmation', sub: 'Via WhatsApp & SMS' },
               { title: 'Zero Advance Deposit', sub: 'No cancellation penalty' },
@@ -247,7 +247,7 @@ export default function ReservationPage() {
                     }`}
                   >
                     <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD]">
-                      <Image src={z.image} alt={z.name} fill className="object-cover" />
+                      <Image src={z.image} alt={z.name} fill className="object-cover parallax-img" />
                     </div>
 
                     <div className="flex flex-col min-w-0">
@@ -450,7 +450,7 @@ export default function ReservationPage() {
           </form>
 
           {/* Right Column: Venue Info & FAQs */}
-          <aside className="lg:col-span-4 flex flex-col gap-6 w-full">
+          <aside className="lg:col-span-4 flex flex-col gap-6 w-full" data-parallax-y="18">
             {/* Live Roastery Card */}
             <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-4">
               <div className="flex items-center justify-between">
@@ -474,7 +474,7 @@ export default function ReservationPage() {
                   src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHrrkPpb7HXk72gUCrU29swJogLVWZgJZksdkJRvgXNQTpv56FwtUDHf0bP4Zw4t4mBZmPafc2oxVNbw9ZghuYPiLAZquSTY_xEKMJGgwtEZjbycbg3IP-xJ1r4T86HYJ-deSaZO0bGXo29Kw4YiQzqg6jqkfjX0LUklC4fs0M1s_OpeONSVA9MZcvV0A_Q-v_SgI0nUHEQlbMmbyPhRL1XuPuKiL1xPCokCbRufU"
                   alt="Location Map Preview"
                   fill
-                  className="object-cover"
+                  className="object-cover parallax-img"
                 />
                 <div className="relative z-10 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-2 text-[#18120F] text-xs font-semibold">
                   <MapPin className="w-4 h-4 text-[#C8652D]" />

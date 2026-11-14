@@ -91,7 +91,7 @@ export default function MenuPage() {
       {/* Page Header & Bento Metrics */}
       <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-6">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
-          <div className="lg:col-span-7 space-y-3">
+          <div className="lg:col-span-7 space-y-3 parallax-header">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD]">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Curated Slow-Living Kitchen</span>
@@ -105,7 +105,7 @@ export default function MenuPage() {
           </div>
 
           {/* Quick Metrics Bento */}
-          <div className="lg:col-span-5 grid grid-cols-3 gap-3">
+          <div className="lg:col-span-5 grid grid-cols-3 gap-3" data-parallax-y="-20">
             <div className="p-4 rounded-2xl bg-white border border-[#E5E2DD] shadow-sm flex flex-col justify-between">
               <span className="text-[11px] font-bold uppercase tracking-wider text-[#C8652D]">Pure Veg</span>
               <span className="text-2xl sm:text-3xl font-extrabold text-[#18120F] mt-1">100%</span>
@@ -125,7 +125,7 @@ export default function MenuPage() {
         </div>
 
         {/* Live Search & Filter Bar */}
-        <div className="mt-8 p-4 sm:p-6 rounded-2xl bg-[#F0EDE9] border border-[#E5E2DD] shadow-sm space-y-4">
+        <div className="mt-8 p-4 sm:p-6 rounded-2xl bg-[#F0EDE9] border border-[#E5E2DD] shadow-sm space-y-4" data-parallax-y="12">
           <div className="relative w-full">
             <Search className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-[#544E49] w-5 h-5" />
             <input
@@ -271,7 +271,7 @@ export default function MenuPage() {
           Array.from(groupedCategories.entries()).map(([categoryName, items]) => (
             <section key={categoryName} className="space-y-6">
               {/* Category Header */}
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-4 border-b border-[#E5E2DD] gap-2">
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-4 border-b border-[#E5E2DD] gap-2 parallax-header">
                 <div>
                   <span className="text-xs font-bold uppercase tracking-wider text-[#C8652D]">
                     Authentic Craft Kitchen
@@ -287,13 +287,13 @@ export default function MenuPage() {
 
               {/* Grid of Dishes with Smooth Animated Entrance */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {items.map((dish) => (
+                {items.map((dish, dIdx) => (
                   <div
                     key={dish.id}
                     onClick={() => setSelectedDish(dish)}
-                    className={`group bg-white border border-[#E5E2DD] rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#C8652D]/60 transition-all duration-300 cursor-pointer relative animate-in fade-in zoom-in-95 ${
-                      dish.inStock === false ? 'opacity-70 bg-stone-50' : ''
-                    }`}
+                    className={`group bg-white border border-[#E5E2DD] rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#C8652D]/60 transition-all duration-300 cursor-pointer relative ${
+                      dIdx % 2 === 0 ? 'parallax-card-odd' : 'parallax-card-even'
+                    } ${dish.inStock === false ? 'opacity-70 bg-stone-50' : ''}`}
                   >
                     {/* Top Row: Dish Photo + Info */}
                     <div className="flex items-start gap-4">
@@ -303,7 +303,7 @@ export default function MenuPage() {
                           src={dish.image}
                           alt={dish.name}
                           fill
-                          className="object-cover"
+                          className="object-cover parallax-img"
                           sizes="(max-width: 640px) 80px, 96px"
                         />
                         <div className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-[#186a22] ring-2 ring-white"></div>

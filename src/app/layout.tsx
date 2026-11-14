@@ -47,6 +47,11 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} ${playfairDisplay.variable} scroll-smooth`}>
       <body className="bg-[#FAF7F2] text-[#18120F] antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-[#C8652D] selection:text-white">
+        {/* Global Parallax Scroll Progress Indicator */}
+        <div
+          id="global-scroll-progress"
+          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C8652D] via-[#E8A55B] to-[#C8652D] z-50 origin-left scale-x-0 pointer-events-none shadow-[0_1px_10px_rgba(200,101,45,0.45)]"
+        />
         <SmoothScrollInit />
         <Header />
         <main className="flex-1 w-full pt-16 sm:pt-20">{children}</main>

@@ -3,9 +3,10 @@
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin';
 
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
+  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 }
 
 let lenisInstance: Lenis | null = null;
@@ -73,5 +74,5 @@ export function destroySmoothScroll() {
   lenisInstance = null;
 }
 
-export { lenisInstance as lenis, gsap, ScrollTrigger };
+export { lenisInstance as lenis, gsap, ScrollTrigger, ScrollToPlugin };
 export default initSmoothScroll;
