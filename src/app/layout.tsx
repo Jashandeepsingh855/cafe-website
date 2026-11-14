@@ -49,7 +49,7 @@ export default function RootLayout({
       <body className="bg-[#FAF7F2] text-[#18120F] antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-[#C8652D] selection:text-white">
         <SmoothScrollInit />
         <Header />
-        <main className="flex-1 w-full pt-20">{children}</main>
+        <main className="flex-1 w-full pt-16 sm:pt-20">{children}</main>
         <Footer />
         <FloatingMobileBar />
       </body>

@@ -3,7 +3,19 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Coffee, Phone, Menu, X, ArrowRight, ShieldCheck, Heart, SlidersHorizontal } from 'lucide-react';
+import {
+  Coffee,
+  Phone,
+  Menu,
+  X,
+  ArrowRight,
+  ShieldCheck,
+  Heart,
+  SlidersHorizontal,
+  MessageCircle,
+  MapPin,
+  Clock,
+} from 'lucide-react';
 import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
 
 export default function Header() {
@@ -15,6 +27,23 @@ export default function Header() {
     setSite(getClientSiteConfig());
   }, []);
 
+  // Lock background scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
+
+  // Close mobile drawer on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Full Menu (140+)', href: '/menu' },
@@ -23,179 +52,249 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 glass-nav border-b border-[#E5E2DD]/80 shadow-[0_1px_12px_rgba(24,18,15,0.03)]">
-      <div className="h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-        {/* Brand Logo */}
-        <div className="flex items-center gap-3 shrink-0">
-          <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-full bg-[#18120F] flex items-center justify-center text-[#FAF7F2] shadow-sm transition-transform group-hover:scale-105">
-              <Coffee className="w-5 h-5 text-[#C8652D]" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-bold text-lg sm:text-[19px] tracking-tight leading-none text-[#18120F]">
-                {site.name}
+    <>
+      <header className="fixed top-0 left-0 right-0 z-40 glass-nav border-b border-[#E5E2DD]/80 shadow-[0_1px_12px_rgba(24,18,15,0.03)]">
+        <div className="h-16 sm:h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
+          {/* Brand Logo */}
+          <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 min-w-0">
+            <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-[#18120F] flex items-center justify-center text-[#FAF7F2] shadow-sm transition-transform group-hover:scale-105 shrink-0">
+                <Coffee className="w-4 h-4 sm:w-5 sm:h-5 text-[#C8652D]" />
+              </div>
+              <div className="flex flex-col min-w-0">
+                <span className="font-extrabold text-base sm:text-lg lg:text-[19px] tracking-tight leading-none text-[#18120F] truncate">
+                  {site.name}
+                </span>
+                <span className="hidden sm:block text-[10px] sm:text-[11px] font-bold text-[#C8652D] tracking-widest uppercase mt-1 truncate">
+                  {site.tagline}
+                </span>
+              </div>
+            </Link>
+
+            {/* Pure Veg Pill badge */}
+            <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBE8E3] text-[#544E49] border border-[#E5E2DD]">
+              <span className="w-2 h-2 rounded-full bg-[#C8652D]"></span>
+              <span className="text-[11px] font-bold uppercase tracking-wider text-[#18120F]">
+                100% Pure Veg
               </span>
-              <span className="text-[10px] sm:text-[11px] font-bold text-[#C8652D] tracking-widest uppercase mt-1">
-                {site.tagline}
-              </span>
             </div>
-          </Link>
-
-          {/* Pure Veg Pill badge */}
-          <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#EBE8E3] text-[#544E49] border border-[#E5E2DD]">
-            <span className="w-2 h-2 rounded-full bg-[#C8652D]"></span>
-            <span className="text-[11px] font-bold uppercase tracking-wider text-[#18120F]">
-              100% Pure Veg
-            </span>
-          </div>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-1">
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
-            return (
-              <Link
-                key={link.name}
-                href={link.href}
-                className={`text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 ${
-                  isActive
-                    ? 'bg-[#18120F] text-[#FAF7F2] shadow-sm'
-                    : 'text-[#544E49] hover:text-[#18120F] hover:bg-[#F0EDE9]'
-                }`}
-              >
-                {link.name}
-              </Link>
-            );
-          })}
-        </nav>
-
-        {/* Actions & CTA */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-          {/* Owner Admin link */}
-          <Link
-            href="/admin"
-            title="Owner Portal"
-            className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${
-              pathname.startsWith('/admin')
-                ? 'bg-[#C8652D] text-white shadow-sm'
-                : 'text-[#544E49] hover:bg-[#EBE8E3] hover:text-[#18120F]'
-            }`}
-          >
-            <SlidersHorizontal className="w-4 h-4" />
-          </Link>
-
-          <Link
-            href="/menu"
-            aria-label="View favorite drinks"
-            className="w-10 h-10 rounded-full flex items-center justify-center text-[#544E49] hover:bg-[#EBE8E3] hover:text-[#18120F] transition-colors relative"
-          >
-            <Heart className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#C8652D] text-white text-[10px] font-bold flex items-center justify-center leading-none">
-              3
-            </span>
-          </Link>
-
-          <a
-            href={`tel:${site.contact.phoneRaw}`}
-            className="hidden md:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0EDE9] border border-[#E5E2DD] text-[#544E49] hover:border-[#C8652D]/50 transition-colors"
-          >
-            <Phone className="w-4 h-4 text-[#C8652D]" />
-            <span className="text-xs font-bold text-[#18120F]">{site.contact.phone}</span>
-          </a>
-
-          <Link
-            href="/reservation"
-            className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-sm hover:bg-[#221A16] hover:text-white transition-all shadow-sm"
-          >
-            Book a Table
-          </Link>
-
-          {/* Mobile Menu Hamburger (>= 44px touch target) */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
-            className="lg:hidden w-11 h-11 rounded-full flex items-center justify-center text-[#18120F] bg-[#F0EDE9] hover:bg-[#EBE8E3] transition-colors"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Slide-down Drawer */}
-      {mobileMenuOpen && (
-        <div
-          data-lenis-prevent
-          className="lg:hidden fixed inset-x-0 top-20 bg-[#FAF7F2] border-b border-[#E5E2DD] shadow-xl p-6 flex flex-col gap-5 max-h-[calc(100vh-5rem)] overflow-y-auto"
-        >
-          <div className="flex items-center justify-between pb-3 border-b border-[#E5E2DD]">
-            <span className="text-xs font-bold tracking-wider uppercase text-[#C8652D]">
-              Bengaluru Roastery Sanctuary
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#18120F] text-[#FAF7F2] text-[11px] font-bold">
-              <ShieldCheck className="w-3.5 h-3.5 text-[#C8652D]" /> 100% Pure Veg
-            </span>
           </div>
 
-          <nav className="flex flex-col gap-2">
+          {/* Desktop Navigation */}
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
                 <Link
                   key={link.name}
                   href={link.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`min-h-[48px] flex items-center justify-between px-4 py-3 rounded-xl font-bold text-base transition-colors ${
+                  className={`text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 ${
                     isActive
-                      ? 'bg-[#18120F] text-[#FAF7F2]'
-                      : 'bg-[#F6F3EE] text-[#18120F] hover:bg-[#EBE8E3]'
+                      ? 'bg-[#18120F] text-[#FAF7F2] shadow-sm'
+                      : 'text-[#544E49] hover:text-[#18120F] hover:bg-[#F0EDE9]'
                   }`}
                 >
-                  <span>{link.name}</span>
-                  <ArrowRight className="w-4 h-4 opacity-70" />
+                  {link.name}
                 </Link>
               );
             })}
-
-            <Link
-              href="/admin"
-              onClick={() => setMobileMenuOpen(false)}
-              className={`min-h-[48px] flex items-center justify-between px-4 py-3 rounded-xl font-bold text-base transition-colors ${
-                pathname.startsWith('/admin')
-                  ? 'bg-[#C8652D] text-white'
-                  : 'bg-[#EBE8E3] text-[#18120F] hover:bg-[#D4CECA]'
-              }`}
-            >
-              <div className="flex items-center gap-2">
-                <SlidersHorizontal className="w-4 h-4 text-[#C8652D]" />
-                <span>Café Owner Admin Portal</span>
-              </div>
-              <ArrowRight className="w-4 h-4 opacity-70" />
-            </Link>
           </nav>
 
-          <div className="pt-2 flex flex-col gap-3">
+          {/* Actions & CTA */}
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+            {/* Desktop Owner Admin link */}
             <Link
-              href="/reservation"
-              onClick={() => setMobileMenuOpen(false)}
-              className="min-h-[48px] w-full rounded-full bg-[#C8652D] hover:bg-[#B45309] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition-colors"
+              href="/admin"
+              title="Owner Portal"
+              className={`hidden lg:flex w-10 h-10 rounded-full items-center justify-center transition-colors ${
+                pathname.startsWith('/admin')
+                  ? 'bg-[#C8652D] text-white shadow-sm'
+                  : 'text-[#544E49] hover:bg-[#EBE8E3] hover:text-[#18120F]'
+              }`}
             >
-              <span>Book a Table (No Deposit)</span>
-              <ArrowRight className="w-4 h-4" />
+              <SlidersHorizontal className="w-4 h-4" />
             </Link>
 
+            {/* Desktop Heart Icon */}
+            <Link
+              href="/menu"
+              aria-label="View favorite drinks"
+              className="hidden md:flex w-10 h-10 rounded-full items-center justify-center text-[#544E49] hover:bg-[#EBE8E3] hover:text-[#18120F] transition-colors relative"
+            >
+              <Heart className="w-5 h-5" />
+              <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#C8652D] text-white text-[10px] font-bold flex items-center justify-center leading-none">
+                3
+              </span>
+            </Link>
+
+            {/* Desktop Phone Pill */}
+            <a
+              href={`tel:${site.contact.phoneRaw}`}
+              className="hidden xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0EDE9] border border-[#E5E2DD] text-[#544E49] hover:border-[#C8652D]/50 transition-colors"
+            >
+              <Phone className="w-4 h-4 text-[#C8652D]" />
+              <span className="text-xs font-bold text-[#18120F]">{site.contact.phone}</span>
+            </a>
+
+            {/* Desktop Book Table CTA */}
+            <Link
+              href="/reservation"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-sm hover:bg-[#221A16] hover:text-white transition-all shadow-sm"
+            >
+              Book a Table
+            </Link>
+
+            {/* Mobile Quick Book Pill (< 640px) */}
+            <Link
+              href="/reservation"
+              className="sm:hidden px-3.5 py-1.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-bold text-xs hover:bg-[#C8652D] transition-colors shadow-sm shrink-0"
+            >
+              Book
+            </Link>
+
+            {/* Mobile Menu Hamburger (>= 44px touch target) */}
+            <button
+              type="button"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
+              aria-expanded={mobileMenuOpen}
+              className="lg:hidden w-11 h-11 rounded-full flex items-center justify-center text-[#18120F] bg-[#F0EDE9] hover:bg-[#EBE8E3] active:scale-95 border border-[#E5E2DD] transition-all shadow-sm shrink-0 focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+            >
+              {mobileMenuOpen ? (
+                <X className="w-6 h-6 text-[#18120F]" />
+              ) : (
+                <Menu className="w-6 h-6 text-[#18120F]" />
+              )}
+            </button>
+          </div>
+        </div>
+      </header>
+
+      {/* Mobile Drawer Backdrop */}
+      {mobileMenuOpen && (
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
+      {/* Mobile Slide-Over Drawer from Right */}
+      <div
+        data-lenis-prevent
+        className={`lg:hidden fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm bg-[#FAF7F2] shadow-2xl border-l border-[#E5E2DD] flex flex-col justify-between transition-transform duration-300 ease-in-out ${
+          mobileMenuOpen ? 'translate-x-0' : 'translate-x-full pointer-events-none'
+        }`}
+      >
+        {/* Drawer Header */}
+        <div className="p-5 pb-4 border-b border-[#E5E2DD] flex items-center justify-between bg-white">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-full bg-[#18120F] flex items-center justify-center text-[#FAF7F2] shrink-0">
+              <Coffee className="w-4 h-4 text-[#C8652D]" />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-extrabold text-sm tracking-tight text-[#18120F]">
+                {site.name}
+              </span>
+              <span className="text-[10px] font-bold text-[#186a22] flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-[#186a22]" /> 100% Pure Veg
+              </span>
+            </div>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close Navigation"
+            className="w-10 h-10 rounded-full bg-[#F0EDE9] hover:bg-[#EBE8E3] flex items-center justify-center text-[#18120F] transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Drawer Body - Navigation Links */}
+        <div className="p-5 flex-1 overflow-y-auto space-y-2">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-[#C8652D] px-1 block mb-2">
+            Navigation Menu
+          </span>
+
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href;
+            return (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setMobileMenuOpen(false)}
+                className={`min-h-[48px] px-4 py-3 rounded-2xl font-bold text-base flex items-center justify-between transition-all ${
+                  isActive
+                    ? 'bg-[#18120F] text-[#FAF7F2] shadow-sm'
+                    : 'bg-white text-[#18120F] border border-[#E5E2DD] hover:bg-[#F0EDE9]'
+                }`}
+              >
+                <span>{link.name}</span>
+                <ArrowRight className="w-4 h-4 opacity-60" />
+              </Link>
+            );
+          })}
+
+          <Link
+            href="/admin"
+            onClick={() => setMobileMenuOpen(false)}
+            className={`min-h-[48px] px-4 py-3 rounded-2xl font-bold text-sm flex items-center justify-between transition-all mt-4 ${
+              pathname.startsWith('/admin')
+                ? 'bg-[#C8652D] text-white shadow-sm'
+                : 'bg-[#EBE8E3] text-[#18120F] border border-[#E5E2DD] hover:bg-[#D4CECA]'
+            }`}
+          >
+            <div className="flex items-center gap-2.5">
+              <SlidersHorizontal className="w-4 h-4 text-[#C8652D]" />
+              <span>Café Owner Admin Portal</span>
+            </div>
+            <ArrowRight className="w-4 h-4 opacity-60" />
+          </Link>
+        </div>
+
+        {/* Drawer Bottom - CTAs & Contact */}
+        <div className="p-5 pt-4 border-t border-[#E5E2DD] space-y-3 bg-[#F6F3EE]">
+          <Link
+            href="/reservation"
+            onClick={() => setMobileMenuOpen(false)}
+            className="min-h-[48px] w-full rounded-full bg-[#C8652D] hover:bg-[#B45309] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md transition-colors"
+          >
+            <span>Book a Table (Instant Confirmation)</span>
+            <ArrowRight className="w-4 h-4" />
+          </Link>
+
+          <div className="grid grid-cols-2 gap-2 text-xs">
             <a
               href={`https://wa.me/${site.contact.whatsappRaw}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="min-h-[48px] w-full rounded-full bg-[#F0EDE9] text-[#18120F] font-semibold text-sm flex items-center justify-center gap-2 border border-[#E5E2DD]"
+              className="min-h-[42px] px-3 py-2 rounded-xl bg-white border border-[#E5E2DD] text-[#18120F] font-semibold flex items-center justify-center gap-1.5 shadow-sm"
             >
-              <span>Chat with Roastery Concierge</span>
+              <MessageCircle className="w-3.5 h-3.5 text-[#25D366]" />
+              <span>WhatsApp</span>
+            </a>
+            <a
+              href={`tel:${site.contact.phoneRaw}`}
+              className="min-h-[42px] px-3 py-2 rounded-xl bg-white border border-[#E5E2DD] text-[#18120F] font-semibold flex items-center justify-center gap-1.5 shadow-sm"
+            >
+              <Phone className="w-3.5 h-3.5 text-[#C8652D]" />
+              <span>Call Roastery</span>
             </a>
           </div>
+
+          <div className="pt-2 text-center text-[11px] text-[#857D77] space-y-0.5">
+            <p className="flex items-center justify-center gap-1">
+              <MapPin className="w-3 h-3 text-[#C8652D]" />
+              <span>{site.address.line1}, {site.address.area}</span>
+            </p>
+            <p className="flex items-center justify-center gap-1 text-[10px]">
+              <Clock className="w-3 h-3 text-[#C8652D]" />
+              <span>{site.hours.openTime} – {site.hours.closingTime} ({site.hours.isOpenNow ? 'Open Now' : 'Closed'})</span>
+            </p>
+          </div>
         </div>
-      )}
-    </header>
+      </div>
+    </>
   );
 }

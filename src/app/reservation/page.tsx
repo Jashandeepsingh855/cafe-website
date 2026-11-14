@@ -136,7 +136,7 @@ export default function ReservationPage() {
           </p>
 
           {/* Trust Badges Strip */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-3 mt-8 text-left">
+          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mt-6 sm:mt-8 text-left">
             {[
               { title: 'Instant Confirmation', sub: 'Via WhatsApp & SMS' },
               { title: 'Zero Advance Deposit', sub: 'No cancellation penalty' },
@@ -145,16 +145,16 @@ export default function ReservationPage() {
             ].map((badge, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-3 p-3.5 rounded-xl bg-white border border-[#E5E2DD] shadow-sm"
+                className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3.5 rounded-xl bg-white border border-[#E5E2DD] shadow-sm"
               >
-                <div className="w-8 h-8 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0">
-                  <CheckCircle2 className="w-4 h-4" />
+                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0">
+                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                 </div>
-                <div className="flex flex-col">
-                  <span className="text-xs sm:text-sm font-bold text-[#18120F] leading-tight">
+                <div className="flex flex-col min-w-0">
+                  <span className="text-[11px] sm:text-sm font-bold text-[#18120F] leading-tight truncate sm:whitespace-normal">
                     {badge.title}
                   </span>
-                  <span className="text-[11px] text-[#544E49] mt-0.5">{badge.sub}</span>
+                  <span className="text-[10px] sm:text-[11px] text-[#544E49] mt-0.5 truncate sm:whitespace-normal">{badge.sub}</span>
                 </div>
               </div>
             ))}
@@ -196,7 +196,7 @@ export default function ReservationPage() {
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                 {[
                   { id: '1-2', count: '1–2', label: 'Solo / Duos', hint: 'Focus & pairs' },
                   { id: '3-4', count: '3–4', label: 'Intimate Table', hint: 'Casual meetup' },
@@ -207,21 +207,21 @@ export default function ReservationPage() {
                     key={item.id}
                     type="button"
                     onClick={() => setPartySize(item.id)}
-                    className={`min-h-[72px] p-3 rounded-2xl flex flex-col items-start gap-1 transition-all text-left border ${
+                    className={`min-h-[64px] sm:min-h-[72px] p-2.5 sm:p-3 rounded-2xl flex flex-col items-start gap-0.5 sm:gap-1 transition-all text-left border ${
                       partySize === item.id
                         ? 'bg-[#18120F] text-white border-[#18120F] shadow-sm'
                         : 'bg-[#F6F3EE] text-[#544E49] border-[#E5E2DD] hover:bg-[#EBE8E3]'
                     }`}
                   >
-                    <span className="text-xl font-bold leading-none">{item.count}</span>
+                    <span className="text-lg sm:text-xl font-bold leading-none">{item.count}</span>
                     <span
-                      className={`text-xs font-semibold ${
+                      className={`text-[11px] sm:text-xs font-semibold leading-tight ${
                         partySize === item.id ? 'text-[#FFDBCB]' : 'text-[#18120F]'
                       }`}
                     >
                       {item.label}
                     </span>
-                    <span className="text-[10px] opacity-75">{item.hint}</span>
+                    <span className="text-[9px] sm:text-[10px] opacity-75">{item.hint}</span>
                   </button>
                 ))}
               </div>
@@ -305,16 +305,16 @@ export default function ReservationPage() {
                       >
                         <div className="flex items-center justify-between w-full">
                           <span
-                            className={`text-[10px] uppercase font-bold tracking-wider ${
+                            className={`text-[9px] sm:text-[10px] uppercase font-bold tracking-wider truncate pr-1 ${
                               isSelected ? 'text-[#FFDBCB]' : 'text-[#544E49]'
                             }`}
                           >
                             {s.name}
                           </span>
-                          <Icon className="w-3.5 h-3.5 text-[#C8652D]" />
+                          <Icon className="w-3.5 h-3.5 text-[#C8652D] shrink-0" />
                         </div>
-                        <span className="text-sm font-bold mt-0.5">{s.time}</span>
-                        <span className="text-[10px] opacity-75 truncate">{s.sub}</span>
+                        <span className="text-xs sm:text-sm font-bold mt-0.5">{s.time}</span>
+                        <span className="text-[9px] sm:text-[10px] opacity-75 truncate">{s.sub}</span>
                       </button>
                     );
                   })}

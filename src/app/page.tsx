@@ -57,7 +57,7 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col overflow-x-hidden">
       {/* 1. HERO SECTION */}
-      <section className="relative w-full -mt-20 overflow-hidden bg-[#18120F] text-[#FAF7F2]">
+      <section className="relative w-full -mt-16 sm:-mt-20 overflow-hidden bg-[#18120F] text-[#FAF7F2]">
         {/* Ambient Backdrop Image */}
         <div
           className="absolute inset-0 w-full h-full bg-cover bg-center opacity-40 mix-blend-luminosity scale-105 transition-transform duration-1000 ease-out"
@@ -69,7 +69,7 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-[#18120F] via-[#18120F]/70 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#18120F]/95 via-[#18120F]/60 to-transparent" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-36 pb-20 sm:pt-44 sm:pb-28 flex flex-col justify-end min-h-[580px] sm:min-h-[640px] lg:min-h-[720px]">
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-28 pb-16 sm:pt-44 sm:pb-28 flex flex-col justify-end min-h-[500px] sm:min-h-[640px] lg:min-h-[720px]">
           <div className="max-w-2xl flex flex-col items-start gap-4">
             {/* Pill */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[#FAF7F2]">
