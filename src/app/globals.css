@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --primary: #18120F;
+    --primary-container: #221A16;
+    --secondary: #C8652D;
+    --secondary-hover: #B45309;
+    --surface: #FAF7F2;
+    --surface-low: #F6F3EE;
+    --surface-container: #F0EDE9;
+    --surface-high: #EBE8E3;
+    --surface-highest: #E5E2DD;
+    --outline: #857D77;
+    --outline-variant: #D4CECA;
+    --on-surface: #18120F;
+    --on-surface-variant: #544E49;
+  }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--surface);
+    color: var(--on-surface);
+    font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #FAF7F2;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #D4CECA;
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C8652D;
+  }
+}
+
+/* Utilities for touch devices & animations */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Ensure smooth touch action on mobile */
+.touch-pan-x {
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Editorial typography clamps */
+.fluid-display {
+  font-size: clamp(2rem, 5vw + 1rem, 3.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.fluid-headline {
+  font-size: clamp(1.5rem, 3vw + 0.5rem, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+/* Glassmorphic subtle overlay */
+.glass-nav {
+  background-color: rgba(250, 247, 242, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
