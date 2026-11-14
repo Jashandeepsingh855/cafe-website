@@ -80,15 +80,15 @@
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* Diagonal Showcase Glide Animations */
-@keyframes glideFromTopRight {
+/* Diagonal Showcase Glide & Expand Animation */
+@keyframes glideAndExpandFromTopRight {
   0% {
     opacity: 0;
-    transform: translate3d(260px, -200px, 0) scale(0.65) rotate(40deg);
+    transform: translate3d(360px, -260px, 0) scale(0.35) rotate(48deg);
   }
   65% {
     opacity: 1;
-    transform: translate3d(-14px, 10px, 0) scale(1.03) rotate(-3deg);
+    transform: translate3d(-18px, 14px, 0) scale(1.05) rotate(-3deg);
   }
   100% {
     opacity: 1;
@@ -98,15 +98,15 @@
 
 @keyframes queuePlatePulse {
   0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(10deg) scale(0.92);
+    transform: translate3d(0, 0, 0) rotate(8deg) scale(0.85);
   }
   50% {
-    transform: translate3d(-10px, 8px, 0) rotate(6deg) scale(0.96);
+    transform: translate3d(-12px, 10px, 0) rotate(5deg) scale(0.88);
   }
 }
 
 .animate-glide-diagonal {
-  animation: glideFromTopRight 0.85s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: glideAndExpandFromTopRight 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   will-change: transform, opacity;
 }
 

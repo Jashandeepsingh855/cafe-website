@@ -350,15 +350,15 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Centerpiece Split Layout (Clean, Uncluttered, with Diagonal Incoming Plate) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-center py-4 lg:py-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-4 items-center">
+        {/* Centerpiece Split Layout (Clean, Breathable & Spacious) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-center py-4 lg:py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
             
-            {/* Left Column: Bold Dual-Weight Title, Action Pills & Carousel Selector */}
-            <div className="lg:col-span-6 flex flex-col items-start text-left z-20">
+            {/* Left Column: Minimalist Editorial Title, Subtle Action Links & Carousel Slider */}
+            <div className="lg:col-span-5 flex flex-col items-start text-left z-20">
               
               {/* Category Eyebrow */}
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 border border-[#C8652D]/20 mb-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 border border-[#C8652D]/20 mb-2 sm:mb-3">
                 <span className="w-2 h-2 rounded-full bg-[#C8652D]"></span>
                 <span className="text-xs font-extrabold text-[#C8652D] tracking-wider uppercase">
                   {currentHeroDish.categoryLabel}
@@ -366,81 +366,42 @@ export default function HomePage() {
               </div>
 
               {/* Massive 2-Tone Headline */}
-              <h1 className="flex flex-col tracking-tight leading-none text-[#18120F] mb-4">
-                <span className="font-light text-3xl sm:text-4xl lg:text-5xl tracking-wider uppercase text-[#544E49]">
+              <h1 className="flex flex-col tracking-tight leading-none text-[#18120F] mb-4 sm:mb-6">
+                <span className="font-light text-3xl sm:text-5xl lg:text-6xl tracking-wider uppercase text-[#544E49]">
                   {currentHeroDish.titleLight}
                 </span>
-                <span className="font-extrabold text-4xl sm:text-6xl lg:text-7xl uppercase text-[#18120F] tracking-tighter mt-1">
+                <span className="font-extrabold text-4xl sm:text-6xl lg:text-7xl xl:text-8xl uppercase text-[#18120F] tracking-tighter mt-1 sm:mt-2">
                   {currentHeroDish.titleBold}
                 </span>
               </h1>
 
-              {/* Dish Overview & Price */}
-              <p className="text-sm sm:text-base text-[#544E49] leading-relaxed max-w-lg mb-4">
-                {currentHeroDish.overview}
-              </p>
-
-              <div className="flex items-center gap-3 mb-6">
-                <span className="text-2xl sm:text-3xl font-extrabold text-[#C8652D]">
-                  ₹{currentHeroDish.price}
-                </span>
-                <span className="text-xs text-[#857D77] font-medium bg-white px-2.5 py-1 rounded-full border border-[#E5E2DD]">
-                  Prep: {currentHeroDish.prepTime} • 100% Pure Veg • Made Fresh to Order
-                </span>
-              </div>
-
-              {/* Clean Action Links Strip */}
-              <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm font-bold text-[#18120F] mb-8">
+              {/* Clean, Subtle Action Links (matching Kitchen King reference) */}
+              <div className="flex items-center gap-6 text-xs sm:text-sm font-bold text-[#18120F] mb-6 sm:mb-8">
                 <button
                   type="button"
                   onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-white hover:bg-[#C8652D] transition-colors shadow-sm"
+                  className="flex items-center gap-1.5 hover:text-[#C8652D] transition-colors group cursor-pointer"
                 >
-                  <span className="text-[#C8652D]">▷</span>
-                  <span>View Recipe &amp; Craft</span>
+                  <span className="text-[#C8652D] text-xs">▷</span>
+                  <span className="group-hover:underline">View Craft Story</span>
                 </button>
 
-                <a
-                  href={site.links.zomato}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white text-[#E23744] border border-[#E5E2DD] hover:border-[#E23744] transition-colors shadow-sm"
+                <Link
+                  href="/menu"
+                  className="flex items-center gap-1.5 text-[#544E49] hover:text-[#C8652D] transition-colors"
                 >
-                  <ShoppingBag className="w-3.5 h-3.5" />
-                  <span>Zomato</span>
-                </a>
-
-                <a
-                  href={site.links.swiggy}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white text-[#FC8019] border border-[#E5E2DD] hover:border-[#FC8019] transition-colors shadow-sm"
-                >
-                  <ShoppingBag className="w-3.5 h-3.5" />
-                  <span>Swiggy</span>
-                </a>
-
-                <a
-                  href={getWhatsAppOrderUrl(
-                    `${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`,
-                    currentHeroDish.price
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-[#25D366]/10 text-[#186a22] border border-[#25D366]/30 hover:bg-[#25D366]/20 transition-colors"
-                >
-                  <MessageCircle className="w-3.5 h-3.5" />
-                  <span>WhatsApp Direct</span>
-                </a>
+                  <span>◬ Explore Full Menu</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
               </div>
 
               {/* Horizontal Thumbnail Carousel Strip */}
-              <div className="flex items-center gap-2 sm:gap-3 pt-1 w-full max-w-lg">
+              <div className="flex items-center gap-2 sm:gap-3 pt-1 w-full max-w-md">
                 <button
                   type="button"
                   onClick={handlePrevHero}
                   aria-label="Previous offering"
-                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0"
+                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0 cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
@@ -459,7 +420,7 @@ export default function HomePage() {
                         }`}
                       >
                         <div
-                          className={`w-11 h-11 sm:w-12 sm:h-12 rounded-full overflow-hidden border-2 shadow-sm relative shrink-0 ${
+                          className={`w-11 h-11 sm:w-13 sm:h-13 rounded-full overflow-hidden border-2 shadow-sm relative shrink-0 ${
                             isActive ? 'border-[#C8652D]' : 'border-white'
                           }`}
                         >
@@ -468,7 +429,7 @@ export default function HomePage() {
                             alt={item.shortName}
                             fill
                             className="object-cover"
-                            sizes="48px"
+                            sizes="52px"
                           />
                         </div>
                         <span
@@ -487,73 +448,49 @@ export default function HomePage() {
                   type="button"
                   onClick={handleNextHero}
                   aria-label="Next offering"
-                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0"
+                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0 cursor-pointer"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Right Column: Visual Stage with Diagonal Incoming Plate & Hanging Lamp */}
-            <div className="lg:col-span-6 relative flex items-center justify-center min-h-[360px] sm:min-h-[440px] lg:min-h-[500px]">
+            {/* Right Column: Visual Stage with Large Commanding Focal Dish */}
+            <div className="lg:col-span-7 relative flex items-center justify-center min-h-[380px] sm:min-h-[480px] lg:min-h-[580px] xl:min-h-[620px]">
               
               {/* Sleek Hanging Pendant Lamp (top right) */}
               <div className="hidden lg:flex flex-col items-center absolute -top-12 right-12 z-30 pointer-events-none">
-                <div className="w-0.5 h-28 bg-[#18120F]"></div>
-                <div className="w-7 h-9 bg-[#18120F] rounded-b-xl shadow-lg"></div>
+                <div className="w-0.5 h-32 bg-[#18120F]"></div>
+                <div className="w-8 h-10 bg-[#18120F] rounded-b-xl shadow-lg"></div>
               </div>
 
-              {/* 1. UPCOMING QUEUE DISH: Peeking at Top-Right Corner / Edge along the arc */}
-              <div
-                onClick={handleNextHero}
-                title={`Next: ${nextHeroDish.titleLight} ${nextHeroDish.titleBold}`}
-                className="absolute -top-10 -right-8 sm:-top-8 sm:right-0 lg:top-0 lg:right-4 z-10 cursor-pointer group transition-transform hover:scale-105"
-              >
-                <div className="relative">
-                  <div className="w-32 h-32 sm:w-44 sm:h-44 lg:w-48 lg:h-48 rounded-full overflow-hidden shadow-xl border-4 border-white/90 ring-1 ring-black/5 opacity-85 group-hover:opacity-100 transition-opacity animate-queue-plate">
-                    <Image
-                      src={nextHeroDish.plateImage}
-                      alt={nextHeroDish.shortName}
-                      fill
-                      className="object-cover"
-                      sizes="192px"
-                    />
-                    <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors"></div>
-                  </div>
-                  {/* Subtle Badge */}
-                  <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 px-2.5 py-0.5 rounded-full bg-white/90 backdrop-blur-sm border border-[#E5E2DD] text-[10px] font-bold text-[#544E49] shadow-sm whitespace-nowrap">
-                    Next up ↗
-                  </span>
-                </div>
-              </div>
-
-              {/* 2. ACTIVE FOCAL DISH: Gliding smoothly Diagonally from Top-Right into the Middle */}
+              {/* ACTIVE FOCAL DISH: Arrives from Top-Right and Becomes BIG */}
               <div
                 key={currentHeroDish.id}
                 onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
                 className="relative z-20 cursor-pointer animate-glide-diagonal"
               >
-                <div className="w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 lg:w-[420px] lg:h-[420px] rounded-full overflow-hidden shadow-[0_32px_75px_-12px_rgba(24,18,15,0.42)] border-4 sm:border-8 border-[#FAF7F2] ring-1 ring-black/5 group relative transition-transform duration-500 ease-out hover:scale-105">
+                <div className="w-72 h-72 sm:w-[420px] sm:h-[420px] md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] xl:w-[600px] xl:h-[600px] rounded-full overflow-hidden shadow-[0_36px_90px_-15px_rgba(24,18,15,0.45)] border-4 sm:border-8 border-[#FAF7F2] ring-1 ring-black/5 group relative transition-transform duration-500 ease-out hover:scale-105">
                   <Image
                     src={currentHeroDish.plateImage}
                     alt={`${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`}
                     fill
                     priority
                     className="object-cover"
-                    sizes="(max-width: 640px) 256px, (max-width: 1024px) 384px, 420px"
+                    sizes="(max-width: 640px) 288px, (max-width: 1024px) 480px, 600px"
                   />
                   {/* Specular vignette */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none"></div>
 
                   {/* 1-Tap Overlay Cue */}
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity px-3.5 py-1 rounded-full bg-white/95 text-[#18120F] text-xs font-bold shadow-md">
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity px-4 py-1.5 rounded-full bg-white/95 text-[#18120F] text-xs font-bold shadow-lg">
                     Tap to view craft story
                   </div>
                 </div>
               </div>
 
               {/* Left Vertical Index (01 / 04) on Desktop */}
-              <div className="hidden lg:flex flex-col items-center gap-2 absolute -left-6 top-1/2 -translate-y-1/2 text-xs font-bold text-[#857D77] z-10">
+              <div className="hidden lg:flex flex-col items-center gap-2 absolute -left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-[#857D77] z-10">
                 <span>{currentHeroDish.number}</span>
                 <div className="w-0.5 h-10 bg-[#C8652D]/40"></div>
                 <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 0 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
