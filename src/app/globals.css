@@ -84,15 +84,32 @@
 @keyframes glideAndExpandFromTopRight {
   0% {
     opacity: 0;
-    transform: translate3d(360px, -260px, 0) scale(0.35) rotate(48deg);
+    transform: translate3d(620px, -360px, 0) scale(0.32) rotate(38deg);
   }
   65% {
     opacity: 1;
-    transform: translate3d(-18px, 14px, 0) scale(1.05) rotate(-3deg);
+    transform: translate3d(-14px, 10px, 0) scale(1.04) rotate(-2deg);
   }
   100% {
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  }
+}
+
+@media (max-width: 768px) {
+  @keyframes glideAndExpandFromTopRight {
+    0% {
+      opacity: 0;
+      transform: translate3d(180px, -140px, 0) scale(0.4) rotate(25deg);
+    }
+    70% {
+      opacity: 1;
+      transform: translate3d(-8px, 6px, 0) scale(1.03) rotate(-1deg);
+    }
+    100% {
+      opacity: 1;
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
   }
 }
 

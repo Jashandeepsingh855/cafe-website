@@ -41,6 +41,7 @@ import {
   SiteConfig,
 } from '@/config/site';
 import DishDetailModal from '@/components/DishDetailModal';
+import PolaroidLineCarousel from '@/components/PolaroidLineCarousel';
 
 // 4 Signature Rotational Showcase Dishes matching the interactive culinary reference
 const HERO_ROTATIONAL_DISHES = [
@@ -51,6 +52,7 @@ const HERO_ROTATIONAL_DISHES = [
     titleLight: 'CHIKMAGALUR',
     titleBold: 'POUR OVER',
     subTitle: 'A little taste of mountain origin.',
+    summary: 'Golden amber pour, wild floral notes. Pure elevation.',
     shortName: 'Pour over',
     overview: 'Single-origin shade-grown Arabica from 1,350m elevation in the Western Ghats. Calibrated 93.5°C water pull through Japanese copper V60, revealing wild honey and roasted cocoa nuances.',
     ingredients: '100% Single-Origin Arabica, Calibrated 120ppm Mineral Water, Gentle Convection Light Roast.',
@@ -69,7 +71,8 @@ const HERO_ROTATIONAL_DISHES = [
     categoryLabel: '02 / STONE HEARTH ARTISANAL PIZZA',
     titleLight: 'WOOD-FIRED',
     titleBold: 'MARGHERITA',
-    subTitle: '48-hour cold fermented sourdough alchemy.',
+    subTitle: 'A taste of stone hearth alchemy.',
+    summary: 'San Marzano plum tomatoes, fresh mozzarella, sweet Genovese basil.',
     shortName: 'Margherita pizza',
     overview: 'San Marzano sweet plum tomato reduction, hand-torn fresh mozzarella, cold-pressed extra virgin olive oil, and organic garden Genovese basil fired at 420°C in our stone oven.',
     ingredients: 'Stone-Milled Semolina Flour, San Marzano Plum Tomatoes, Fresh Fior di Latte, Cold-Pressed Olive Oil, Garden Basil.',
@@ -83,42 +86,44 @@ const HERO_ROTATIONAL_DISHES = [
     dishRefId: 'pp-1',
   },
   {
-    id: 'vanilla-cloud-coldbrew',
+    id: 'spicy-paneer-burger',
     number: '03',
-    categoryLabel: '03 / 18-HOUR COLD EXTRACTION',
-    titleLight: 'VANILLA CLOUD',
-    titleBold: 'COLD BREW',
-    subTitle: 'Silky micro-foam over crystal slow drip.',
-    shortName: 'Cloud cold brew',
-    overview: 'Slow-drip single-origin cold brew steeped for 18 hours in mountain spring water, crowned with thick Madagascar bourbon vanilla bean foam and raw Demerara sugar crystals.',
-    ingredients: 'Single-Origin Coarse Grounds, Chikmagalur Spring Water, Madagascar Bourbon Vanilla, Oat Cream Float, Demerara Crystals.',
+    categoryLabel: '03 / GOURMET SMASH BURGER',
+    titleLight: 'SPICY PANEER',
+    titleBold: 'SMASH BURGER',
+    subTitle: 'A taste of handcrafted street craft.',
+    summary: 'Panko malai paneer, smoked paprika aioli, and brioche crunch.',
+    shortName: 'Smash burger',
+    overview: 'Double spiced malai paneer patty crusted in panko crumb, melted artisanal smoked cheddar, house-pickled cucumbers, and fire-roasted sriracha aioli inside a butter-toasted golden brioche bun.',
+    ingredients: 'Artisanal Malai Paneer, Panko Breadcrumbs, Toasted Brioche Bun, Sriracha Aioli, House Pickles, Crisp Iceberg, Smoked Cheddar.',
     price: 240,
-    prepTime: '2 mins',
-    badgeColor: 'bg-[#E3964A] text-[#18120F]',
-    ribbonColor1: '#D6833E',
-    ribbonColor2: '#F0E2D0',
-    plateImage: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=800&auto=format&fit=crop&q=80',
-    thumbImage: 'https://images.unsplash.com/photo-1517701550927-30cf4ba1dba5?w=300&auto=format&fit=crop&q=80',
-    dishRefId: 'cb-1',
+    prepTime: '7 mins',
+    badgeColor: 'bg-[#E3723E] text-[#FAF7F2]',
+    ribbonColor1: '#D96B27',
+    ribbonColor2: '#F4E6D8',
+    plateImage: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80',
+    thumbImage: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=300&auto=format&fit=crop&q=80',
+    dishRefId: 'bs-3',
   },
   {
-    id: 'truffle-mushroom-toast',
+    id: 'lotus-biscoff-shake',
     number: '04',
-    categoryLabel: '04 / WOOD-HEARTH ROASTED TOAST',
-    titleLight: 'TRUFFLE HERBED',
-    titleBold: 'MUSHROOM TOAST',
-    subTitle: 'Earth & hearth in mindful harmony.',
-    shortName: 'Mushroom toast',
-    overview: 'Thick charred sourdough toast, whipped lemon-herb ricotta, pan-roasted wild button & shiitake mushrooms, toasted pine nuts, and aromatic white truffle glaze.',
-    ingredients: 'Wood-Fired Sourdough, Herbed Ricotta, Sautéed Shiitake & Button Mushrooms, White Truffle Glaze, Thyme, Pine Nuts.',
-    price: 280,
-    prepTime: '8 mins',
-    badgeColor: 'bg-[#BFA588] text-[#18120F]',
-    ribbonColor1: '#8C6D53',
-    ribbonColor2: '#EBE1D5',
-    plateImage: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800&auto=format&fit=crop&q=80',
-    thumbImage: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=300&auto=format&fit=crop&q=80',
-    dishRefId: 'sn-3',
+    categoryLabel: '04 / BELGIAN SPECULOOS THICKSHAKE',
+    titleLight: 'LOTUS BISCOFF',
+    titleBold: 'THICK SHAKE',
+    subTitle: 'A taste of velvety decadence.',
+    summary: 'Creamy churned vanilla dairy, Belgian Biscoff spread, and crushed biscuit sand.',
+    shortName: 'Biscoff shake',
+    overview: 'Thick churned farm-fresh dairy gelato blended with velvety Belgian Lotus Biscoff caramel spread, topped with slow-whipped vanilla bean cream and crunchy spiced caramelised biscuit crumb.',
+    ingredients: 'Belgian Lotus Biscoff Spread, Farm Cream Gelato, Crushed Biscoff Biscuits, Pure Vanilla Bean, Caramelized Sugar Rim.',
+    price: 260,
+    prepTime: '4 mins',
+    badgeColor: 'bg-[#C27C44] text-[#FAF7F2]',
+    ribbonColor1: '#A66027',
+    ribbonColor2: '#EFE5DA',
+    plateImage: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=800&auto=format&fit=crop&q=80',
+    thumbImage: 'https://images.unsplash.com/photo-1572490122747-3968b75cc699?w=300&auto=format&fit=crop&q=80',
+    dishRefId: 'gs-1',
   },
 ];
 
@@ -141,6 +146,7 @@ export default function HomePage() {
   // Hero Carousel State
   const [heroIndex, setHeroIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
+  const [heroInfoTab, setHeroInfoTab] = useState<'overview' | 'ingredients'>('overview');
 
   // Gallery Upload Modal State
   const [galleryModalOpen, setGalleryModalOpen] = useState(false);
@@ -161,7 +167,7 @@ export default function HomePage() {
       caption: 'Handcrafted Smash Burger',
     },
     {
-      url: 'https://images.unsplash.com/photo-1576107232684-1279f3908594?w=800&auto=format&fit=crop&q=80',
+      url: 'https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&auto=format&fit=crop&q=80',
       alt: 'Crispy Peri Peri Crinkle Fries with dipping sauce',
       caption: 'Loaded Peri Peri Fries',
     },
@@ -171,7 +177,12 @@ export default function HomePage() {
       caption: 'Lotus Biscoff Thickshake',
     },
     {
-      url: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCR3ec3I9YAVVYVvSKs8OJDkCJBh18N4dIHNxR66dNlXk-ZEWtlXdQjtHPzELuMiYAxh8HnF1DOdiLVqohLlK2-6xO5z_H6M8UMI3F82O89T-uA3zbYgjkTEiMUZTjrdBNg354A4hBpHeOJ2oLfyR3n2F1emeCLkMaZlko2JAnxt_MUtRRcILy-D8O5y89tuRSP2TaOmUUVe81Zl-KxUa-sp0iViTTVwwitM5h44lk',
+      url: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80',
+      alt: 'Chikmagalur Pour-Over Coffee V60 Extraction',
+      caption: 'Chikmagalur Pour-Over',
+    },
+    {
+      url: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=80',
       alt: 'Sunlit botanical courtyard patio at Daily Coffee Drip',
       caption: 'Al Fresco Courtyard Vibe',
     },
@@ -350,33 +361,72 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Centerpiece Split Layout (Clean, Breathable & Spacious) */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-center py-4 lg:py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center">
+        {/* Centerpiece Split Layout (Clean, Breathable & Kitchen King Inspired) */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 flex flex-col justify-center py-4 lg:py-6">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-6 items-center">
             
-            {/* Left Column: Minimalist Editorial Title, Subtle Action Links & Carousel Slider */}
-            <div className="lg:col-span-5 flex flex-col items-start text-left z-20">
+            {/* 1. Left Column: Large Commanding Focal Dish (Arrives from Top-Right and Grows Big) */}
+            <div className="lg:col-span-5 order-1 flex items-center justify-center relative min-h-[300px] sm:min-h-[420px] lg:min-h-[500px]">
+              
+              {/* Left Vertical Index (01 / 04) on Desktop */}
+              <div className="hidden xl:flex flex-col items-center gap-2 absolute -left-6 top-1/2 -translate-y-1/2 text-xs font-bold text-[#857D77] z-10">
+                <span>{currentHeroDish.number}</span>
+                <div className="w-0.5 h-10 bg-[#C8652D]/40"></div>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 0 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 1 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 2 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 3 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+              </div>
+
+              {/* FOCAL DISH: Swoops in diagonally from top-right and expands */}
+              <div
+                key={currentHeroDish.id}
+                onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
+                className="relative z-20 cursor-pointer animate-glide-diagonal"
+              >
+                <div className="w-64 h-64 sm:w-[360px] sm:h-[360px] md:w-[420px] md:h-[420px] lg:w-[440px] lg:h-[440px] xl:w-[490px] xl:h-[490px] rounded-full overflow-hidden shadow-[0_36px_90px_-15px_rgba(24,18,15,0.42)] border-4 sm:border-8 border-[#FAF7F2] ring-1 ring-black/5 group relative transition-transform duration-500 ease-out hover:scale-105">
+                  <Image
+                    src={currentHeroDish.plateImage}
+                    alt={`${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`}
+                    fill
+                    priority
+                    className="object-cover"
+                    sizes="(max-width: 640px) 256px, (max-width: 1024px) 420px, 500px"
+                  />
+                  {/* Subtle specular vignette */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+
+                  {/* 1-Tap Overlay Cue */}
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity px-4 py-1.5 rounded-full bg-white/95 text-[#18120F] text-xs font-bold shadow-lg whitespace-nowrap">
+                    Tap to view craft story
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* 2. Middle Column: Minimalist Editorial Title, Action Links & Dish Selector */}
+            <div className="lg:col-span-4 order-2 flex flex-col items-start text-left z-20">
               
               {/* Category Eyebrow */}
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 border border-[#C8652D]/20 mb-2 sm:mb-3">
                 <span className="w-2 h-2 rounded-full bg-[#C8652D]"></span>
-                <span className="text-xs font-extrabold text-[#C8652D] tracking-wider uppercase">
+                <span className="text-[11px] sm:text-xs font-extrabold text-[#C8652D] tracking-wider uppercase">
                   {currentHeroDish.categoryLabel}
                 </span>
               </div>
 
               {/* Massive 2-Tone Headline */}
-              <h1 className="flex flex-col tracking-tight leading-none text-[#18120F] mb-4 sm:mb-6">
-                <span className="font-light text-3xl sm:text-5xl lg:text-6xl tracking-wider uppercase text-[#544E49]">
+              <h1 className="flex flex-col tracking-tight leading-none text-[#18120F] mb-4 sm:mb-5">
+                <span className="font-light text-2xl sm:text-4xl lg:text-4xl xl:text-5xl tracking-wider uppercase text-[#544E49]">
                   {currentHeroDish.titleLight}
                 </span>
-                <span className="font-extrabold text-4xl sm:text-6xl lg:text-7xl xl:text-8xl uppercase text-[#18120F] tracking-tighter mt-1 sm:mt-2">
+                <span className="font-extrabold text-3xl sm:text-5xl lg:text-5xl xl:text-6xl uppercase text-[#18120F] tracking-tighter mt-1">
                   {currentHeroDish.titleBold}
                 </span>
               </h1>
 
-              {/* Clean, Subtle Action Links (matching Kitchen King reference) */}
-              <div className="flex items-center gap-6 text-xs sm:text-sm font-bold text-[#18120F] mb-6 sm:mb-8">
+              {/* Clean, Subtle Action Links */}
+              <div className="flex items-center gap-5 text-xs sm:text-sm font-bold text-[#18120F] mb-5 sm:mb-6">
                 <button
                   type="button"
                   onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
@@ -396,17 +446,17 @@ export default function HomePage() {
               </div>
 
               {/* Horizontal Thumbnail Carousel Strip */}
-              <div className="flex items-center gap-2 sm:gap-3 pt-1 w-full max-w-md">
+              <div className="flex items-center gap-2 sm:gap-2.5 pt-1 w-full max-w-md">
                 <button
                   type="button"
                   onClick={handlePrevHero}
                   aria-label="Previous offering"
-                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0 cursor-pointer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0 cursor-pointer"
                 >
                   <ChevronLeft className="w-4 h-4" />
                 </button>
 
-                <div className="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar py-1">
+                <div className="flex items-center gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar py-1">
                   {HERO_ROTATIONAL_DISHES.map((item, idx) => {
                     const isActive = idx === heroIndex;
                     return (
@@ -415,12 +465,12 @@ export default function HomePage() {
                         onClick={() => setHeroIndex(idx)}
                         className={`cursor-pointer transition-all duration-300 flex flex-col items-center ${
                           isActive
-                            ? 'bg-white rounded-2xl p-2 sm:p-2.5 shadow-md border border-[#C8652D]/50 scale-105'
-                            : 'opacity-70 hover:opacity-100 p-1.5'
+                            ? 'bg-white rounded-2xl p-1.5 sm:p-2 shadow-md border border-[#C8652D]/50 scale-105'
+                            : 'opacity-70 hover:opacity-100 p-1'
                         }`}
                       >
                         <div
-                          className={`w-11 h-11 sm:w-13 sm:h-13 rounded-full overflow-hidden border-2 shadow-sm relative shrink-0 ${
+                          className={`w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden border-2 shadow-sm relative shrink-0 ${
                             isActive ? 'border-[#C8652D]' : 'border-white'
                           }`}
                         >
@@ -429,11 +479,11 @@ export default function HomePage() {
                             alt={item.shortName}
                             fill
                             className="object-cover"
-                            sizes="52px"
+                            sizes="48px"
                           />
                         </div>
                         <span
-                          className={`text-[10px] sm:text-[11px] font-bold mt-1.5 whitespace-nowrap ${
+                          className={`text-[9px] sm:text-[10px] font-bold mt-1 whitespace-nowrap ${
                             isActive ? 'text-[#18120F]' : 'text-[#857D77]'
                           }`}
                         >
@@ -448,55 +498,73 @@ export default function HomePage() {
                   type="button"
                   onClick={handleNextHero}
                   aria-label="Next offering"
-                  className="w-9 h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0 cursor-pointer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-white border border-[#E5E2DD] shadow-sm flex items-center justify-center text-[#18120F] hover:bg-[#EBE8E3] active:scale-95 transition-all shrink-0 cursor-pointer"
                 >
                   <ChevronRight className="w-4 h-4" />
                 </button>
               </div>
             </div>
 
-            {/* Right Column: Visual Stage with Large Commanding Focal Dish */}
-            <div className="lg:col-span-7 relative flex items-center justify-center min-h-[380px] sm:min-h-[480px] lg:min-h-[580px] xl:min-h-[620px]">
+            {/* 3. Right Column: Floating Glassmorphic Info Card & Cafe Interior Stage */}
+            <div className="lg:col-span-3 order-3 relative flex flex-col items-start justify-center">
               
-              {/* Sleek Hanging Pendant Lamp (top right) */}
-              <div className="hidden lg:flex flex-col items-center absolute -top-12 right-12 z-30 pointer-events-none">
-                <div className="w-0.5 h-32 bg-[#18120F]"></div>
-                <div className="w-8 h-10 bg-[#18120F] rounded-b-xl shadow-lg"></div>
+              {/* Minimalist Hanging Pendant Lamp (top right) */}
+              <div className="hidden lg:flex flex-col items-center absolute -top-16 right-6 z-30 pointer-events-none">
+                <div className="w-0.5 h-28 bg-[#18120F]"></div>
+                <div className="w-7 h-9 bg-[#18120F] rounded-b-xl shadow-lg"></div>
               </div>
 
-              {/* ACTIVE FOCAL DISH: Arrives from Top-Right and Becomes BIG */}
-              <div
-                key={currentHeroDish.id}
-                onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
-                className="relative z-20 cursor-pointer animate-glide-diagonal"
-              >
-                <div className="w-72 h-72 sm:w-[420px] sm:h-[420px] md:w-[480px] md:h-[480px] lg:w-[540px] lg:h-[540px] xl:w-[600px] xl:h-[600px] rounded-full overflow-hidden shadow-[0_36px_90px_-15px_rgba(24,18,15,0.45)] border-4 sm:border-8 border-[#FAF7F2] ring-1 ring-black/5 group relative transition-transform duration-500 ease-out hover:scale-105">
-                  <Image
-                    src={currentHeroDish.plateImage}
-                    alt={`${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`}
-                    fill
-                    priority
-                    className="object-cover"
-                    sizes="(max-width: 640px) 288px, (max-width: 1024px) 480px, 600px"
-                  />
-                  {/* Specular vignette */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent pointer-events-none"></div>
-
-                  {/* 1-Tap Overlay Cue */}
-                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity px-4 py-1.5 rounded-full bg-white/95 text-[#18120F] text-xs font-bold shadow-lg">
-                    Tap to view craft story
-                  </div>
+              {/* Floating White Card (Overview / Ingredients) */}
+              <div className="w-full max-w-sm bg-white/95 backdrop-blur-md rounded-3xl p-5 sm:p-6 shadow-[0_20px_50px_rgba(24,18,15,0.08)] border border-[#E5E2DD] relative z-20">
+                
+                {/* Segmented Tabs */}
+                <div className="flex items-center gap-5 border-b border-[#E5E2DD] pb-2 text-xs font-semibold">
+                  <button
+                    type="button"
+                    onClick={() => setHeroInfoTab('overview')}
+                    className={`transition-colors pb-1 relative cursor-pointer ${
+                      heroInfoTab === 'overview'
+                        ? 'text-[#18120F] font-extrabold border-b-2 border-[#18120F]'
+                        : 'text-[#857D77] hover:text-[#18120F]'
+                    }`}
+                  >
+                    Overview
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setHeroInfoTab('ingredients')}
+                    className={`transition-colors pb-1 relative cursor-pointer ${
+                      heroInfoTab === 'ingredients'
+                        ? 'text-[#18120F] font-extrabold border-b-2 border-[#18120F]'
+                        : 'text-[#857D77] hover:text-[#18120F]'
+                    }`}
+                  >
+                    Ingredients
+                  </button>
                 </div>
-              </div>
 
-              {/* Left Vertical Index (01 / 04) on Desktop */}
-              <div className="hidden lg:flex flex-col items-center gap-2 absolute -left-4 top-1/2 -translate-y-1/2 text-xs font-bold text-[#857D77] z-10">
-                <span>{currentHeroDish.number}</span>
-                <div className="w-0.5 h-10 bg-[#C8652D]/40"></div>
-                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 0 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
-                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 1 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
-                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 2 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
-                <span className={`w-1.5 h-1.5 rounded-full ${heroIndex === 3 ? 'bg-[#C8652D]' : 'bg-[#D4CECA]'}`}></span>
+                {/* Number Badge with Star */}
+                <div
+                  className={`mt-4 inline-flex items-center justify-center gap-1 px-3 py-1.5 rounded-xl ${currentHeroDish.badgeColor} font-black text-sm shadow-xs`}
+                >
+                  <span>{currentHeroDish.number}</span>
+                  <Star className="w-3 h-3 fill-current" />
+                </div>
+
+                {/* Subtitle / Story Headline */}
+                <h3 className="text-sm sm:text-base font-extrabold text-[#18120F] mt-3">
+                  {currentHeroDish.subTitle}
+                </h3>
+                <p className="text-[11px] text-[#857D77] font-medium mt-1">
+                  {currentHeroDish.summary}
+                </p>
+
+                {/* Body Text (Switches smoothly based on active tab) */}
+                <p className="text-xs text-[#544E49] leading-relaxed mt-3 pt-3 border-t border-[#F2EEE9]">
+                  {heroInfoTab === 'overview'
+                    ? currentHeroDish.overview
+                    : currentHeroDish.ingredients}
+                </p>
               </div>
 
             </div>
@@ -1097,7 +1165,7 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. ROASTERY IMAGE GALLERY & MOMENT UPLOAD SECTION */}
+      {/* 7. ROASTERY & CAFE PHOTO GALLERY (POLAROID LINE CAROUSEL ANIMATION) */}
       {/* ========================================================================= */}
       <section className="w-full py-16 sm:py-20 bg-[#FAF7F2] pb-24 sm:pb-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1105,13 +1173,13 @@ export default function HomePage() {
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2">
                 <Camera className="w-3.5 h-3.5" />
-                <span>Patron &amp; Food Gallery</span>
+                <span>Patron &amp; Food Polaroid Line</span>
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight mb-2">
                 Moments Inside Our Roastery &amp; Cafe
               </h2>
               <p className="text-sm sm:text-base text-[#544E49]">
-                Stone oven aromas, sizzling smash patties, precision cold drips, and unhurried courtyard conversations.
+                Drag or swipe the line — instant polaroid prints swaying on wooden pegs in the Bengaluru breeze.
               </p>
             </div>
 
@@ -1119,7 +1187,7 @@ export default function HomePage() {
               <button
                 type="button"
                 onClick={() => setGalleryModalOpen(true)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C8652D] text-white font-semibold text-xs hover:bg-[#B45309] transition-all shadow-sm"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C8652D] text-white font-semibold text-xs hover:bg-[#B45309] transition-all shadow-sm cursor-pointer"
               >
                 <Upload className="w-3.5 h-3.5" />
                 <span>Share Your Food &amp; Cafe Photo</span>
@@ -1135,28 +1203,24 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Mosaic Grid of Moments */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-4">
-            {galleryImages.slice(0, 5).map((img, i) => (
-              <div
-                key={i}
-                className={`${
-                  i === 0 ? 'md:col-span-4' : 'md:col-span-2'
-                } h-72 sm:h-80 md:h-[400px] rounded-2xl overflow-hidden shadow-sm group border border-[#E5E2DD] relative`}
-              >
-                <Image
-                  src={img.url}
-                  alt={img.alt}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-4 text-white">
-                  <span className="text-xs font-bold">{img.caption || img.alt}</span>
-                  {img.author && <span className="text-[10px] text-white/80">Photo by {img.author}</span>}
-                </div>
-              </div>
-            ))}
+          {/* Interactive Polaroid Line Carousel Component */}
+          <div className="w-full my-4">
+            <PolaroidLineCarousel
+              height="500px"
+              cardWidth={270}
+              sag={46}
+              swing={1.1}
+              autoplay={4500}
+              string="#9E866B"
+              background="#F6F3EE"
+              ink="#18120F"
+              slides={galleryImages.map((img) => ({
+                image: img.url,
+                title: img.caption || img.alt,
+                caption: img.author ? `Shared by ${img.author}` : 'Daily Coffee Drip Roastery & Kitchen',
+                alt: img.alt,
+              }))}
+            />
           </div>
         </div>
       </section>
