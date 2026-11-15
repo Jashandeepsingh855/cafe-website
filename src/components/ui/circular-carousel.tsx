@@ -129,22 +129,22 @@ export function CircularCarousel({
   );
 
   const next = useCallback(() => {
-    setInternalIndex((prev) => {
-      const target = controlledIndex !== undefined ? controlledIndex : prev;
-      const newIndex = (target + 1) % total;
-      onActiveChange?.(newIndex);
-      return newIndex;
-    });
-  }, [total, controlledIndex, onActiveChange]);
+    const current = controlledIndex !== undefined ? controlledIndex : internalIndex;
+    const newIndex = (current + 1) % total;
+    if (controlledIndex === undefined) {
+      setInternalIndex(newIndex);
+    }
+    onActiveChange?.(newIndex);
+  }, [total, controlledIndex, internalIndex, onActiveChange]);
 
   const prev = useCallback(() => {
-    setInternalIndex((prev) => {
-      const target = controlledIndex !== undefined ? controlledIndex : prev;
-      const newIndex = (target - 1 + total) % total;
-      onActiveChange?.(newIndex);
-      return newIndex;
-    });
-  }, [total, controlledIndex, onActiveChange]);
+    const current = controlledIndex !== undefined ? controlledIndex : internalIndex;
+    const newIndex = (current - 1 + total) % total;
+    if (controlledIndex === undefined) {
+      setInternalIndex(newIndex);
+    }
+    onActiveChange?.(newIndex);
+  }, [total, controlledIndex, internalIndex, onActiveChange]);
 
   const handleUserGoTo = (index: number) => {
     lastUserInteraction.current = Date.now();

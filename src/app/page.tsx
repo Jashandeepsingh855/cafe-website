@@ -1302,33 +1302,24 @@ export default function HomePage() {
         style={{ isolation: 'isolate' }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
+            <div className="max-w-2xl">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-2.5">
                 <Camera className="w-3.5 h-3.5" />
                 <span>Patron &amp; Food Polaroid Line</span>
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight mb-2">
                 Moments Inside Our Cafe &amp; Restaurant
               </h2>
-              <p className="text-sm sm:text-base text-[#544E49]">
+              <p className="text-sm sm:text-base text-[#544E49] leading-relaxed">
                 Drag or swipe the line — instant polaroid prints swaying on wooden pegs in the Bengaluru breeze.
               </p>
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
-              <button
-                type="button"
-                onClick={() => setGalleryModalOpen(true)}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C8652D] text-white font-semibold text-xs hover:bg-[#B45309] transition-all shadow-sm cursor-pointer"
-              >
-                <Upload className="w-3.5 h-3.5" />
-                <span>Share Your Food &amp; Cafe Photo</span>
-              </button>
-
+            <div className="shrink-0">
               <Link
                 href="/about"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-xs hover:bg-[#C8652D] transition-colors shadow-sm"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-bold text-xs sm:text-sm hover:bg-[#C8652D] transition-colors shadow-xs"
               >
                 <span>Full Story &amp; Spaces</span>
                 <ArrowRight className="w-3.5 h-3.5" />
