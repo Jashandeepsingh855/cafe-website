@@ -91,36 +91,42 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-1">
-            {navLinks.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className={`text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 ${
-                    isActive
-                      ? 'bg-[#18120F] text-[#FAF7F2] shadow-sm'
-                      : 'text-[#544E49] hover:text-[#18120F] hover:bg-[#F0EDE9]'
-                  }`}
-                >
-                  {link.name}
-                </Link>
-              );
-            })}
-          </nav>
+          {/* Desktop Navigation & Actions: Home, Menu, About Us, and Book a Table right next to each other */}
+          <div className="hidden lg:flex items-center gap-2 sm:gap-3">
+            <nav className="flex items-center gap-1">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className={`text-sm font-semibold px-4 py-2 rounded-full transition-all duration-200 ${
+                      isActive
+                        ? 'bg-[#18120F] text-[#FAF7F2] shadow-sm'
+                        : 'text-[#544E49] hover:text-[#18120F] hover:bg-[#F0EDE9]'
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </nav>
 
-          {/* Actions & CTA: Book a Table on desktop, Menu pill on mobile */}
-          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Desktop Book Table CTA */}
+            {/* Desktop Book Table CTA - sits directly alongside About Us */}
             <Link
               href="/reservation"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-sm hover:bg-[#C8652D] hover:text-white transition-all shadow-sm"
+              className={`inline-flex items-center justify-center px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-sm ${
+                pathname === '/reservation'
+                  ? 'bg-[#C8652D] text-white shadow-md'
+                  : 'bg-[#18120F] text-[#FAF7F2] hover:bg-[#C8652D] hover:text-white'
+              }`}
             >
               Book a Table
             </Link>
+          </div>
 
+          {/* Mobile Right Controls (< lg) */}
+          <div className="flex lg:hidden items-center gap-2 shrink-0">
             {/* Mobile Quick Menu Pill (< 640px) */}
             <Link
               href="/menu"
@@ -130,13 +136,21 @@ export default function Header() {
               <span>Menu</span>
             </Link>
 
+            {/* Tablet Book Table Pill (640px to 1024px) */}
+            <Link
+              href="/reservation"
+              className="hidden sm:inline-flex lg:hidden items-center justify-center px-4 py-2 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-xs hover:bg-[#C8652D] hover:text-white transition-all shadow-sm"
+            >
+              Book a Table
+            </Link>
+
             {/* Mobile Menu Hamburger (>= 44px touch target) */}
             <button
               type="button"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label={mobileMenuOpen ? 'Close Menu' : 'Open Menu'}
               aria-expanded={mobileMenuOpen}
-              className="lg:hidden w-11 h-11 rounded-full flex items-center justify-center text-[#18120F] bg-[#F0EDE9] hover:bg-[#EBE8E3] active:scale-95 border border-[#E5E2DD] transition-all shadow-sm shrink-0 focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+              className="w-11 h-11 rounded-full flex items-center justify-center text-[#18120F] bg-[#F0EDE9] hover:bg-[#EBE8E3] active:scale-95 border border-[#E5E2DD] transition-all shadow-sm shrink-0 focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
             >
               {mobileMenuOpen ? (
                 <X className="w-6 h-6 text-[#18120F]" />
