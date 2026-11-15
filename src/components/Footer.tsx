@@ -11,7 +11,17 @@ export default function Footer() {
   const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
 
   useEffect(() => {
-    setSite(getClientSiteConfig());
+    const syncSite = () => {
+      setSite(getClientSiteConfig());
+    };
+    syncSite();
+
+    window.addEventListener('storage', syncSite);
+    window.addEventListener('dcd_site_updated', syncSite);
+    return () => {
+      window.removeEventListener('storage', syncSite);
+      window.removeEventListener('dcd_site_updated', syncSite);
+    };
   }, []);
 
   const handleSubscribe = (e: React.FormEvent) => {

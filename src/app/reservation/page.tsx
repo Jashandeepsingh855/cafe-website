@@ -9,6 +9,7 @@ import {
   Clock,
   Sparkles,
   CheckCircle2,
+  AlertCircle,
   Phone,
   MessageCircle,
   MapPin,
@@ -33,10 +34,7 @@ export default function ReservationPage() {
   const [partySize, setPartySize] = useState('1-2');
   const [zone, setZone] = useState('veranda');
   const [timeSlot, setTimeSlot] = useState('Morning Roast 08:30 AM');
-  const [date, setDate] = useState(() => {
-    const today = new Date();
-    return today.toISOString().split('T')[0];
-  });
+  const [date, setDate] = useState('2026-11-15');
   const [name, setName] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [email, setEmail] = useState('');
@@ -47,10 +45,27 @@ export default function ReservationPage() {
     celebration: false,
   });
   const [submitted, setSubmitted] = useState(false);
+  const [validationError, setValidationError] = useState<string | null>(null);
+  const [bookingInfo, setBookingInfo] = useState<{ id: string; waUrl: string } | null>(null);
   const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
 
   useEffect(() => {
     setSite(getClientSiteConfig());
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    setDate(`${yyyy}-${mm}-${dd}`);
+
+    const syncSite = () => {
+      setSite(getClientSiteConfig());
+    };
+    window.addEventListener('storage', syncSite);
+    window.addEventListener('dcd_site_updated', syncSite);
+    return () => {
+      window.removeEventListener('storage', syncSite);
+      window.removeEventListener('dcd_site_updated', syncSite);
+    };
   }, []);
 
   const zones = [
@@ -97,12 +112,26 @@ export default function ReservationPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      setValidationError('Please enter your full name for the table reservation.');
+      return;
+    }
+
+    const cleanDigits = whatsapp.replace(/\D/g, '');
+    if (cleanDigits.length < 10) {
+      setValidationError('Please enter a valid 10-digit WhatsApp contact number.');
+      return;
+    }
+    setValidationError(null);
+
     const zoneName = zones.find((z) => z.id === zone)?.name || zone;
+    const bookingId = 'RES-' + Math.floor(100000 + Math.random() * 900000).toString();
     const newReservation: ReservationRecord = {
-      id: 'RES-' + Math.floor(100000 + Math.random() * 900000).toString(),
-      name: name || 'Guest',
-      whatsapp: whatsapp || '',
-      email: email || '',
+      id: bookingId,
+      name: trimmedName,
+      whatsapp: whatsapp.trim(),
+      email: email.trim(),
       partySize: `${partySize} Guests`,
       zone: zoneName,
       date,
@@ -111,9 +140,39 @@ export default function ReservationPage() {
       status: 'Pending',
       createdAt: new Date().toISOString(),
     };
+
     const current = getClientReservations();
     saveClientReservations([newReservation, ...current]);
+
+    const waMessage = `*TABLE RESERVATION INQUIRY - DAILY COFFEE DRIP*
+Booking Ref: ${bookingId}
+Name: ${trimmedName}
+WhatsApp: ${whatsapp.trim()}
+${email.trim() ? `Email: ${email.trim()}\n` : ''}Party Size: ${partySize} Guests
+Seating Sanctuary: ${zoneName}
+Date: ${date}
+Time Slot: ${timeSlot}
+Hospitality Preferences:
+• 100% Pure Vegetarian: Yes
+${dietaryOptions.strictJain ? '• Strict Jain Preparation: Yes\n' : ''}${dietaryOptions.nutFree ? '• Nut-Free Precaution: Yes\n' : ''}${dietaryOptions.celebration ? '• Special Celebration: Yes\n' : ''}
+Please confirm my table reservation. Thank you!`;
+
+    const waUrl = `https://wa.me/${site.contact.whatsappRaw}?text=${encodeURIComponent(waMessage)}`;
+    setBookingInfo({ id: bookingId, waUrl });
     setSubmitted(true);
+
+    if (typeof window !== 'undefined') {
+      window.open(waUrl, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  const handleResetForm = () => {
+    setSubmitted(false);
+    setBookingInfo(null);
+    setName('');
+    setWhatsapp('');
+    setEmail('');
+    setValidationError(null);
   };
 
   return (
@@ -286,6 +345,7 @@ export default function ReservationPage() {
                   <input
                     type="date"
                     value={date}
+                    min={date}
                     onChange={(e) => setDate(e.target.value)}
                     className="w-full bg-white border border-[#E5E2DD] px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
                   />
@@ -423,6 +483,14 @@ export default function ReservationPage() {
               </div>
             </div>
 
+            {/* Validation Error Banner */}
+            {validationError && (
+              <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-semibold flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                <span>{validationError}</span>
+              </div>
+            )}
+
             {/* Submission Button */}
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#E5E2DD]">
               <div className="flex items-center gap-2 text-xs text-[#544E49]">
@@ -439,16 +507,40 @@ export default function ReservationPage() {
             </div>
 
             {/* Success Banner */}
-            {submitted && (
-              <div className="p-4 rounded-2xl bg-[#18120F] text-white flex items-center justify-between animate-in fade-in">
-                <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-[#C8652D] shrink-0" />
+            {submitted && bookingInfo && (
+              <div className="p-5 rounded-2xl bg-[#18120F] text-white flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-in fade-in">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="w-6 h-6 text-[#25D366] shrink-0 mt-0.5" />
                   <div>
-                    <p className="font-bold text-sm">Your Table is Reserved!</p>
-                    <p className="text-xs text-[#D4CECA] mt-0.5">
-                      Confirmation dispatched to your WhatsApp. We look forward to hosting you in Indiranagar.
+                    <div className="flex items-center gap-2">
+                      <p className="font-bold text-sm sm:text-base">Your Table is Reserved!</p>
+                      <span className="px-2 py-0.5 rounded-md bg-[#2A201A] border border-[#3E342E] text-[11px] font-mono text-[#D4CECA]">
+                        {bookingInfo.id}
+                      </span>
+                    </div>
+                    <p className="text-xs text-[#D4CECA] mt-1">
+                      Confirmation dispatched to your WhatsApp. We look forward to hosting you at Daily Coffee Drip.
                     </p>
                   </div>
+                </div>
+
+                <div className="flex items-center gap-2.5 shrink-0">
+                  <a
+                    href={bookingInfo.waUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-[#18120F] font-bold text-xs flex items-center gap-1.5 transition-all shadow-sm"
+                  >
+                    <MessageCircle className="w-3.5 h-3.5" />
+                    <span>Open in WhatsApp</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={handleResetForm}
+                    className="px-4 py-2 rounded-full bg-[#2A201A] hover:bg-[#3E342E] text-white border border-[#3E342E] font-semibold text-xs transition-all"
+                  >
+                    Book Another Table
+                  </button>
                 </div>
               </div>
             )}

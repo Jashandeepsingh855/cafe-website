@@ -145,6 +145,8 @@ export function saveClientSiteConfig(config: SiteConfig): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem('dcd_site_config', JSON.stringify(config));
+    window.dispatchEvent(new CustomEvent('dcd_site_updated', { detail: config }));
+    window.dispatchEvent(new Event('storage'));
   } catch (err) {
     console.error('Failed to save site config:', err);
   }
@@ -248,6 +250,8 @@ export function saveClientReservations(reservations: ReservationRecord[]): void 
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem('dcd_reservations', JSON.stringify(reservations));
+    window.dispatchEvent(new CustomEvent('dcd_reservations_updated', { detail: reservations }));
+    window.dispatchEvent(new Event('storage'));
   } catch (err) {
     console.error('Failed to save reservations:', err);
   }

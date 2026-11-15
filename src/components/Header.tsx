@@ -24,7 +24,17 @@ export default function Header() {
   const pathname = usePathname();
 
   useEffect(() => {
-    setSite(getClientSiteConfig());
+    const syncSite = () => {
+      setSite(getClientSiteConfig());
+    };
+    syncSite();
+
+    window.addEventListener('storage', syncSite);
+    window.addEventListener('dcd_site_updated', syncSite);
+    return () => {
+      window.removeEventListener('storage', syncSite);
+      window.removeEventListener('dcd_site_updated', syncSite);
+    };
   }, []);
 
   // Lock background scroll when mobile menu is open

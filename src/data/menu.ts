@@ -1280,6 +1280,8 @@ export function saveClientMenuItems(items: MenuItem[]): void {
   if (typeof window === 'undefined') return;
   try {
     localStorage.setItem('dcd_menu_items', JSON.stringify(items));
+    window.dispatchEvent(new CustomEvent('dcd_menu_updated', { detail: items }));
+    window.dispatchEvent(new Event('storage'));
   } catch (err) {
     console.error('Failed to save menu items to localStorage:', err);
   }

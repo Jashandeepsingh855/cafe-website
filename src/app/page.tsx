@@ -190,7 +190,16 @@ export default function HomePage() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
-    setSite(getClientSiteConfig());
+    const syncData = () => {
+      setSite(getClientSiteConfig());
+    };
+    syncData();
+    window.addEventListener('storage', syncData);
+    window.addEventListener('dcd_site_updated', syncData);
+    return () => {
+      window.removeEventListener('storage', syncData);
+      window.removeEventListener('dcd_site_updated', syncData);
+    };
   }, []);
 
   // Auto-rotation timer (5.5s)
@@ -782,7 +791,7 @@ export default function HomePage() {
                 <div className="pt-3 flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-baseline justify-between gap-2">
-                      <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors line-clamp-1">
+                      <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors line-clamp-2">
                         {item.name}
                       </h3>
                       <span className="font-extrabold text-lg text-[#C8652D] shrink-0">

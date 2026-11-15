@@ -27,8 +27,19 @@ export default function MenuPage() {
   const [likedDishes, setLikedDishes] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    setMenuItems(getClientMenuItems());
-    setSite(getClientSiteConfig());
+    const syncData = () => {
+      setMenuItems(getClientMenuItems());
+      setSite(getClientSiteConfig());
+    };
+    syncData();
+    window.addEventListener('storage', syncData);
+    window.addEventListener('dcd_menu_updated', syncData);
+    window.addEventListener('dcd_site_updated', syncData);
+    return () => {
+      window.removeEventListener('storage', syncData);
+      window.removeEventListener('dcd_menu_updated', syncData);
+      window.removeEventListener('dcd_site_updated', syncData);
+    };
   }, []);
 
   const toggleLike = (e: React.MouseEvent, id: string) => {
@@ -317,7 +328,7 @@ export default function MenuPage() {
                       {/* Dish Name & Description */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between gap-2">
-                          <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors leading-snug truncate">
+                          <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors leading-snug line-clamp-2">
                             {dish.name}
                           </h3>
                           <span className="font-extrabold text-base sm:text-lg text-[#C8652D] shrink-0">

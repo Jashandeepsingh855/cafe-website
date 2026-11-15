@@ -61,9 +61,24 @@ export default function AdminPage() {
 
   // Initialize client state
   useEffect(() => {
-    setItems(getClientMenuItems());
-    setReservations(getClientReservations());
-    setConfig(getClientSiteConfig());
+    const syncAll = () => {
+      setItems(getClientMenuItems());
+      setReservations(getClientReservations());
+      setConfig(getClientSiteConfig());
+    };
+    syncAll();
+
+    window.addEventListener('storage', syncAll);
+    window.addEventListener('dcd_menu_updated', syncAll);
+    window.addEventListener('dcd_reservations_updated', syncAll);
+    window.addEventListener('dcd_site_updated', syncAll);
+
+    return () => {
+      window.removeEventListener('storage', syncAll);
+      window.removeEventListener('dcd_menu_updated', syncAll);
+      window.removeEventListener('dcd_reservations_updated', syncAll);
+      window.removeEventListener('dcd_site_updated', syncAll);
+    };
   }, []);
 
   const showToast = (msg: string) => {

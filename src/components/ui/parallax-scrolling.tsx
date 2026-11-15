@@ -69,38 +69,6 @@ export function ParallaxComponent({
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
-    const triggerElement = parallaxRef.current?.querySelector('[data-parallax-layers]');
-    let timeline: gsap.core.Timeline | null = null;
-
-    if (triggerElement) {
-      timeline = gsap.timeline({
-        scrollTrigger: {
-          trigger: triggerElement,
-          start: '0% 0%',
-          end: '100% 0%',
-          scrub: 0,
-        },
-      });
-
-      layers.forEach((layerObj, idx) => {
-        const targets = triggerElement.querySelectorAll(
-          `[data-parallax-layer="${layerObj.layer}"]`
-        );
-        if (targets.length > 0) {
-          timeline?.to(
-            targets,
-            {
-              yPercent: layerObj.yPercent,
-              ease: 'none',
-              force3D: true,
-            },
-            idx === 0 ? undefined : '<'
-          );
-        }
-      });
-    }
-
-    // Reuse existing global Lenis instance or initialize if standalone
     let localLenis: Lenis | null = getLenis();
     let tickerCb: ((time: number) => void) | null = null;
 
@@ -117,11 +85,39 @@ export function ParallaxComponent({
       gsap.ticker.lagSmoothing(0);
     }
 
-    return () => {
-      timeline?.kill();
+    const ctx = gsap.context(() => {
+      const triggerElement = parallaxRef.current?.querySelector('[data-parallax-layers]');
       if (triggerElement) {
-        gsap.killTweensOf(triggerElement);
+        const timeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerElement,
+            start: '0% 0%',
+            end: '100% 0%',
+            scrub: 0,
+          },
+        });
+
+        layers.forEach((layerObj, idx) => {
+          const targets = triggerElement.querySelectorAll(
+            `[data-parallax-layer="${layerObj.layer}"]`
+          );
+          if (targets.length > 0) {
+            timeline.to(
+              targets,
+              {
+                yPercent: layerObj.yPercent,
+                ease: 'none',
+                force3D: true,
+              },
+              idx === 0 ? undefined : '<'
+            );
+          }
+        });
       }
+    }, parallaxRef);
+
+    return () => {
+      ctx.revert();
       if (tickerCb) {
         gsap.ticker.remove(tickerCb);
       }
