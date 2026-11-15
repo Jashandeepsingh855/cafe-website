@@ -14,8 +14,6 @@ import {
   Armchair,
   Cookie,
   Star,
-  Play,
-  Pause,
   ChevronLeft,
   ChevronRight,
   Utensils,
@@ -314,7 +312,7 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 1. HERO SECTION WITH OSMO MULTI-LAYER DEPTH PARALLAX */}
       {/* ========================================================================= */}
-      <section className="relative w-full overflow-hidden bg-[#F2EEE9] text-[#18120F] min-h-[720px] lg:min-h-[820px] flex flex-col justify-between pt-6 sm:pt-8 pb-4 border-b border-[#E5E2DD]">
+      <section className="relative w-full overflow-hidden bg-[#F2EEE9] text-[#18120F] min-h-[660px] lg:min-h-[740px] flex flex-col justify-between pt-6 sm:pt-8 pb-8 sm:pb-12 border-b border-[#E5E2DD]">
         
         {/* Dynamic Sweeping Organic Curved Arc & Ambient Layers (Osmo Multi-Layer Depth) */}
         <div data-parallax-layers className="absolute inset-0 pointer-events-none overflow-hidden z-0">
@@ -586,49 +584,6 @@ export default function HomePage() {
             </div>
 
           </div>
-        </div>
-
-        {/* Foreground Kitchen Counter Marble Top */}
-        <div className="relative z-10 w-full mt-2">
-          <div className="w-full h-8 sm:h-9 bg-gradient-to-r from-white via-[#FAF7F2] to-white border-t border-white/90 shadow-[0_-8px_20px_rgba(0,0,0,0.03)] flex items-center justify-between px-8"></div>
-        </div>
-
-        {/* Bottom Ticker / Status Bar */}
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex items-center justify-between text-xs text-[#544E49] pt-2">
-          {/* Left: Our Menu Link */}
-          <Link
-            href="/menu"
-            className="flex items-center gap-2 font-bold text-[#18120F] hover:text-[#C8652D] transition-colors"
-          >
-            <Utensils className="w-4 h-4 text-[#C8652D]" />
-            <span>Full Cafe &amp; Fast Food Menu (142 Items)</span>
-          </Link>
-
-          {/* Center: Roastery Delivery & Pure Veg Motto */}
-          <div className="hidden md:flex items-center gap-2 text-[11px] font-bold uppercase tracking-wider text-[#857D77]">
-            <ShieldCheck className="w-4 h-4 text-[#186a22]" />
-            <span>100% Pure Vegetarian Cafe • Stone Pizzas, Smash Burgers, Fries &amp; Artisan Brews</span>
-          </div>
-
-          {/* Right: Play / Pause Auto-Cycle Toggle */}
-          <button
-            type="button"
-            onClick={() => setIsPlaying(!isPlaying)}
-            aria-label={isPlaying ? 'Pause showcase cycle' : 'Play showcase cycle'}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E5E2DD] shadow-sm hover:bg-[#F6F3EE] transition-colors text-xs font-bold text-[#18120F]"
-          >
-            {isPlaying ? (
-              <>
-                <Pause className="w-3.5 h-3.5 text-[#C8652D]" />
-                <span className="hidden sm:inline">Pause</span>
-              </>
-            ) : (
-              <>
-                <Play className="w-3.5 h-3.5 text-[#C8652D]" />
-                <span className="hidden sm:inline">Play</span>
-              </>
-            )}
-          </button>
         </div>
       </section>
 
