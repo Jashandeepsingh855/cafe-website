@@ -565,22 +565,16 @@ Please confirm my table reservation. Thank you!`;
                 </span>
               </div>
 
-              {/* Map Thumbnail */}
-              <div className="relative w-full h-40 rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner flex items-end p-3">
-                <Image
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHrrkPpb7HXk72gUCrU29swJogLVWZgJZksdkJRvgXNQTpv56FwtUDHf0bP4Zw4t4mBZmPafc2oxVNbw9ZghuYPiLAZquSTY_xEKMJGgwtEZjbycbg3IP-xJ1r4T86HYJ-deSaZO0bGXo29Kw4YiQzqg6jqkfjX0LUklC4fs0M1s_OpeONSVA9MZcvV0A_Q-v_SgI0nUHEQlbMmbyPhRL1XuPuKiL1xPCokCbRufU"
-                  alt="Location Map Preview"
-                  fill
-                  className="object-cover"
-                />
-                <div className="relative z-10 bg-white/95 backdrop-blur-md px-3 py-1.5 rounded-xl shadow-sm flex items-center gap-2 text-[#18120F] text-xs font-semibold">
-                  <MapPin className="w-4 h-4 text-[#C8652D]" />
-                  <span>{site.address.line1}, {site.address.area}</span>
-                </div>
-              </div>
-
-              {/* Stats */}
+              {/* Address & Venue Highlights */}
               <div className="flex flex-col gap-2.5 text-xs text-[#544E49]">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#F6F3EE]">
+                  <MapPin className="w-4 h-4 text-[#C8652D] shrink-0" />
+                  <div>
+                    <p className="font-bold text-[#18120F]">Address &amp; Location</p>
+                    <p className="text-[11px]">{site.address.line1}, {site.address.area}</p>
+                  </div>
+                </div>
+
                 <div className="flex items-center gap-3 p-3 rounded-xl bg-[#F6F3EE]">
                   <Clock className="w-4 h-4 text-[#C8652D] shrink-0" />
                   <div>

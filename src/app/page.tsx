@@ -30,6 +30,11 @@ import {
   Sandwich,
   Coffee,
   CheckCircle2,
+  MapPin,
+  Compass,
+  Car,
+  Phone,
+  Navigation,
 } from 'lucide-react';
 import { MENU_ITEMS, MenuItem } from '@/data/menu';
 import {
@@ -1349,6 +1354,190 @@ export default function HomePage() {
                 alt: img.alt,
               }))}
             />
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================================= */}
+      {/* 8. CAFE LOCATION & GOOGLE MAPS */}
+      {/* ========================================================================= */}
+      <section
+        className="w-full py-16 sm:py-24 bg-white border-t border-[#E5E2DD] relative z-10"
+        style={{ isolation: 'isolate' }}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-10">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD] mb-3">
+                <MapPin className="w-3.5 h-3.5" />
+                <span>Location &amp; Visit Guide</span>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight mb-2">
+                Find Us in Indiranagar, Bengaluru
+              </h2>
+              <p className="text-sm sm:text-base text-[#544E49] max-w-2xl">
+                Centrally located on 12th Main Road, HAL 2nd Stage. Join us for shade-grown artisanal coffee, wood-fired sourdough pizzas, and cozy al fresco dining.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0">
+              <a
+                href={site.address.mapUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-xs hover:bg-[#C8652D] transition-colors shadow-sm"
+              >
+                <Compass className="w-3.5 h-3.5 text-[#C8652D]" />
+                <span>Get Directions (Google Maps)</span>
+                <ExternalLink className="w-3 h-3" />
+              </a>
+              <Link
+                href="/reservation"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C8652D] text-white font-semibold text-xs hover:bg-[#B45309] transition-all shadow-sm"
+              >
+                <span>Book a Table</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+          </div>
+
+          {/* Main Grid: Google Map View + Venue Details */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+            {/* Left Column: Google Map Container */}
+            <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
+              <div className="relative w-full h-[380px] sm:h-[460px] rounded-3xl overflow-hidden border border-[#E5E2DD] shadow-md group bg-[#E5E2DD]">
+                <Image
+                  src={site.address.mapEmbedUrl}
+                  alt="Daily Coffee Drip Cafe &amp; Restaurant Location Map Indiranagar Bengaluru"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  sizes="(max-width: 1024px) 100vw, 66vw"
+                />
+
+                {/* Top Overlay Badge: Live Cafe Identity */}
+                <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-md border border-[#E5E2DD] flex items-center gap-3">
+                  <div className="w-9 h-9 rounded-full bg-[#18120F] flex items-center justify-center text-[#FAF7F2] shrink-0">
+                    <Coffee className="w-4 h-4 text-[#C8652D]" />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-xs sm:text-sm text-[#18120F] leading-tight">
+                      {site.name}
+                    </h3>
+                    <p className="text-[11px] text-[#544E49] flex items-center gap-1 mt-0.5">
+                      <MapPin className="w-3 h-3 text-[#C8652D]" />
+                      <span>{site.address.line1}, {site.address.area}</span>
+                    </p>
+                  </div>
+                </div>
+
+                {/* Top Right: Open Status Pill */}
+                <div className="absolute top-4 right-4 z-10">
+                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold shadow-md backdrop-blur-md ${
+                    site.hours.isOpenNow
+                      ? 'bg-white/95 text-[#186a22] border border-[#186a22]/30'
+                      : 'bg-white/95 text-red-700 border border-red-200'
+                  }`}>
+                    <span className={`w-2 h-2 rounded-full ${site.hours.isOpenNow ? 'bg-[#186a22] animate-ping' : 'bg-red-500'}`} />
+                    {site.hours.isOpenNow ? 'Open Now • Until 11:00 PM' : 'Closed for Today'}
+                  </span>
+                </div>
+
+                {/* Bottom Center / Floating Location Bar */}
+                <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-lg border border-[#E5E2DD]">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-[#18120F] truncate min-w-0">
+                    <MapPin className="w-4 h-4 text-[#C8652D] shrink-0" />
+                    <span className="truncate">{site.address.full}</span>
+                  </div>
+                  <a
+                    href={site.address.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="shrink-0 px-4 py-2 rounded-xl bg-[#18120F] hover:bg-[#C8652D] text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                  >
+                    <span>View on Google Maps</span>
+                    <ExternalLink className="w-3 h-3" />
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Venue Details & Accessibility */}
+            <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between bg-[#FAF7F2] p-6 sm:p-7 rounded-3xl border border-[#E5E2DD] shadow-sm gap-5">
+              <div>
+                <span className="text-[11px] font-bold text-[#C8652D] uppercase tracking-wider block mb-1">
+                  Location &amp; Visit Details
+                </span>
+                <h3 className="text-xl font-extrabold text-[#18120F]">
+                  At the Heart of Indiranagar
+                </h3>
+                <p className="text-xs text-[#544E49] mt-1 leading-relaxed">
+                  Easily accessible from 100ft Road and CMH Road with dedicated valet and peaceful alfresco seating.
+                </p>
+              </div>
+
+              {/* Information Rows */}
+              <div className="flex flex-col gap-3 text-xs text-[#544E49]">
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-white border border-[#E5E2DD]/80 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#FAF7F2] flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <MapPin className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#18120F]">Address &amp; Landmark</p>
+                    <p className="text-[11px] mt-0.5 leading-relaxed">{site.address.full}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-white border border-[#E5E2DD]/80 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#FAF7F2] flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <Clock className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#18120F]">Daily Hours</p>
+                    <p className="text-[11px] mt-0.5">{site.hours.openTime} – {site.hours.closingTime} • {site.hours.days}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-white border border-[#E5E2DD]/80 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#FAF7F2] flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <Car className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#18120F]">Complimentary Valet</p>
+                    <p className="text-[11px] mt-0.5">Dedicated valet parking team at the front entrance portico</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-3 p-3 rounded-2xl bg-white border border-[#E5E2DD]/80 shadow-xs">
+                  <div className="w-8 h-8 rounded-xl bg-[#FAF7F2] flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <Compass className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <p className="font-bold text-[#18120F]">Metro &amp; Transit</p>
+                    <p className="text-[11px] mt-0.5">600m from Indiranagar Metro Station (Purple Line)</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Quick Actions */}
+              <div className="flex flex-col sm:flex-row lg:flex-col gap-2.5 pt-2">
+                <a
+                  href={`https://wa.me/${site.contact.whatsappRaw}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-[44px] py-2.5 px-4 rounded-full bg-white hover:bg-[#F0EDE9] text-[#18120F] border border-[#E5E2DD] text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-xs"
+                >
+                  <MessageCircle className="w-4 h-4 text-[#25D366]" />
+                  <span>Chat on WhatsApp</span>
+                </a>
+                <a
+                  href={`tel:${site.contact.phoneRaw}`}
+                  className="w-full min-h-[44px] py-2.5 px-4 rounded-full bg-[#18120F] hover:bg-[#C8652D] text-white text-xs font-bold flex items-center justify-center gap-2 transition-colors shadow-sm"
+                >
+                  <Phone className="w-3.5 h-3.5 text-[#C8652D]" />
+                  <span>Call Cafe Concierge</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </section>
