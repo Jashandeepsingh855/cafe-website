@@ -40,8 +40,8 @@ export interface SiteConfig {
 
 export const DEFAULT_SITE_CONFIG: SiteConfig = {
   name: 'Daily Coffee Drip',
-  tagline: 'Artisanal Roastery & Craft Kitchen',
-  subTagline: '100% Pure Vegetarian Roastery & Kitchen',
+  tagline: 'Artisanal Cafe & Craft Kitchen',
+  subTagline: '100% Pure Vegetarian Cafe & Restaurant',
   pureVegNotice: '100% Pure Veg • Jain Adaptations Available',
   altitudeNote: 'Single Origin Chikmagalur Shade-Grown Beans • 1,350m Altitude',
   address: {
@@ -83,7 +83,7 @@ export const DEFAULT_SITE_CONFIG: SiteConfig = {
  */
 export function getWhatsAppOrderUrl(dishName: string, price: number, whatsappNumber = DEFAULT_SITE_CONFIG.contact.whatsappRaw): string {
   const text = encodeURIComponent(
-    `Hello Daily Coffee Drip! I would like to order: *${dishName}* (₹${price}) from your Indiranagar Roastery.`
+    `Hello Daily Coffee Drip! I would like to order: *${dishName}* (₹${price}) from your Indiranagar Cafe.`
   );
   return `https://wa.me/${whatsappNumber}?text=${text}`;
 }
@@ -93,7 +93,7 @@ export function getWhatsAppOrderUrl(dishName: string, price: number, whatsappNum
  */
 export function getWhatsAppLocationUrl(whatsappNumber = DEFAULT_SITE_CONFIG.contact.whatsappRaw): string {
   const text = encodeURIComponent(
-    `Hello Daily Coffee Drip! Please send me the live Google Maps location & parking directions to your Indiranagar Roastery.`
+    `Hello Daily Coffee Drip! Please send me the live Google Maps location & parking directions to your Indiranagar Cafe.`
   );
   return `https://wa.me/${whatsappNumber}?text=${text}`;
 }

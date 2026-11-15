@@ -23,7 +23,7 @@ export default function FloatingMobileBar() {
   }, []);
 
   const whatsappUrl = `https://wa.me/${site.contact.whatsappRaw}?text=${encodeURIComponent(
-    `Hello ${site.name}! I would like to order from your Indiranagar Roastery menu.`
+    `Hello ${site.name}! I would like to order from your Indiranagar Cafe menu.`
   )}`;
 
   return (

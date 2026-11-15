@@ -49,15 +49,15 @@ const DEFAULT_CAFE_LAYERS: ParallaxLayerItem[] = [
     layer: '4',
     yPercent: 10,
     src: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1600&auto=format&fit=crop&q=80',
-    alt: 'Foreground botanical branch & coffee steam',
+    alt: 'Foreground artisanal brew aroma & coffee steam',
     className: 'opacity-25 mix-blend-overlay scale-100 object-cover',
   },
 ];
 
 export function ParallaxComponent({
-  title = 'Artisanal Roastery & Craft Kitchen',
+  title = 'Artisanal Cafe & Craft Kitchen',
   subtitle = 'Western Ghats Single-Origin Micro-Lots • 100% Pure Vegetarian Stone-Hearth Craft',
-  tag = 'Mindful Botanical Sanctuary',
+  tag = 'Artisanal Cafe & Restaurant Sanctuary',
   layers = DEFAULT_CAFE_LAYERS,
   children,
   theme = 'dark',

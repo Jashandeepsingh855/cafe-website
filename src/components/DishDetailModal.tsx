@@ -131,7 +131,7 @@ export default function DishDetailModal({ item, onClose }: DishDetailModalProps)
           {item.story && (
             <div className="flex flex-col gap-1.5">
               <span className="text-xs font-bold uppercase tracking-wider text-[#C8652D]">
-                The Roastery Craft Story
+                The Kitchen &amp; Brew Craft Story
               </span>
               <p className="text-xs sm:text-sm text-[#544E49] leading-relaxed italic bg-white p-3.5 rounded-xl border border-[#E5E2DD]/70">
                 &ldquo;{item.story}&rdquo;

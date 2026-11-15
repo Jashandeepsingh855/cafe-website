@@ -1033,7 +1033,7 @@ export default function AdminPage() {
                 />
               </div>
 
-              {/* Roastery Craft Story */}
+              {/* Kitchen & Brew Craft Story */}
               <div className="space-y-1.5">
                 <label className="text-xs font-bold uppercase tracking-wider text-[#544E49]">The Craft Story</label>
                 <textarea

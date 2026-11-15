@@ -63,7 +63,7 @@ export default function Footer() {
                 href={site.address.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Roastery Location"
+                aria-label="Cafe Location"
                 className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#C8652D] hover:text-white flex items-center justify-center text-[#FAF7F2] transition-colors"
               >
                 <MapPin className="w-4 h-4" />
@@ -88,7 +88,7 @@ export default function Footer() {
                     }).catch(() => {});
                   }
                 }}
-                aria-label="Share Roastery"
+                aria-label="Share Cafe"
                 className="w-9 h-9 rounded-full bg-white/5 hover:bg-[#C8652D] hover:text-white flex items-center justify-center text-[#FAF7F2] transition-colors"
               >
                 <Share2 className="w-4 h-4" />
@@ -98,14 +98,14 @@ export default function Footer() {
 
           {/* Newsletter Box */}
           <div className="lg:col-span-4 flex flex-col gap-3">
-            <span className="font-bold text-lg text-[#FAF7F2]">Get Roastery Updates</span>
+            <span className="font-bold text-lg text-[#FAF7F2]">Get Cafe &amp; Menu Updates</span>
             <p className="text-sm text-[#D4CECA]">
-              Receive seasonal micro-lot releases, single-origin cupping invitations, and roaster notes.
+              Receive seasonal chef specials, new wood-fired pizza drops, and artisanal coffee releases.
             </p>
             {subscribed ? (
               <div className="flex items-center gap-2 p-3 bg-white/10 rounded-full text-sm text-[#FAF7F2]">
                 <CheckCircle className="w-4 h-4 text-[#C8652D]" />
-                <span>Thank you! You are on our private cupping list.</span>
+                <span>Thank you! You are on our private food &amp; brew list.</span>
               </div>
             ) : (
               <form onSubmit={handleSubscribe} className="flex items-center w-full max-w-md bg-white/10 rounded-full p-1.5 border border-white/10 focus-within:border-[#C8652D] transition-colors">
@@ -131,16 +131,16 @@ export default function Footer() {
           {/* Navigation Links */}
           <div className="lg:col-span-4 grid grid-cols-2 sm:grid-cols-3 gap-6">
             <div className="flex flex-col gap-2">
-              <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider mb-1">Roastery</span>
+              <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider mb-1">Cafe &amp; Kitchen</span>
               <Link href="/menu" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Full Menu</Link>
-              <Link href="/roastery" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">About Us</Link>
-              <Link href="/roastery" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Spaces</Link>
+              <Link href="/about" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">About Us</Link>
+              <Link href="/about" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Our Story</Link>
             </div>
 
             <div className="flex flex-col gap-2">
               <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider mb-1">Experience</span>
               <Link href="/reservation" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Table Booking</Link>
-              <Link href="/roastery" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Cupping Lab</Link>
+              <Link href="/about" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Dining Spaces</Link>
               <a href={site.address.mapUrl} target="_blank" rel="noopener noreferrer" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Find Location</a>
             </div>
 
@@ -148,10 +148,6 @@ export default function Footer() {
               <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider mb-1">Concierge</span>
               <a href={`tel:${site.contact.phoneRaw}`} className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Direct Call</a>
               <a href={`https://wa.me/${site.contact.whatsappRaw}`} target="_blank" rel="noopener noreferrer" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">WhatsApp</a>
-              <Link href="/admin" className="text-xs text-[#C8652D] hover:underline flex items-center gap-1 mt-1">
-                <SlidersHorizontal className="w-3 h-3" />
-                <span>Owner Admin</span>
-              </Link>
             </div>
           </div>
         </div>

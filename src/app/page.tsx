@@ -76,7 +76,7 @@ const CUSTOMER_REVIEWS: CarouselItem[] = [
     avatar:
       'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
     description:
-      'The botanical veranda aesthetic with shaded wooden pergolas is incredible. We host weekend design meets here over Japanese V60s and truffle mushroom sourdough toast.',
+      'The sunlit courtyard veranda with shaded wooden pergolas is incredible. We host weekend design meets here over Japanese V60s and truffle mushroom sourdough toast.',
   },
   {
     id: 'rev-4',
@@ -253,7 +253,7 @@ export default function HomePage() {
     },
     {
       url: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=80',
-      alt: 'Sunlit botanical courtyard patio at Daily Coffee Drip',
+      alt: 'Sunlit courtyard patio at Daily Coffee Drip',
       caption: 'Al Fresco Courtyard Vibe',
     },
   ]);
@@ -302,7 +302,7 @@ export default function HomePage() {
       setSelectedDish({
         id: currentHeroDish.id,
         name: `${currentHeroDish.titleLight} ${currentHeroDish.titleBold}`,
-        category: 'Roastery & Kitchen Signature',
+        category: 'Cafe & Kitchen Signature',
         categorySlug: 'hot-coffee',
         price: currentHeroDish.price,
         description: currentHeroDish.overview,
@@ -345,7 +345,7 @@ export default function HomePage() {
         url: uploadImagePreview,
         alt: uploadCaption || 'Guest moment at Daily Coffee Drip',
         author: uploadName || 'Valued Patron',
-        caption: uploadCaption || 'Shared Roastery Moment',
+        caption: uploadCaption || 'Shared Cafe Moment',
       },
       ...prev,
     ]);
@@ -428,7 +428,7 @@ export default function HomePage() {
             </svg>
           </div>
 
-          {/* Layer 3: Floating elevation & botanical accent (yPercent: -35) */}
+          {/* Layer 3: Floating warmth & golden glow accent (yPercent: -35) */}
           <div
             data-parallax-layer="float"
             className="hidden sm:block absolute top-1/4 right-12 w-64 h-64 rounded-full bg-[#E8A55B]/10 blur-2xl"
@@ -444,7 +444,7 @@ export default function HomePage() {
             </span>
             <span className="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-[#C8652D]"></span>
             <span className="hidden sm:inline-block text-[11px] font-bold text-[#857D77] uppercase tracking-wider">
-              100% Pure Vegetarian Cafe, Roastery &amp; Fast Food Kitchen
+              100% Pure Vegetarian Cafe, Restaurant &amp; Craft Kitchen
             </span>
           </div>
 
@@ -919,14 +919,14 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
-            {/* Left Column: Kitchen & Roastery Philosophy */}
+            {/* Left Column: Kitchen & Brew Philosophy */}
             <div className="lg:col-span-6 flex flex-col justify-center">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-white/15 mb-3 w-fit">
                 <Flame className="w-3.5 h-3.5" />
-                <span>Wood-Hearth &amp; Roastery Alchemy</span>
+                <span>Wood-Hearth &amp; Specialty Brew Alchemy</span>
               </div>
               <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-[#FAF7F2] tracking-tight leading-tight mb-4">
-                Where Stone Hearth Heat Meets Roastery Precision
+                Where Stone Hearth Heat Meets Barista Craft Precision
               </h2>
               <p className="text-sm sm:text-base text-[#D4CECA] mb-8 leading-relaxed font-normal">
                 Every pizza is fired on 420°C hot stone for an airy blistered crust. Every smash burger is seared fresh to order with house sauces. And every coffee is calibrated with 9 bar extraction at 93.5°C.
@@ -1131,15 +1131,115 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5B. OSMO MULTI-LAYER DEPTH PARALLAX BANNER (ROASTERY & BOTANICAL KITCHEN) */}
+      {/* 5B. ABOUT US & THE FOUNDERS STORY (OUR CAFE & KITCHEN ROOTS) */}
       {/* ========================================================================= */}
-      <ParallaxComponent
-        title="Artisanal Roastery & Craft Kitchen"
-        subtitle="Where single-origin Chikmagalur shade-grown Arabica meets 48-hour cold fermented stone-baked sourdoughs and mindful 100% pure vegetarian cuisine."
-        tag="Western Ghats Elevation 1,350M"
-        height="68vh"
-        theme="dark"
-      />
+      <section className="w-full py-16 sm:py-24 bg-[#FAF7F2] border-b border-[#E5E2DD] overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-3xl p-8 sm:p-12 lg:p-14 shadow-sm border border-[#E5E2DD] flex flex-col lg:flex-row gap-10 items-center">
+            {/* Left: Story & Quote */}
+            <div className="lg:w-1/2 flex flex-col gap-5">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C8652D]/10 text-[#C8652D] text-xs font-bold uppercase tracking-wider w-fit border border-[#C8652D]/20">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>About Our Cafe &amp; Restaurant</span>
+              </div>
+
+              <h2 className="text-2xl sm:text-4xl font-extrabold text-[#18120F] tracking-tight leading-tight">
+                Crafted for Bengaluru, Rooted in Honest Food &amp; Precision Brews
+              </h2>
+
+              <p className="text-sm sm:text-base text-[#544E49] leading-relaxed">
+                Founded by Kabir &amp; Ananya on 12th Main Indiranagar, Daily Coffee Drip was born to create a warm neighborhood gathering space where world-class single-origin coffee meets serious artisanal dining.
+              </p>
+
+              <p className="text-sm sm:text-base text-[#544E49] leading-relaxed">
+                We believe you shouldn&apos;t have to settle for bland quick-service meals. That&apos;s why our kitchen is 100% pure vegetarian, slow-fermenting 48-hour sourdough pizzas, hand-crafting panko malai paneer smash burgers, and pulling calibrated pour-overs from 1,350m elevation Chikmagalur estates.
+              </p>
+
+              <div className="grid grid-cols-2 gap-4 pt-2">
+                <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5E2DD]">
+                  <span className="text-2xl font-black text-[#C8652D]">100%</span>
+                  <p className="text-xs font-bold text-[#18120F] mt-0.5">Pure Vegetarian</p>
+                  <p className="text-[11px] text-[#857D77]">Jain customizations available</p>
+                </div>
+                <div className="p-4 rounded-2xl bg-[#FAF7F2] border border-[#E5E2DD]">
+                  <span className="text-2xl font-black text-[#18120F]">1,350m</span>
+                  <p className="text-xs font-bold text-[#18120F] mt-0.5">Chikmagalur Elevation</p>
+                  <p className="text-[11px] text-[#857D77]">Direct single-origin micro-lots</p>
+                </div>
+              </div>
+
+              <div className="pt-3 flex flex-wrap items-center gap-4">
+                <Link
+                  href="/about"
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#18120F] text-[#FAF7F2] hover:bg-[#C8652D] text-xs font-bold shadow-sm transition-all"
+                >
+                  <span>Meet the Founders &amp; Read Our Story</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+                <Link
+                  href="/reservation"
+                  className="inline-flex items-center gap-2 text-xs font-bold text-[#18120F] hover:text-[#C8652D] transition-colors"
+                >
+                  <span>Book a Table →</span>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right: Founders & Kitchen Image Showcase */}
+            <div className="lg:w-1/2 w-full grid grid-cols-2 gap-4">
+              <div className="flex flex-col gap-4">
+                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
+                  <Image
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80"
+                    alt="Kabir Mehta - Co-Founder & Coffee Roaster"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                  <div className="absolute bottom-2 left-2 right-2 p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-white">
+                    <p className="font-bold text-xs truncate">Kabir Mehta</p>
+                    <p className="text-[10px] text-white/70">Co-Founder &amp; Roaster</p>
+                  </div>
+                </div>
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
+                  <Image
+                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
+                    alt="Manual V60 Pour-over brewing"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4 pt-6">
+                <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
+                  <Image
+                    src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=800&auto=format&fit=crop&q=80"
+                    alt="Wood-fired stone-baked sourdough pizza"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                </div>
+                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
+                  <Image
+                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=80"
+                    alt="Ananya Iyer - Co-Founder & Executive Chef"
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                  />
+                  <div className="absolute bottom-2 left-2 right-2 p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-white">
+                    <p className="font-bold text-xs truncate">Ananya Iyer</p>
+                    <p className="text-[10px] text-white/70">Co-Founder &amp; Chef</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* ========================================================================= */}
       {/* 6. CUSTOMER TESTIMONIALS (ANIMATED CIRCULAR CAROUSEL) */}
@@ -1198,7 +1298,7 @@ export default function HomePage() {
                 <span>Patron &amp; Food Polaroid Line</span>
               </div>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#18120F] tracking-tight mb-2">
-                Moments Inside Our Roastery &amp; Cafe
+                Moments Inside Our Cafe &amp; Restaurant
               </h2>
               <p className="text-sm sm:text-base text-[#544E49]">
                 Drag or swipe the line — instant polaroid prints swaying on wooden pegs in the Bengaluru breeze.
@@ -1216,10 +1316,10 @@ export default function HomePage() {
               </button>
 
               <Link
-                href="/roastery"
+                href="/about"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-xs hover:bg-[#C8652D] transition-colors shadow-sm"
               >
-                <span>Full Tour</span>
+                <span>Full Story &amp; Spaces</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
             </div>
@@ -1239,7 +1339,7 @@ export default function HomePage() {
               slides={galleryImages.map((img) => ({
                 image: img.url,
                 title: img.caption || img.alt,
-                caption: img.author ? `Shared by ${img.author}` : 'Daily Coffee Drip Roastery & Kitchen',
+                caption: img.author ? `Shared by ${img.author}` : 'Daily Coffee Drip Cafe & Kitchen',
                 alt: img.alt,
               }))}
             />
@@ -1333,7 +1433,7 @@ export default function HomePage() {
                 className="w-full min-h-[44px] rounded-full bg-[#18120F] hover:bg-[#C8652D] text-white font-bold text-xs flex items-center justify-center gap-2 shadow-sm transition-all"
               >
                 <Upload className="w-3.5 h-3.5" />
-                <span>Publish to Roastery Moments</span>
+                <span>Publish to Cafe Moments</span>
               </button>
             </form>
           </div>

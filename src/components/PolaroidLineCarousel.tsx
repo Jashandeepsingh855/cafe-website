@@ -87,7 +87,7 @@ const DEFAULT_CAFE_SLIDES: Slide[] = [
   },
   {
     image: 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=80',
-    title: 'Botanical Courtyard Veranda',
+    title: 'Sunlit Courtyard Veranda',
     caption: 'Sunlit morning bakes and unhurried coffee connection in Indiranagar.',
   },
 ];
@@ -324,7 +324,7 @@ export default function PolaroidLineCarousel({
   onChange,
   className,
   style,
-  ariaLabel = 'Roastery & Cafe Photo Line Carousel',
+  ariaLabel = 'Cafe & Restaurant Photo Line Carousel',
 }: PolaroidLineCarouselProps) {
   const baseN = slides.length;
   // Repeat enough sets so the string spans seamlessly across any wide viewport without showing seams

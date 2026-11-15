@@ -72,7 +72,7 @@ export default function ReservationPage() {
     {
       id: 'veranda',
       name: 'Al Fresco Veranda',
-      desc: 'Breezy outdoor canopy, wooden pergolas & fresh open-air botanical seating.',
+      desc: 'Breezy outdoor canopy, wooden pergolas & sunlit garden patio seating.',
       tag: 'Available for booking',
       image:
         'https://lh3.googleusercontent.com/aida-public/AB6AXuCVjFXx8SV616u_kR_qTEf-QYx8FjHmQ42o7KsvCGB2zlq7oEb7rZDiDD1nDVioA1I08Vk3dtxIEMIuLOFmTp1gApV_Rxp-fwZd1qzFus35D1qPSzTWug4E9O0SFCPm72L5cV2-9E2MqZ8SKac38i5GqzTMu5qIvYaCejoY6QBogVZx07keXz19b_FsDDvG-xjToW8BZ_sup2rXo8Z6Ojq3MGtYGlsqYzy5O_ormwY',
@@ -80,7 +80,7 @@ export default function ReservationPage() {
     {
       id: 'hearth',
       name: 'Hearth & Banquette Salon',
-      desc: 'Indoor velvet banquettes, warm acoustic hearth lighting & curated roastery library.',
+      desc: 'Indoor velvet banquettes, warm acoustic hearth lighting & curated dining library.',
       tag: 'Cozy & plush ambiance',
       image:
         'https://lh3.googleusercontent.com/aida-public/AB6AXuAIjQL4v5uL3wjbFMf2Jg9kkkvzM4S6OJm8UjZzKRER4gtKpODOFspYWFgGDSZIM3gbLf1zJP8BTiDNlO76Agc2bcT2BaIOG5yFSbaNABgYma6eC24KjYgSSn0YiN4dK3mP5pCylrR86SCtPwsplzzmE3sWqB5-CUF4BjKQgysEOmGuXS8kZ1MMnA8x-HRb7wyRaJpItFSWACg65jizfTdcxh2Yw55_dmIr7ICnUYc',
@@ -226,7 +226,7 @@ Please confirm my table reservation. Thank you!`;
         </div>
       </section>
 
-      {/* Main Booking Form + Roastery Venue Info */}
+      {/* Main Booking Form + Cafe Venue Info */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: 4-Step Reservation Machine */}
@@ -265,7 +265,7 @@ Please confirm my table reservation. Thank you!`;
                   { id: '1-2', count: '1–2', label: 'Solo / Duos', hint: 'Focus & pairs' },
                   { id: '3-4', count: '3–4', label: 'Intimate Table', hint: 'Casual meetup' },
                   { id: '5-8', count: '5–8', label: 'Group Lounge', hint: 'Sofa circle' },
-                  { id: '8+', count: '8+', label: 'Private Salon', hint: 'Roastery suite' },
+                  { id: '8+', count: '8+', label: 'Private Salon', hint: 'Dining suite' },
                 ].map((item) => (
                   <button
                     key={item.id}
@@ -291,11 +291,11 @@ Please confirm my table reservation. Thank you!`;
               </div>
             </div>
 
-            {/* STEP 2: Preferred Roastery Zone */}
+            {/* STEP 2: Preferred Dining Zone */}
             <div className="flex flex-col gap-3">
               <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                 <Store className="w-4 h-4 text-[#C8652D]" />
-                <span>2. Preferred Roastery Zone</span>
+                <span>2. Preferred Dining Zone</span>
               </label>
 
               {/* Stacked Single-Column Cards on Mobile (< 768px), 2-Col on Desktop */}
@@ -548,12 +548,12 @@ Please confirm my table reservation. Thank you!`;
 
           {/* Right Column: Venue Info & FAQs */}
           <aside className="lg:col-span-4 flex flex-col gap-6 w-full">
-            {/* Live Roastery Card */}
+            {/* Live Cafe Card */}
             <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-4">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-[11px] font-bold text-[#C8652D] uppercase tracking-wider">
-                    Roastery Presence
+                    Cafe &amp; Restaurant Presence
                   </span>
                   <h3 className="text-lg font-bold text-[#18120F]">{site.name}</h3>
                 </div>

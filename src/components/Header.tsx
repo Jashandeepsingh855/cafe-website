@@ -57,7 +57,7 @@ export default function Header() {
   const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'Full Menu (140+)', href: '/menu' },
-    { name: 'The Roastery', href: '/roastery' },
+    { name: 'About Us', href: '/about' },
     { name: 'Table Reservation', href: '/reservation' },
   ];
 
@@ -112,19 +112,6 @@ export default function Header() {
 
           {/* Actions & CTA */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Desktop Owner Admin link */}
-            <Link
-              href="/admin"
-              title="Owner Portal"
-              className={`hidden lg:flex w-10 h-10 rounded-full items-center justify-center transition-colors ${
-                pathname.startsWith('/admin')
-                  ? 'bg-[#C8652D] text-white shadow-sm'
-                  : 'text-[#544E49] hover:bg-[#EBE8E3] hover:text-[#18120F]'
-              }`}
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-            </Link>
-
             {/* Desktop Heart Icon */}
             <Link
               href="/menu"
@@ -246,21 +233,6 @@ export default function Header() {
             );
           })}
 
-          <Link
-            href="/admin"
-            onClick={() => setMobileMenuOpen(false)}
-            className={`min-h-[48px] px-4 py-3 rounded-2xl font-bold text-sm flex items-center justify-between transition-all mt-4 ${
-              pathname.startsWith('/admin')
-                ? 'bg-[#C8652D] text-white shadow-sm'
-                : 'bg-[#EBE8E3] text-[#18120F] border border-[#E5E2DD] hover:bg-[#D4CECA]'
-            }`}
-          >
-            <div className="flex items-center gap-2.5">
-              <SlidersHorizontal className="w-4 h-4 text-[#C8652D]" />
-              <span>Café Owner Admin Portal</span>
-            </div>
-            <ArrowRight className="w-4 h-4 opacity-60" />
-          </Link>
         </div>
 
         {/* Drawer Bottom - CTAs & Contact */}
@@ -289,7 +261,7 @@ export default function Header() {
               className="min-h-[42px] px-3 py-2 rounded-xl bg-white border border-[#E5E2DD] text-[#18120F] font-semibold flex items-center justify-center gap-1.5 shadow-sm"
             >
               <Phone className="w-3.5 h-3.5 text-[#C8652D]" />
-              <span>Call Roastery</span>
+              <span>Call Cafe</span>
             </a>
           </div>
 

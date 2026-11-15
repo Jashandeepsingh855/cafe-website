@@ -26,16 +26,16 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: 'Daily Coffee Drip - Artisanal Roastery & Craft Kitchen',
+  title: 'Daily Coffee Drip - Artisanal Cafe & Restaurant',
   description:
-    'Experience extraordinary precision at Daily Coffee Drip in Indiranagar, Bengaluru. 100% pure vegetarian artisanal kitchen, single-origin micro-lots, and unhurried hospitality.',
+    'Experience extraordinary hospitality at Daily Coffee Drip in Indiranagar, Bengaluru. 100% pure vegetarian artisanal kitchen, single-origin brews, sourdough pizzas, smash burgers, and comfortable dining spaces.',
   keywords: [
     'Daily Coffee Drip',
     'Specialty Coffee Bangalore',
-    'Indiranagar Roastery',
+    'Indiranagar Cafe and Restaurant',
     'Pure Veg Cafe Bangalore',
     'Artisanal Coffee',
-    'Micro-lot Roaster',
+    'Indiranagar Pure Veg Dining',
   ],
 };
 
