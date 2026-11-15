@@ -302,27 +302,27 @@ export default function MenuPage() {
               </div>
 
               {/* Grid of Dishes with Smooth Animated Entrance */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div data-reveal-grid className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 {items.map((dish) => (
                   <div
                     key={dish.id}
                     onClick={() => setSelectedDish(dish)}
-                    className={`group bg-white border border-[#E5E2DD] rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-lg hover:border-[#C8652D]/60 transition-all duration-300 cursor-pointer relative ${
+                    className={`dish-card-reveal image-lift-card group bg-white border border-[#E5E2DD] rounded-3xl p-4 sm:p-5 flex flex-col justify-between shadow-sm hover:shadow-[0_20px_40px_rgba(200,101,45,0.16)] hover:border-[#C8652D]/60 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer relative ${
                       dish.inStock === false ? 'opacity-70 bg-stone-50' : ''
                     }`}
                   >
                     {/* Top Row: Dish Photo + Info */}
                     <div className="flex items-start gap-4">
                       {/* Dish Photo */}
-                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 relative bg-[#FAF7F2] border border-[#E5E2DD] shadow-inner group-hover:scale-105 transition-transform duration-300">
+                      <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden shrink-0 relative bg-[#FAF7F2] border border-[#E5E2DD] shadow-inner image-zoom-frame">
                         <Image
                           src={dish.image}
                           alt={dish.name}
                           fill
-                          className="object-cover"
+                          className="object-cover scroll-parallax-img scale-105 group-hover:scale-112 transition-transform duration-700 ease-out"
                           sizes="(max-width: 640px) 80px, 96px"
                         />
-                        <div className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-[#186a22] ring-2 ring-white"></div>
+                        <div className="absolute top-1.5 left-1.5 w-2 h-2 rounded-full bg-[#186a22] ring-2 ring-white z-10"></div>
                       </div>
 
                       {/* Dish Name & Description */}

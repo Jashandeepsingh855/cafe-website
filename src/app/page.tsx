@@ -686,9 +686,9 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div data-reveal-grid className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {/* Zomato Card */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#E23744]/40 hover:shadow-md transition-all flex flex-col justify-between group">
+            <div className="dish-card-reveal image-lift-card p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#E23744]/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="px-3.5 py-1.5 rounded-full bg-[#E23744] text-white text-xs font-black tracking-wider uppercase">
@@ -720,7 +720,7 @@ export default function HomePage() {
             </div>
 
             {/* Swiggy Card */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#FC8019]/40 hover:shadow-md transition-all flex flex-col justify-between group">
+            <div className="dish-card-reveal image-lift-card p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#FC8019]/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="px-3.5 py-1.5 rounded-full bg-[#FC8019] text-white text-xs font-black tracking-wider uppercase">
@@ -752,7 +752,7 @@ export default function HomePage() {
             </div>
 
             {/* WhatsApp Direct Barista Card */}
-            <div className="p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#25D366]/40 hover:shadow-md transition-all flex flex-col justify-between group">
+            <div className="dish-card-reveal image-lift-card p-6 sm:p-7 rounded-3xl bg-[#FAF7F2] border border-[#E5E2DD] hover:border-[#25D366]/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 flex flex-col justify-between group">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="px-3.5 py-1.5 rounded-full bg-[#25D366] text-white text-xs font-black tracking-wider uppercase">
@@ -825,36 +825,39 @@ export default function HomePage() {
           </div>
 
           {/* 4x2 Responsive Grid of Cafe Food & Drinks */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
+          <div data-reveal-grid className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full">
             {displayedCafeItems.map((item) => (
               <div
                 key={item.id}
                 onClick={() => setSelectedDish(item)}
-                className="group relative bg-white border border-[#E5E2DD] rounded-3xl p-4 flex flex-col justify-between shadow-sm hover:shadow-xl hover:border-[#C8652D]/50 transition-all duration-300 cursor-pointer"
+                className="group relative bg-white border border-[#E5E2DD] rounded-3xl p-4 flex flex-col justify-between shadow-sm hover:shadow-[0_20px_40px_rgba(200,101,45,0.16)] hover:border-[#C8652D]/60 hover:-translate-y-2 transition-all duration-300 ease-out cursor-pointer dish-card-reveal image-lift-card"
               >
                 {/* Favorite button */}
                 <button
                   type="button"
                   onClick={(e) => toggleLike(e, item.id)}
                   aria-label="Save to favorites"
-                  className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-[#544E49] hover:text-[#C8652D] transition-colors shadow-sm"
+                  className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-[#544E49] hover:text-[#C8652D] group-hover:scale-110 transition-all shadow-sm"
                 >
                   <Heart
-                    className={`w-4 h-4 ${likedDishes[item.id] ? 'fill-[#C8652D] text-[#C8652D]' : ''}`}
+                    className={`w-4 h-4 transition-transform ${likedDishes[item.id] ? 'fill-[#C8652D] text-[#C8652D]' : ''}`}
                   />
                 </button>
 
-                {/* Dish Photo */}
-                <div className="relative w-full aspect-square rounded-2xl bg-[#FAF7F2] overflow-hidden flex items-center justify-center p-2 border border-[#E5E2DD]/70">
+                {/* Dish Photo with Scroll Parallax & Zoom */}
+                <div className="relative w-full aspect-square rounded-2xl bg-[#FAF7F2] overflow-hidden flex items-center justify-center p-2 border border-[#E5E2DD]/70 shadow-xs image-zoom-frame">
                   <Image
                     src={item.image}
                     alt={item.name}
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover scroll-parallax-img scale-105 group-hover:scale-112 transition-transform duration-700 ease-out"
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
                   />
+                  {/* Atmospheric hover sheen */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#18120F]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+
                   {/* Category Pill Tag */}
-                  <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold">
+                  <div className="absolute bottom-2 left-2 px-2.5 py-0.5 rounded-full bg-black/60 backdrop-blur-sm text-white text-[10px] font-bold z-10 shadow-xs">
                     {item.category}
                   </div>
                 </div>

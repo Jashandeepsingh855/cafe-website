@@ -143,18 +143,18 @@ export default function RoasteryPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div data-reveal-grid className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {spaces.map((sp, i) => (
             <div
               key={i}
-              className="group bg-white rounded-3xl border border-[#E5E2DD] shadow-sm hover:shadow-md transition-all flex flex-col overflow-hidden"
+              className="dish-card-reveal image-lift-card group bg-white rounded-3xl border border-[#E5E2DD] shadow-sm hover:shadow-[0_24px_50px_rgba(24,18,15,0.14)] hover:border-[#C8652D]/60 hover:-translate-y-2.5 transition-all duration-300 ease-out flex flex-col overflow-hidden"
             >
-              <div className="relative w-full aspect-[16/10] bg-[#E5E2DD] overflow-hidden">
+              <div className="relative w-full aspect-[16/10] bg-[#E5E2DD] overflow-hidden image-zoom-frame">
                 <Image
                   src={sp.image}
                   alt={sp.title}
                   fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="object-cover scroll-parallax-img scale-105 group-hover:scale-112 transition-transform duration-700 ease-out"
                 />
               </div>
               <div className="p-6 flex flex-col gap-2 flex-1 justify-between">

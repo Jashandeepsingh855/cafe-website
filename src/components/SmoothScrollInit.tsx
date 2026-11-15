@@ -153,6 +153,97 @@ export default function SmoothScrollInit() {
             }
           });
         });
+
+        // -------------------------------------------------------------
+        // 5. Scroll-Driven Card Grid Stagger Entrance (.dish-card-reveal)
+        // -------------------------------------------------------------
+        const revealGrids = document.querySelectorAll<HTMLElement>('[data-reveal-grid]');
+        revealGrids.forEach((grid) => {
+          const cards = grid.querySelectorAll<HTMLElement>('.dish-card-reveal');
+          if (cards.length > 0) {
+            gsap.fromTo(
+              cards,
+              {
+                opacity: 0,
+                y: 35,
+                scale: 0.96,
+                force3D: true,
+              },
+              {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                duration: 0.65,
+                stagger: {
+                  each: 0.08,
+                  from: 'start',
+                },
+                ease: 'power2.out',
+                force3D: true,
+                scrollTrigger: {
+                  trigger: grid,
+                  start: 'top 88%',
+                  toggleActions: 'play none none reverse',
+                },
+              }
+            );
+          }
+        });
+
+        const standaloneCards = document.querySelectorAll<HTMLElement>(
+          '.dish-card-reveal:not([data-reveal-grid] *)'
+        );
+        standaloneCards.forEach((card) => {
+          gsap.fromTo(
+            card,
+            {
+              opacity: 0,
+              y: 28,
+              scale: 0.97,
+              force3D: true,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              scale: 1,
+              duration: 0.55,
+              ease: 'power2.out',
+              force3D: true,
+              scrollTrigger: {
+                trigger: card,
+                start: 'top 90%',
+                toggleActions: 'play none none reverse',
+              },
+            }
+          );
+        });
+
+        // -------------------------------------------------------------
+        // 6. Smooth Scroll-Driven Image Parallax (.scroll-parallax-img)
+        // Subtle, physical vertical drift inside overflow-hidden frames
+        // -------------------------------------------------------------
+        const parallaxImages = document.querySelectorAll<HTMLElement>('.scroll-parallax-img');
+        parallaxImages.forEach((img) => {
+          const container = img.closest('.overflow-hidden') || img.parentElement || img;
+          gsap.fromTo(
+            img,
+            {
+              yPercent: -6,
+              force3D: true,
+            },
+            {
+              yPercent: 6,
+              ease: 'none',
+              force3D: true,
+              scrollTrigger: {
+                trigger: container,
+                start: 'top bottom',
+                end: 'bottom top',
+                scrub: 0.4,
+              },
+            }
+          );
+        });
       });
 
       // Refresh ScrollTrigger calculations after mounting

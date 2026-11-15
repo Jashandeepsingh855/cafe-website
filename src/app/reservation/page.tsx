@@ -304,14 +304,14 @@ Please confirm my table reservation. Thank you!`;
                   <div
                     key={z.id}
                     onClick={() => setZone(z.id)}
-                    className={`relative p-3.5 rounded-2xl cursor-pointer transition-all flex gap-3 items-start border-2 ${
+                    className={`group relative p-3.5 rounded-2xl cursor-pointer transition-all duration-300 flex gap-3 items-start border-2 hover:-translate-y-1 hover:shadow-md ${
                       zone === z.id
                         ? 'bg-[#FAF7F2] border-[#C8652D] shadow-sm'
                         : 'bg-[#F6F3EE] border-transparent hover:border-[#E5E2DD]'
                     }`}
                   >
-                    <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD]">
-                      <Image src={z.image} alt={z.name} fill className="object-cover" />
+                    <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD] image-zoom-frame">
+                      <Image src={z.image} alt={z.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out" />
                     </div>
 
                     <div className="flex flex-col min-w-0">
