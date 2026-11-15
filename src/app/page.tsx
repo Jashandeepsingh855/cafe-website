@@ -1164,7 +1164,7 @@ export default function HomePage() {
               onActiveChange={setActiveReviewIndex}
               theme="cafe"
               autoPlay={true}
-              autoPlayInterval={4500}
+              autoPlayInterval={2800}
             />
           </div>
 

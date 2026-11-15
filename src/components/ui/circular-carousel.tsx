@@ -94,15 +94,13 @@ export function CircularCarousel({
   activeIndex: controlledIndex,
   onActiveChange,
   autoPlay = true,
-  autoPlayInterval = 4500,
+  autoPlayInterval = 2800,
   className,
   theme = 'cafe',
 }: CircularCarouselProps) {
   const [internalIndex, setInternalIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const [isFocused, setIsFocused] = useState(false);
   const [containerWidth, setContainerWidth] = useState(800);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const lastUserInteraction = useRef(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const activeIndex = controlledIndex ?? internalIndex;
@@ -130,21 +128,54 @@ export function CircularCarousel({
     [total, controlledIndex, onActiveChange]
   );
 
-  const next = useCallback(() => goTo(activeIndex + 1), [activeIndex, goTo]);
-  const prev = useCallback(() => goTo(activeIndex - 1), [activeIndex, goTo]);
+  const next = useCallback(() => {
+    setInternalIndex((prev) => {
+      const target = controlledIndex !== undefined ? controlledIndex : prev;
+      const newIndex = (target + 1) % total;
+      onActiveChange?.(newIndex);
+      return newIndex;
+    });
+  }, [total, controlledIndex, onActiveChange]);
+
+  const prev = useCallback(() => {
+    setInternalIndex((prev) => {
+      const target = controlledIndex !== undefined ? controlledIndex : prev;
+      const newIndex = (target - 1 + total) % total;
+      onActiveChange?.(newIndex);
+      return newIndex;
+    });
+  }, [total, controlledIndex, onActiveChange]);
+
+  const handleUserGoTo = (index: number) => {
+    lastUserInteraction.current = Date.now();
+    goTo(index);
+  };
+
+  const handleUserNext = () => {
+    lastUserInteraction.current = Date.now();
+    next();
+  };
+
+  const handleUserPrev = () => {
+    lastUserInteraction.current = Date.now();
+    prev();
+  };
 
   useEffect(() => {
-    if (!autoPlay || isHovered || isFocused) return;
-    intervalRef.current = setInterval(next, autoPlayInterval);
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [autoPlay, autoPlayInterval, isHovered, isFocused, next]);
+    if (!autoPlay || total <= 1) return;
+    const interval = setInterval(() => {
+      // Pause briefly if user recently interacted
+      if (Date.now() - lastUserInteraction.current < 2500) return;
+      next();
+    }, autoPlayInterval);
+
+    return () => clearInterval(interval);
+  }, [autoPlay, autoPlayInterval, total, next]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') handleUserPrev();
+      if (e.key === 'ArrowRight') handleUserNext();
     };
     const el = containerRef.current;
     el?.addEventListener('keydown', handler);
@@ -161,10 +192,6 @@ export function CircularCarousel({
       role="region"
       aria-label="Customer Reviews Carousel"
       aria-roledescription="carousel"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
       className={cn(
         'relative flex flex-col items-center justify-center gap-6 outline-none select-none w-full max-w-6xl mx-auto overflow-hidden py-2',
         className
@@ -200,14 +227,14 @@ export function CircularCarousel({
                 zIndex: pos.zIndex,
               }}
               transition={{
-                duration: 0.45,
-                ease: [0.22, 1, 0.36, 1],
+                duration: 0.38,
+                ease: [0.16, 1, 0.3, 1],
               }}
               style={{
                 pointerEvents: pos.isVisible ? 'auto' : 'none',
                 transformOrigin: 'center center',
               }}
-              onClick={() => goTo(i)}
+              onClick={() => handleUserGoTo(i)}
               aria-label={item.title}
               aria-selected={isActive}
               role="option"
@@ -308,24 +335,17 @@ export function CircularCarousel({
         })}
       </div>
 
-      {/* Controls Bar: Prev, Counter, Dots, Next */}
+      {/* Controls Bar: Prev, Dots, Next */}
       <div className="flex items-center gap-4 sm:gap-5 z-20 mt-1">
         <motion.button
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
-          onClick={prev}
+          onClick={handleUserPrev}
           aria-label="Previous review"
           className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[#E5E2DD] bg-white text-[#18120F] shadow-sm hover:border-[#C8652D] hover:bg-[#FAF7F2] transition-all cursor-pointer"
         >
           <ChevronLeft className="w-5 h-5 text-[#18120F]" />
         </motion.button>
-
-        {/* Counter Badge */}
-        <div className="px-3 py-1 rounded-full bg-[#FAF7F2] border border-[#E5E2DD] text-xs font-bold text-[#18120F] font-mono tracking-wider">
-          <span className="text-[#C8652D]">{String(activeIndex + 1).padStart(2, '0')}</span>
-          <span className="text-[#857D77] mx-1">/</span>
-          <span className="text-[#857D77]">{String(total).padStart(2, '0')}</span>
-        </div>
 
         {/* Dot Indicators */}
         <div className="flex items-center gap-1.5 sm:gap-2" role="tablist">
@@ -334,11 +354,11 @@ export function CircularCarousel({
               key={i}
               role="tab"
               aria-selected={i === activeIndex}
-              onClick={() => goTo(i)}
+              onClick={() => handleUserGoTo(i)}
               className={cn(
                 'h-2 sm:h-2.5 rounded-full transition-all duration-300 cursor-pointer',
                 i === activeIndex
-                  ? 'w-6 sm:w-8 bg-[#C8652D]'
+                  ? 'w-7 sm:w-8 bg-[#C8652D]'
                   : 'w-2 sm:w-2.5 bg-[#E5E2DD] hover:bg-[#C8652D]/50'
               )}
               aria-label={`Go to review ${i + 1}`}
@@ -349,7 +369,7 @@ export function CircularCarousel({
         <motion.button
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
-          onClick={next}
+          onClick={handleUserNext}
           aria-label="Next review"
           className="flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full border border-[#E5E2DD] bg-white text-[#18120F] shadow-sm hover:border-[#C8652D] hover:bg-[#FAF7F2] transition-all cursor-pointer"
         >
