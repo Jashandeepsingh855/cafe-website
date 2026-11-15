@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -17,10 +17,26 @@ import {
   Clock,
   Utensils,
   Store,
+  Play,
+  Pause,
 } from 'lucide-react';
 import { DEFAULT_SITE_CONFIG } from '@/config/site';
 
 export default function AboutUsPage() {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  const toggleVideo = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        videoRef.current.play().catch(() => {});
+        setIsPlaying(true);
+      }
+    }
+  };
   const founders = [
     {
       name: 'Kabir Mehta',
@@ -69,16 +85,56 @@ export default function AboutUsPage() {
 
   return (
     <div className="w-full bg-[#FAF7F2] min-h-screen pb-24 md:pb-16 flex flex-col">
-      {/* 1. Hero Header Banner */}
-      <section className="relative w-full bg-[#18120F] text-[#FAF7F2] py-20 sm:py-28 overflow-hidden">
-        {/* Ambient Warm Gradient Backdrop */}
-        <div className="absolute inset-0 bg-radial from-[#C8652D]/20 via-transparent to-transparent pointer-events-none opacity-60" />
-        <div className="absolute inset-0 bg-[radial-gradient(#C8652D_1px,transparent_1px)] [background-size:24px_24px] opacity-10 pointer-events-none" />
+      {/* 1. Hero Header Banner with Atmospheric Ambient Video */}
+      <section className="relative w-full bg-[#18120F] text-[#FAF7F2] py-24 sm:py-32 overflow-hidden">
+        {/* Background Ambient Video Stream */}
+        <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
+          <video
+            ref={videoRef}
+            autoPlay
+            loop
+            muted
+            playsInline
+            poster="/videos/about-hero-poster.jpg"
+            className="w-full h-full object-cover scale-105 opacity-35 transition-opacity duration-1000"
+          >
+            <source src="/videos/about-hero.mp4" type="video/mp4" />
+            <source src="/videos/about-hero.webm" type="video/webm" />
+          </video>
+          {/* Multi-layered cinematic gradient overlays */}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#18120F]/90 via-[#18120F]/75 to-[#18120F]" />
+          <div className="absolute inset-0 bg-radial from-[#C8652D]/15 via-transparent to-transparent opacity-70" />
+          <div className="absolute inset-0 bg-[radial-gradient(#C8652D_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
+        </div>
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-wider mb-4 border border-white/15 backdrop-blur-md">
-            <Sparkles className="w-3.5 h-3.5 text-[#C8652D]" />
-            <span>Our Origin &amp; Hospitality Story</span>
+          {/* Badge & Video Reel Status */}
+          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-5">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md shadow-sm">
+              <Sparkles className="w-3.5 h-3.5 text-[#C8652D]" />
+              <span>Our Origin &amp; Hospitality Story</span>
+            </div>
+
+            {/* Video Play/Pause toggle */}
+            <button
+              type="button"
+              onClick={toggleVideo}
+              aria-label={isPlaying ? 'Pause background video' : 'Play background video'}
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF7F2] text-xs font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md transition-all cursor-pointer"
+            >
+              <span className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-[#186a22] animate-ping' : 'bg-[#857D77]'}`} />
+              {isPlaying ? (
+                <>
+                  <Pause className="w-3 h-3 text-[#C8652D]" />
+                  <span>Pause Reel</span>
+                </>
+              ) : (
+                <>
+                  <Play className="w-3 h-3 text-[#C8652D]" />
+                  <span>Play Reel</span>
+                </>
+              )}
+            </button>
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-5 text-[#FAF7F2]">
@@ -89,15 +145,15 @@ export default function AboutUsPage() {
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA]">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA] backdrop-blur-sm shadow-xs">
               <ShieldCheck className="w-4 h-4 text-[#C8652D]" />
               <span>100% Pure Vegetarian Kitchen</span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA]">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA] backdrop-blur-sm shadow-xs">
               <Coffee className="w-4 h-4 text-[#C8652D]" />
               <span>Single-Origin Chikmagalur Beans</span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA]">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA] backdrop-blur-sm shadow-xs">
               <Store className="w-4 h-4 text-[#C8652D]" />
               <span>Indiranagar Flagship Dining</span>
             </div>
