@@ -2,20 +2,16 @@
 
 import * as React from 'react';
 
-export type LandPalette = 'dawn' | 'alpine' | 'dusk' | 'mist';
-
 export type Slide = {
   image?: string;
   title?: string;
   caption?: string;
   alt?: string;
-  palette?: LandPalette;
-  seed?: number;
 };
 
 export type PolaroidLineCarouselProps = {
   slides?: Slide[];
-  /** Height of the line area. Default 460px or 520px. */
+  /** Height of the line area. Default 500px. */
   height?: number | string;
   /** Width of a print in px (it shrinks on narrow screens). */
   cardWidth?: number;
@@ -57,18 +53,10 @@ export function springStep(x: number, v: number, target: number, dt: number, k =
   return [x + nv * dt, nv];
 }
 
-/** One step of a print's swing. */
+/** One step of a print's swing on wooden pegs. */
 export function swingStep(a: number, w: number, lineVel: number, dt: number, gain: number): [number, number] {
   const nw = w + (-38 * a - 4.2 * w + lineVel * 0.0034 * gain) * dt;
   return [clamp(a + nw * dt, -0.6, 0.6), nw];
-}
-
-export function nearestAt(off: number, spacing: number, n: number): number {
-  return clamp(Math.round(off / spacing), 0, Math.max(0, n - 1));
-}
-
-export function pad2(n: number): string {
-  return n < 10 ? '0' + n : String(n);
 }
 
 const DEFAULT_CAFE_SLIDES: Slide[] = [
@@ -118,6 +106,7 @@ const PL_CSS = `
   cursor: grab;
   border-radius: 2rem;
   border: 1px solid #E5E2DD;
+  font-family: var(--font-sans, "Plus Jakarta Sans"), system-ui, -apple-system, sans-serif;
 }
 .pl-root[data-drag='1'] {
   cursor: grabbing;
@@ -148,14 +137,14 @@ const PL_CSS = `
   margin-top: 10px;
   background: #FFFFFF;
   padding: 10px 10px 12px;
-  border-radius: 4px;
+  border-radius: 6px;
   border: 1px solid rgba(0,0,0,0.06);
-  box-shadow: 0 4px 12px rgba(24,18,15,0.08), 0 20px 32px -12px rgba(24,18,15,0.28);
-  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.5s ease;
+  box-shadow: 0 4px 12px rgba(24,18,15,0.08), 0 20px 32px -12px rgba(24,18,15,0.24);
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease, opacity 0.4s ease;
 }
 .pl-card[data-on='0'] .pl-print {
   transform: scale(0.91);
-  filter: saturate(0.85) brightness(0.97);
+  filter: saturate(0.88) brightness(0.97);
   opacity: 0.88;
 }
 .pl-shot {
@@ -163,7 +152,7 @@ const PL_CSS = `
   aspect-ratio: 1;
   overflow: hidden;
   background: #EBE8E3;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 .pl-shot img {
   position: absolute;
@@ -180,8 +169,10 @@ const PL_CSS = `
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 4px;
-  font: 600 13px/1.2 ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+  padding: 0 6px;
+  font-family: var(--font-sans, "Plus Jakarta Sans"), system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  font-size: 13px;
   letter-spacing: -0.01em;
   color: #18120F;
   white-space: nowrap;
@@ -218,16 +209,18 @@ const PL_CSS = `
   bottom: clamp(16px, 3vh, 28px);
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: clamp(12px, 2vw, 24px);
   cursor: default;
   z-index: 25;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 12px 20px;
   border-radius: 9999px;
   border: 1px solid #E5E2DD;
   box-shadow: 0 8px 24px rgba(24,18,15,0.06);
+  font-family: var(--font-sans, "Plus Jakarta Sans"), system-ui, -apple-system, sans-serif;
 }
 .pl-cap {
   flex: 1;
@@ -236,10 +229,14 @@ const PL_CSS = `
 }
 .pl-cap > * {
   display: block;
-  animation: pl-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  animation: pl-in 0.35s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 .pl-title {
-  font: 700 clamp(15px, 1.8vw, 20px)/1.2 ui-serif, Georgia, serif;
+  font-family: var(--font-sans, "Plus Jakarta Sans"), system-ui, -apple-system, sans-serif;
+  font-weight: 800;
+  font-size: clamp(15px, 1.8vw, 19px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   color: #18120F;
   white-space: nowrap;
   overflow: hidden;
@@ -247,25 +244,25 @@ const PL_CSS = `
 }
 .pl-sub {
   margin-top: 2px;
-  font: 500 12px/1.3 system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans, "Plus Jakarta Sans"), system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.3;
   color: #544E49;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.pl-count {
-  font: 700 12px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
-  letter-spacing: 0.1em;
-  color: #857D77;
-}
-.pl-count b {
-  color: #C8652D;
-  font-weight: 800;
+.pl-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
 }
 .pl-btn {
   appearance: none;
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   border: 1px solid #E5E2DD;
   background: #FFFFFF;
@@ -273,17 +270,18 @@ const PL_CSS = `
   display: grid;
   place-items: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  shrink: 0;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  flex-shrink: 0;
   box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
 .pl-btn:hover {
   background: #18120F;
   color: #FAF7F2;
   border-color: #18120F;
+  transform: scale(1.06);
 }
 .pl-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.94);
 }
 .pl-sr {
   position: absolute;
@@ -295,7 +293,7 @@ const PL_CSS = `
 }
 @keyframes pl-in {
   from {
-    transform: translateY(60%);
+    transform: translateY(50%);
     opacity: 0;
   }
   to {
@@ -316,9 +314,9 @@ const PL_CSS = `
 export default function PolaroidLineCarousel({
   slides = DEFAULT_CAFE_SLIDES,
   height = '500px',
-  cardWidth = 260,
-  sag = 44,
-  swing = 1,
+  cardWidth = 270,
+  sag = 46,
+  swing = 1.1,
   autoplay = 4200,
   string = '#9E866B',
   background = '#FAF7F2',
@@ -328,7 +326,11 @@ export default function PolaroidLineCarousel({
   style,
   ariaLabel = 'Roastery & Cafe Photo Line Carousel',
 }: PolaroidLineCarouselProps) {
-  const n = slides.length;
+  const baseN = slides.length;
+  // Repeat enough sets so the string spans seamlessly across any wide viewport without showing seams
+  const repeatCount = Math.max(4, Math.ceil(24 / Math.max(1, baseN)));
+  const totalCards = baseN * repeatCount;
+
   const [active, setActive] = React.useState(0);
   const [dragging, setDragging] = React.useState(false);
   const [size, setSize] = React.useState({ w: 1200, h: 500, cw: cardWidth });
@@ -343,12 +345,16 @@ export default function PolaroidLineCarousel({
   opts.current = { sag, swing };
 
   const spacing = size.cw * 1.1;
+  const totalW = totalCards * spacing;
+  const halfTotalW = totalW / 2;
 
-  const goTo = React.useCallback(
-    (i: number) => {
-      sim.current.target = clamp(i, 0, n - 1) * spacing;
+  // Step front (+1) or back (-1) in continuous infinite loop
+  const step = React.useCallback(
+    (dir: number) => {
+      lastTouch.current = performance.now();
+      sim.current.target += dir * spacing;
     },
-    [n, spacing]
+    [spacing]
   );
 
   React.useEffect(() => {
@@ -363,7 +369,7 @@ export default function PolaroidLineCarousel({
     return () => ro.disconnect();
   }, [cardWidth]);
 
-  // Keep target synchronized when spacing changes
+  // Keep target aligned on spacing changes (e.g. screen resize)
   React.useEffect(() => {
     sim.current.target = activeRef.current * spacing;
     sim.current.off = activeRef.current * spacing;
@@ -373,10 +379,10 @@ export default function PolaroidLineCarousel({
     onChange?.(active);
   }, [active, onChange]);
 
-  // Real-time animation loop directly updating card transforms
+  // Real-time animation loop directly updating card transforms & infinite circular line
   React.useEffect(() => {
     const root = rootRef.current;
-    if (!root) return;
+    if (!root || baseN === 0) return;
     const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let visible = true;
     let raf = 0;
@@ -401,39 +407,67 @@ export default function PolaroidLineCarousel({
         lineVel = -(S.off - before) / Math.max(dt, 1e-3);
       }
 
+      // Periodically normalize S.off and S.target by totalW to prevent any numeric drift
+      if (Math.abs(S.off) > totalW) {
+        const shift = Math.round(S.off / totalW) * totalW;
+        S.off -= shift;
+        S.target -= shift;
+        if (d) d.off -= shift;
+      }
+
       const o = opts.current;
       const g = reduce ? 0 : o.swing;
-      const near = nearestAt(S.off, spacing, n);
 
-      for (let i = 0; i < n; i++) {
-        const el = cards.current[i];
+      // Position each card along the sagging string in an infinite wrap
+      for (let k = 0; k < totalCards; k++) {
+        const el = cards.current[k];
         if (!el) continue;
-        const x = w / 2 + i * spacing - S.off;
+
+        const rawDist = k * spacing - S.off;
+        let dx = ((rawDist % totalW) + totalW) % totalW;
+        if (dx > halfTotalW) dx -= totalW;
+
+        const x = w / 2 + dx;
+
+        // Clip offscreen cards to preserve GPU performance
         if (x < -cw * 1.5 || x > w + cw * 1.5) {
           el.style.visibility = 'hidden';
           continue;
         }
         el.style.visibility = 'visible';
-        let a = S.a[i] || 0;
-        let av = S.w[i] || 0;
+
+        let a = S.a[k] || 0;
+        let av = S.w[k] || 0;
         [a, av] = swingStep(a, av, lineVel, dt, g);
-        if (g) a += Math.sin(now / 1300 + i * 1.7) * 0.0009 * g;
-        S.a[i] = a;
-        S.w[i] = av;
+        if (g) a += Math.sin(now / 1300 + k * 1.7) * 0.0009 * g;
+        S.a[k] = a;
+        S.w[k] = av;
+
         const y = stringY(x, w, y0, o.sag) - 4;
         el.style.transform = `translate(${(x - cw / 2).toFixed(1)}px,${y.toFixed(1)}px) rotate(${a.toFixed(4)}rad)`;
-        el.style.zIndex = String(i === near ? n + 2 : n - Math.abs(i - near));
+
+        const isCentered = Math.abs(dx) < spacing * 0.5;
+        el.setAttribute('data-on', isCentered ? '1' : '0');
+
+        const distFromCenter = Math.abs(dx);
+        const z = Math.max(1, Math.round(50 - distFromCenter / 40));
+        el.style.zIndex = String(z);
       }
 
+      // Sagging string path
       pathRef.current?.setAttribute(
         'd',
         `M0 ${y0} Q${w / 2} ${y0 + 2 * o.sag} ${w} ${y0}`
       );
 
-      if (near !== activeRef.current) {
-        activeRef.current = near;
-        setActive(near);
+      // Active slide tracking for the bottom title/caption
+      const centeredIndex = Math.round(S.off / spacing);
+      const activeBase = ((centeredIndex % baseN) + baseN) % baseN;
+      if (activeBase !== activeRef.current) {
+        activeRef.current = activeBase;
+        setActive(activeBase);
       }
+
       raf = requestAnimationFrame(frame);
     };
 
@@ -451,17 +485,17 @@ export default function PolaroidLineCarousel({
       cancelAnimationFrame(raf);
       io.disconnect();
     };
-  }, [size, spacing, n]);
+  }, [size, spacing, totalCards, totalW, halfTotalW, baseN]);
 
-  // Autoplay
+  // Continuous Autoplay looping smoothly forward
   React.useEffect(() => {
-    if (!autoplay || n < 2) return;
+    if (!autoplay || baseN < 2) return;
     const t = window.setInterval(() => {
       if (document.hidden || drag.current || performance.now() - lastTouch.current < autoplay) return;
-      goTo(activeRef.current >= n - 1 ? 0 : activeRef.current + 1);
+      sim.current.target += spacing;
     }, autoplay);
     return () => window.clearInterval(t);
-  }, [autoplay, n, goTo]);
+  }, [autoplay, baseN, spacing]);
 
   const onDown = (e: React.PointerEvent) => {
     if ((e.target as HTMLElement).closest('.pl-bar')) return;
@@ -483,11 +517,8 @@ export default function PolaroidLineCarousel({
     d.v = 0.7 * ((e.clientX - d.lx) / dt) + 0.3 * d.v;
     d.lx = e.clientX;
     d.lt = e.timeStamp;
-    const max = (n - 1) * spacing;
-    let off = d.off - dx;
-    if (off < 0) off *= 0.35;
-    if (off > max) off = max + (off - max) * 0.35;
-    sim.current.off = off;
+    // Unclamped infinite drag
+    sim.current.off = d.off - dx;
   };
 
   const onUp = (e: React.PointerEvent) => {
@@ -498,16 +529,19 @@ export default function PolaroidLineCarousel({
     if (d.moved) {
       setDragging(false);
       sim.current.vel = -d.v * 1000;
-      goTo(nearestAt(sim.current.off - d.v * 180, spacing, n));
+      const projected = sim.current.off - d.v * 180;
+      sim.current.target = Math.round(projected / spacing) * spacing;
       return;
     }
-    const card = (e.target as HTMLElement).closest('[data-i]');
-    if (card) goTo(Number(card.getAttribute('data-i')));
-  };
-
-  const step = (dir: number) => {
-    lastTouch.current = performance.now();
-    goTo(clamp(activeRef.current + dir, 0, n - 1));
+    // Clicking on a card centers it smoothly
+    const card = (e.target as HTMLElement).closest('[data-k]');
+    if (card) {
+      const k = Number(card.getAttribute('data-k'));
+      const rawDist = k * spacing - sim.current.off;
+      let dx = ((rawDist % totalW) + totalW) % totalW;
+      if (dx > halfTotalW) dx -= totalW;
+      sim.current.target = Math.round((sim.current.off + dx) / spacing) * spacing;
+    }
   };
 
   const onKey = (e: React.KeyboardEvent) => {
@@ -517,7 +551,9 @@ export default function PolaroidLineCarousel({
     e.preventDefault();
   };
 
-  const s = slides[active] || {};
+  if (baseN === 0) return null;
+
+  const s = slides[active] || slides[0] || {};
 
   return (
     <div
@@ -546,33 +582,35 @@ export default function PolaroidLineCarousel({
       <svg className="pl-string" aria-hidden="true">
         <path ref={pathRef} fill="none" stroke={string} strokeWidth="1.6" strokeLinecap="round" />
       </svg>
-      {slides.map((sl, i) => (
-        <div
-          key={i}
-          className="pl-card"
-          data-i={i}
-          data-on={i === active ? '1' : '0'}
-          ref={(el) => {
-            cards.current[i] = el;
-          }}
-          aria-hidden={i === active ? undefined : true}
-        >
-          <div className="pl-print">
-            <div className="pl-shot">
-              {sl.image ? (
-                <img
-                  src={sl.image}
-                  alt={sl.alt || sl.title || ''}
-                  draggable={false}
-                  loading={i < 3 ? 'eager' : 'lazy'}
-                />
-              ) : null}
+      {Array.from({ length: totalCards }).map((_, k) => {
+        const slideIndex = k % baseN;
+        const sl = slides[slideIndex];
+        return (
+          <div
+            key={k}
+            className="pl-card"
+            data-k={k}
+            ref={(el) => {
+              cards.current[k] = el;
+            }}
+          >
+            <div className="pl-print">
+              <div className="pl-shot">
+                {sl.image ? (
+                  <img
+                    src={sl.image}
+                    alt={sl.alt || sl.title || ''}
+                    draggable={false}
+                    loading={k < 8 ? 'eager' : 'lazy'}
+                  />
+                ) : null}
+              </div>
+              <div className="pl-note">{sl.title || ''}</div>
             </div>
-            <div className="pl-note">{sl.title || ''}</div>
+            <div className="pl-peg" />
           </div>
-          <div className="pl-peg" />
-        </div>
-      ))}
+        );
+      })}
 
       {/* Interactive Bottom Control Bar */}
       <div className="pl-bar">
@@ -580,33 +618,32 @@ export default function PolaroidLineCarousel({
           {s.title ? <span className="pl-title">{s.title}</span> : null}
           {s.caption ? <span className="pl-sub">{s.caption}</span> : null}
         </div>
-        <span className="pl-count" aria-hidden="true">
-          <b>{pad2(active + 1)}</b> / {pad2(n)}
-        </span>
-        <button
-          type="button"
-          className="pl-btn"
-          aria-label="Previous Polaroid print"
-          onClick={() => step(-1)}
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M10 3 5 8l5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
-        <button
-          type="button"
-          className="pl-btn"
-          aria-label="Next Polaroid print"
-          onClick={() => step(1)}
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="m6 3 5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
-        </button>
+        <div className="pl-actions">
+          <button
+            type="button"
+            className="pl-btn"
+            aria-label="Previous photo in loop"
+            onClick={() => step(-1)}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="M10 3 5 8l5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="pl-btn"
+            aria-label="Next photo in loop"
+            onClick={() => step(1)}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <path d="m6 3 5 5-5 5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <div className="pl-sr" aria-live="polite">
-        {'Print ' + (active + 1) + ' of ' + n + (s.title ? ': ' + s.title : '')}
+        {(s.title ? s.title + ': ' : '') + (s.caption || '')}
       </div>
     </div>
   );
