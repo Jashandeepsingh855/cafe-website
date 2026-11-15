@@ -42,6 +42,7 @@ import {
 } from '@/config/site';
 import DishDetailModal from '@/components/DishDetailModal';
 import PolaroidLineCarousel from '@/components/PolaroidLineCarousel';
+import { ParallaxComponent } from '@/components/ui/parallax-scrolling';
 
 // 4 Signature Rotational Showcase Dishes matching the interactive culinary reference
 const HERO_ROTATIONAL_DISHES = [
@@ -311,33 +312,48 @@ export default function HomePage() {
   return (
     <div className="w-full flex flex-col overflow-x-hidden">
       {/* ========================================================================= */}
-      {/* 1. HERO SECTION: DIAGONAL TOP-RIGHT GLIDE DISH SHOWCASE (CLEAN & SPACIOUS) */}
+      {/* 1. HERO SECTION WITH OSMO MULTI-LAYER DEPTH PARALLAX */}
       {/* ========================================================================= */}
       <section className="relative w-full overflow-hidden bg-[#F2EEE9] text-[#18120F] min-h-[720px] lg:min-h-[820px] flex flex-col justify-between pt-6 sm:pt-8 pb-4 border-b border-[#E5E2DD]">
         
-        {/* Dynamic Sweeping Organic Curved Arc (matching Pinterest reference) */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-0 parallax-bg">
-          <svg
-            className="w-full h-full object-cover scale-110 sm:scale-100 transition-all duration-1000 ease-in-out"
-            viewBox="0 0 1440 900"
-            fill="none"
-            preserveAspectRatio="none"
-          >
-            <path
-              d="M-150,260 C250,560 850,490 1650,40"
-              stroke="url(#curvedRibbonGradient)"
-              strokeWidth="240"
-              strokeLinecap="round"
-              opacity="0.32"
-            />
-            <defs>
-              <linearGradient id="curvedRibbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor={currentHeroDish.ribbonColor1} stopOpacity="0.45" />
-                <stop offset="45%" stopColor={currentHeroDish.ribbonColor2} stopOpacity="0.9" />
-                <stop offset="100%" stopColor={currentHeroDish.ribbonColor1} stopOpacity="0.3" />
-              </linearGradient>
-            </defs>
-          </svg>
+        {/* Dynamic Sweeping Organic Curved Arc & Ambient Layers (Osmo Multi-Layer Depth) */}
+        <div data-parallax-layers className="absolute inset-0 pointer-events-none overflow-hidden z-0">
+          {/* Layer 1: Warm ambient glow (yPercent: 70) */}
+          <div
+            data-parallax-layer="1"
+            className="absolute -top-32 -right-24 w-[500px] h-[500px] rounded-full bg-[#C8652D]/12 blur-3xl"
+          />
+
+          {/* Layer 2: Sweeping Organic Ribbon Arc (yPercent: 55) */}
+          <div data-parallax-layer="2" className="absolute inset-0 w-full h-full">
+            <svg
+              className="w-full h-full object-cover scale-110 sm:scale-100 transition-all duration-1000 ease-in-out"
+              viewBox="0 0 1440 900"
+              fill="none"
+              preserveAspectRatio="none"
+            >
+              <path
+                d="M-150,260 C250,560 850,490 1650,40"
+                stroke="url(#curvedRibbonGradient)"
+                strokeWidth="240"
+                strokeLinecap="round"
+                opacity="0.32"
+              />
+              <defs>
+                <linearGradient id="curvedRibbonGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor={currentHeroDish.ribbonColor1} stopOpacity="0.45" />
+                  <stop offset="45%" stopColor={currentHeroDish.ribbonColor2} stopOpacity="0.9" />
+                  <stop offset="100%" stopColor={currentHeroDish.ribbonColor1} stopOpacity="0.3" />
+                </linearGradient>
+              </defs>
+            </svg>
+          </div>
+
+          {/* Layer 3: Floating elevation & botanical accent (yPercent: -35) */}
+          <div
+            data-parallax-layer="float"
+            className="hidden sm:block absolute top-1/4 right-12 w-64 h-64 rounded-full bg-[#E8A55B]/10 blur-2xl"
+          />
         </div>
 
         {/* Top Header Label & Left Vertical Index */}
@@ -1074,6 +1090,17 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      {/* ========================================================================= */}
+      {/* 5B. OSMO MULTI-LAYER DEPTH PARALLAX BANNER (ROASTERY & BOTANICAL KITCHEN) */}
+      {/* ========================================================================= */}
+      <ParallaxComponent
+        title="Artisanal Roastery & Craft Kitchen"
+        subtitle="Where single-origin Chikmagalur shade-grown Arabica meets 48-hour cold fermented stone-baked sourdoughs and mindful 100% pure vegetarian cuisine."
+        tag="Western Ghats Elevation 1,350M"
+        height="68vh"
+        theme="dark"
+      />
 
       {/* ========================================================================= */}
       {/* 6. CUSTOMER TESTIMONIALS (HOME PAGE REVIEWS ABOUT US) */}

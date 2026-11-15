@@ -88,8 +88,13 @@ export default function MenuPage() {
         </div>
       </div>
 
-      {/* Page Header & Bento Metrics */}
-      <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-6">
+      {/* Page Header & Bento Metrics with Multi-Layer Parallax Depth */}
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-6" data-parallax-layers>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+          <div data-parallax-layer="1" className="absolute -top-16 -right-16 w-80 h-80 rounded-full bg-[#C8652D]/10 blur-3xl" />
+          <div data-parallax-layer="2" className="absolute top-1/3 -left-20 w-72 h-72 rounded-full bg-[#E8A55B]/10 blur-2xl" />
+          <div data-parallax-layer="float" className="absolute bottom-2 right-1/4 w-48 h-48 rounded-full bg-[#18120F]/5 blur-xl" />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
           <div className="lg:col-span-7 space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD]">

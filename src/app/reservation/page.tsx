@@ -118,8 +118,13 @@ export default function ReservationPage() {
 
   return (
     <div className="w-full bg-[#FAF7F2] min-h-screen pb-24 md:pb-16 flex flex-col">
-      {/* Top Hero Story Ribbon */}
-      <section className="relative w-full bg-[#F6F3EE] border-b border-[#E5E2DD] py-10 sm:py-14">
+      {/* Top Hero Story Ribbon with Multi-Layer Parallax Depth */}
+      <section className="relative w-full bg-[#F6F3EE] border-b border-[#E5E2DD] py-10 sm:py-14 overflow-hidden" data-parallax-layers>
+        <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
+          <div data-parallax-layer="1" className="absolute -top-20 right-1/4 w-96 h-96 rounded-full bg-[#C8652D]/10 blur-3xl" />
+          <div data-parallax-layer="2" className="absolute top-1/2 -left-16 w-80 h-80 rounded-full bg-[#18120F]/5 blur-2xl" />
+          <div data-parallax-layer="float" className="absolute bottom-2 right-12 w-40 h-40 rounded-full bg-[#E8A55B]/15 blur-xl" />
+        </div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C8652D]/10 text-[#C8652D] mb-3 border border-[#C8652D]/20">
             <span className="w-2 h-2 rounded-full bg-[#C8652D] animate-pulse" />

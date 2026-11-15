@@ -103,6 +103,50 @@ export default function SmoothScrollInit() {
         );
       });
 
+      // -------------------------------------------------------------
+      // 4. Osmo Multi-Layer Parallax Engine ([data-parallax-layers])
+      // Enables smooth multi-depth scroll parallax across all pages
+      // -------------------------------------------------------------
+      const triggerElements = document.querySelectorAll<HTMLElement>('[data-parallax-layers]');
+      triggerElements.forEach((triggerElement) => {
+        const isNearTop = triggerElement.getBoundingClientRect().top < 250;
+        const startVal = triggerElement.getAttribute('data-parallax-start') || (isNearTop ? '0% 0%' : 'top bottom');
+        const endVal = triggerElement.getAttribute('data-parallax-end') || (isNearTop ? '100% 0%' : 'bottom top');
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: triggerElement,
+            start: startVal,
+            end: endVal,
+            scrub: 0,
+          },
+        });
+
+        const layers = [
+          { layer: '1', yPercent: 70 },
+          { layer: '2', yPercent: 55 },
+          { layer: '3', yPercent: 40 },
+          { layer: '4', yPercent: 10 },
+          { layer: 'float', yPercent: -35 },
+          { layer: 'bg', yPercent: 45 },
+        ];
+
+        layers.forEach((layerObj, idx) => {
+          const targets = triggerElement.querySelectorAll(`[data-parallax-layer="${layerObj.layer}"]`);
+          if (targets.length > 0) {
+            tl.to(
+              targets,
+              {
+                yPercent: layerObj.yPercent,
+                ease: 'none',
+                force3D: true,
+              },
+              idx === 0 ? undefined : '<'
+            );
+          }
+        });
+      });
+
       // Refresh ScrollTrigger calculations
       ScrollTrigger.refresh();
     }, 80);

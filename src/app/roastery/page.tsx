@@ -47,28 +47,50 @@ export default function RoasteryPage() {
 
   return (
     <div className="w-full bg-[#FAF7F2] min-h-screen pb-24 md:pb-16 flex flex-col">
-      {/* Hero Header */}
-      <section className="relative w-full bg-[#18120F] text-[#FAF7F2] py-20 sm:py-28 overflow-hidden">
-        <div
-          className="absolute inset-0 w-full h-full bg-cover bg-center opacity-30 mix-blend-luminosity scale-110 parallax-bg"
-          style={{
-            backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgB5Dju61f1AZ7w8ZZkunbc_VPRKRw7tF1CcWK56UO3X8JE7-yB85nH1tZrKCOPh-VWK7jkpZqA_GdSsaJw6UySmzgxlkxGofYUL-SkdiK7IbpFC0dI8lylMLtInAWzr2I7UGbeXcs8qd1k3uztGOAl95EdgjxsONqSRAYVJse5XLRBNeyFnruaW1evnwGybvkFkWOidlKlrZhRCQbS0w0RhKiduw4D_c1DNwTgqk')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#18120F] via-[#18120F]/80 to-transparent" />
+      {/* Hero Header with Osmo Multi-Layer Depth Parallax */}
+      <section className="relative w-full bg-[#18120F] text-[#FAF7F2] min-h-[70vh] sm:min-h-[78vh] flex items-center justify-center overflow-hidden">
+        <div className="parallax__visuals">
+          <div className="parallax__black-line-overflow" />
+          <div data-parallax-layers className="parallax__layers">
+            {/* Layer 1: Background Botanical Canopy (yPercent: 70) */}
+            <div
+              data-parallax-layer="1"
+              className="parallax__layer-img absolute inset-0 w-full h-full bg-cover bg-center opacity-30 mix-blend-luminosity scale-110"
+              style={{
+                backgroundImage: `url('https://lh3.googleusercontent.com/aida-public/AB6AXuBgB5Dju61f1AZ7w8ZZkunbc_VPRKRw7tF1CcWK56UO3X8JE7-yB85nH1tZrKCOPh-VWK7jkpZqA_GdSsaJw6UySmzgxlkxGofYUL-SkdiK7IbpFC0dI8lylMLtInAWzr2I7UGbeXcs8qd1k3uztGOAl95EdgjxsONqSRAYVJse5XLRBNeyFnruaW1evnwGybvkFkWOidlKlrZhRCQbS0w0RhKiduw4D_c1DNwTgqk')`,
+              }}
+            />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-3xl">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-wider mb-4 border border-white/15">
-            <Sparkles className="w-3.5 h-3.5 text-[#C8652D]" />
-            <span>The Roastery Architecture</span>
+            {/* Layer 2: Warm Copper Roasting Light Ray Overlay (yPercent: 55) */}
+            <div
+              data-parallax-layer="2"
+              className="parallax__layer-img absolute inset-0 bg-gradient-to-tr from-[#C8652D]/25 via-[#18120F]/60 to-transparent pointer-events-none"
+            />
+
+            {/* Layer 3: Title, Badges & Story (yPercent: 40) */}
+            <div data-parallax-layer="3" className="parallax__layer-title">
+              <div className="relative max-w-4xl mx-auto px-4 text-center">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-wider mb-4 border border-white/15 backdrop-blur-md">
+                  <Sparkles className="w-3.5 h-3.5 text-[#C8652D]" />
+                  <span>The Roastery Architecture</span>
+                </div>
+
+                <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-4 text-[#FAF7F2]">
+                  A Botanical Sanctuary for Specialty Coffee
+                </h1>
+                <p className="text-base sm:text-lg text-[#D4CECA] leading-relaxed max-w-2xl mx-auto">
+                  Designed as an antidote to frantic city life. Where shade-grown Chikmagalur beans meet calibrated roasting, stone-hearth culinary craft, and 100% pure vegetarian mindful dining.
+                </p>
+              </div>
+            </div>
+
+            {/* Layer 4: Foreground Mist & Atmosphere (yPercent: 10) */}
+            <div
+              data-parallax-layer="4"
+              className="parallax__layer-img absolute inset-0 bg-radial from-transparent via-[#18120F]/20 to-[#18120F]/85 pointer-events-none"
+            />
           </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-4">
-            A Botanical Sanctuary for Specialty Coffee
-          </h1>
-          <p className="text-base sm:text-lg text-[#D4CECA] leading-relaxed">
-            Designed as an antidote to frantic city life. Where shade-grown Chikmagalur beans meet calibrated roasting, stone-hearth culinary craft, and 100% pure vegetarian mindful dining.
-          </p>
+          <div className="parallax__fade" />
         </div>
       </section>
 
