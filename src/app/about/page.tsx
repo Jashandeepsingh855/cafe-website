@@ -96,15 +96,13 @@ export default function AboutUsPage() {
             muted
             playsInline
             poster="/videos/about-hero-poster.jpg"
-            className="w-full h-full object-cover scale-105 opacity-35 transition-opacity duration-1000"
+            className="w-full h-full object-cover scale-105 opacity-85 transition-opacity duration-700"
           >
             <source src="/videos/about-hero.mp4" type="video/mp4" />
             <source src="/videos/about-hero.webm" type="video/webm" />
           </video>
-          {/* Multi-layered cinematic gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#18120F]/90 via-[#18120F]/75 to-[#18120F]" />
-          <div className="absolute inset-0 bg-radial from-[#C8652D]/15 via-transparent to-transparent opacity-70" />
-          <div className="absolute inset-0 bg-[radial-gradient(#C8652D_1px,transparent_1px)] [background-size:24px_24px] opacity-10" />
+          {/* Gentle cinematic gradient so the video is vividly visible while keeping text legible */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/35 to-[#18120F]" />
         </div>
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
@@ -137,23 +135,23 @@ export default function AboutUsPage() {
             </button>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-5 text-[#FAF7F2]">
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-5 text-[#FAF7F2] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
             Crafted for Bengaluru, Rooted in Unhurried Comfort
           </h1>
-          <p className="text-base sm:text-lg text-[#D4CECA] leading-relaxed max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg text-[#FAF7F2] font-medium leading-relaxed max-w-3xl mx-auto drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]">
             Daily Coffee Drip was born on 12th Main Indiranagar out of a simple conviction: you shouldn&apos;t have to compromise between world-class third-wave specialty coffee and serious artisanal comfort food.
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA] backdrop-blur-sm shadow-xs">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 border border-white/20 text-xs font-semibold text-[#FAF7F2] backdrop-blur-md shadow-md">
               <ShieldCheck className="w-4 h-4 text-[#C8652D]" />
               <span>100% Pure Vegetarian Kitchen</span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA] backdrop-blur-sm shadow-xs">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 border border-white/20 text-xs font-semibold text-[#FAF7F2] backdrop-blur-md shadow-md">
               <Coffee className="w-4 h-4 text-[#C8652D]" />
               <span>Single-Origin Chikmagalur Beans</span>
             </div>
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-[#D4CECA] backdrop-blur-sm shadow-xs">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 border border-white/20 text-xs font-semibold text-[#FAF7F2] backdrop-blur-md shadow-md">
               <Store className="w-4 h-4 text-[#C8652D]" />
               <span>Indiranagar Flagship Dining</span>
             </div>
