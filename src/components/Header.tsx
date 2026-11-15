@@ -15,6 +15,7 @@ import {
   MessageCircle,
   MapPin,
   Clock,
+  Utensils,
 } from 'lucide-react';
 import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
 
@@ -141,12 +142,13 @@ export default function Header() {
               Book a Table
             </Link>
 
-            {/* Mobile Quick Book Pill (< 640px) */}
+            {/* Mobile Quick Menu Pill (< 640px) */}
             <Link
-              href="/reservation"
-              className="sm:hidden px-3.5 py-1.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-bold text-xs hover:bg-[#C8652D] transition-colors shadow-sm shrink-0"
+              href="/menu"
+              className="sm:hidden px-3.5 py-1.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-bold text-xs hover:bg-[#C8652D] transition-colors shadow-sm shrink-0 flex items-center gap-1.5"
             >
-              Book
+              <Utensils className="w-3 h-3 text-[#C8652D]" />
+              <span>Menu</span>
             </Link>
 
             {/* Mobile Menu Hamburger (>= 44px touch target) */}

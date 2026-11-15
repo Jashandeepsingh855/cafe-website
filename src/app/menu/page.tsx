@@ -222,7 +222,7 @@ export default function MenuPage() {
       </section>
 
       {/* Sticky Category Strip */}
-      <div className="sticky top-20 z-30 w-full glass-nav border-y border-[#E5E2DD] shadow-sm">
+      <div className="sticky top-16 sm:top-20 z-30 w-full glass-nav border-y border-[#E5E2DD] shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
           <div className="flex items-center gap-2 overflow-x-auto no-scrollbar touch-pan-x">
             <button

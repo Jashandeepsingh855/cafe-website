@@ -126,10 +126,10 @@ export default function AboutUsPage() {
             <div className="pt-4 border-t border-[#E5E2DD] flex items-center gap-4">
               <div className="flex -space-x-3">
                 <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                  <Image src={founders[0].image} alt={founders[0].name} fill className="object-cover" />
+                  <Image src={founders[0].image} alt={founders[0].name} fill className="object-cover" sizes="48px" />
                 </div>
                 <div className="relative w-12 h-12 rounded-full overflow-hidden border-2 border-white shadow-sm">
-                  <Image src={founders[1].image} alt={founders[1].name} fill className="object-cover" />
+                  <Image src={founders[1].image} alt={founders[1].name} fill className="object-cover" sizes="48px" />
                 </div>
               </div>
               <div className="flex flex-col">
@@ -146,7 +146,13 @@ export default function AboutUsPage() {
                 className="bg-[#FAF7F2] rounded-2xl p-5 border border-[#E5E2DD] flex flex-col gap-3 group hover:border-[#C8652D]/50 hover:shadow-md transition-all"
               >
                 <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[#E5E2DD] shadow-inner">
-                  <Image src={founder.image} alt={founder.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <Image
+                    src={founder.image}
+                    alt={founder.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
+                  />
                 </div>
                 <div>
                   <h3 className="font-bold text-base text-[#18120F]">{founder.name}</h3>
@@ -229,6 +235,7 @@ export default function AboutUsPage() {
                   alt={sp.title}
                   fill
                   className="object-cover scroll-parallax-img scale-105 group-hover:scale-112 transition-transform duration-700 ease-out"
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
               <div className="p-6 flex flex-col gap-2 flex-1 justify-between">
