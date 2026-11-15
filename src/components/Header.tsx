@@ -6,12 +6,10 @@ import { usePathname } from 'next/navigation';
 import {
   Coffee,
   Phone,
-  Menu,
+  Menu as MenuIcon,
   X,
   ArrowRight,
   ShieldCheck,
-  Heart,
-  SlidersHorizontal,
   MessageCircle,
   MapPin,
   Clock,
@@ -57,9 +55,8 @@ export default function Header() {
 
   const navLinks = [
     { name: 'Home', href: '/' },
-    { name: 'Full Menu (140+)', href: '/menu' },
+    { name: 'Menu', href: '/menu' },
     { name: 'About Us', href: '/about' },
-    { name: 'Table Reservation', href: '/reservation' },
   ];
 
   return (
@@ -111,33 +108,12 @@ export default function Header() {
             })}
           </nav>
 
-          {/* Actions & CTA */}
+          {/* Actions & CTA: Book a Table on desktop, Menu pill on mobile */}
           <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-            {/* Desktop Heart Icon */}
-            <Link
-              href="/menu"
-              aria-label="View favorite drinks"
-              className="hidden md:flex w-10 h-10 rounded-full items-center justify-center text-[#544E49] hover:bg-[#EBE8E3] hover:text-[#18120F] transition-colors relative"
-            >
-              <Heart className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 w-4 h-4 rounded-full bg-[#C8652D] text-white text-[10px] font-bold flex items-center justify-center leading-none">
-                3
-              </span>
-            </Link>
-
-            {/* Desktop Phone Pill */}
-            <a
-              href={`tel:${site.contact.phoneRaw}`}
-              className="hidden xl:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0EDE9] border border-[#E5E2DD] text-[#544E49] hover:border-[#C8652D]/50 transition-colors"
-            >
-              <Phone className="w-4 h-4 text-[#C8652D]" />
-              <span className="text-xs font-bold text-[#18120F]">{site.contact.phone}</span>
-            </a>
-
             {/* Desktop Book Table CTA */}
             <Link
               href="/reservation"
-              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-sm hover:bg-[#221A16] hover:text-white transition-all shadow-sm"
+              className="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-sm hover:bg-[#C8652D] hover:text-white transition-all shadow-sm"
             >
               Book a Table
             </Link>
@@ -162,7 +138,7 @@ export default function Header() {
               {mobileMenuOpen ? (
                 <X className="w-6 h-6 text-[#18120F]" />
               ) : (
-                <Menu className="w-6 h-6 text-[#18120F]" />
+                <MenuIcon className="w-6 h-6 text-[#18120F]" />
               )}
             </button>
           </div>

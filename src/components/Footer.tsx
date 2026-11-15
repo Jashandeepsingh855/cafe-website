@@ -132,7 +132,7 @@ export default function Footer() {
           <div className="lg:col-span-4 grid grid-cols-2 sm:grid-cols-3 gap-6">
             <div className="flex flex-col gap-2">
               <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider mb-1">Cafe &amp; Kitchen</span>
-              <Link href="/menu" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Full Menu</Link>
+              <Link href="/menu" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Menu</Link>
               <Link href="/about" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">About Us</Link>
               <Link href="/about" className="text-sm text-[#D4CECA] hover:text-[#FAF7F2] transition-colors">Our Story</Link>
             </div>
