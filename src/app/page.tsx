@@ -41,6 +41,77 @@ import {
 import DishDetailModal from '@/components/DishDetailModal';
 import PolaroidLineCarousel from '@/components/PolaroidLineCarousel';
 import { ParallaxComponent } from '@/components/ui/parallax-scrolling';
+import { CircularCarousel, CarouselItem } from '@/components/ui/circular-carousel';
+
+// Customer Reviews Carousel Items
+const CUSTOMER_REVIEWS: CarouselItem[] = [
+  {
+    id: 'rev-1',
+    title: 'Emma Wilson',
+    role: 'Coffee & Food Enthusiast',
+    rating: 5.0,
+    tag: '5.0 ★ Verified',
+    avatar:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuCE1Y4JWHR4G8Novk9zPiCzyn3KI3_CAHMFq02CSRqh_FOhYOX1EyWZWM5HE3WXkMDwm3FeF4hMirvFqwx8lILgWn6FdZu5FHQyI7LVc3XxVbTNIhFl6GrHZK4TZ7H9YeFMjdh1gc19p_kWvwX-OvfL9hL9vTQDXoQPuRZY1GBpDwQSM06g1jE2rFrQyCLDKx7rYBqwEamqCZMSS7_tuLJCD9oHeeeQH5i3PuzhbB4',
+    description:
+      'The coffee is rich and calibrated, but the food blew me away! The 100% pure veg wood-fired sourdough pizza and the peri-peri fries are easily the best in Indiranagar.',
+  },
+  {
+    id: 'rev-2',
+    title: 'Rohan Kapoor',
+    role: 'Bengaluru Foodie',
+    rating: 4.9,
+    tag: '4.9 ★ Verified',
+    avatar:
+      'https://lh3.googleusercontent.com/aida-public/AB6AXuBbvPgWKhwNdDV4mviWxmR1SACzHj4LUbfjhwKMRdCYxAm_FFQm0k4-WC-AhfWFLOPprqlbQNb_mTtlTl9LpoXS0fgoJpHTSupv75zgBabO6r_zcRnFgCclu-t_HKZgXIRH3To1-FyvZpE_PQFfu2ZW-bUiauHX_4QV_8N_sP2CXTDNxhplI_UUbTSRP9W7Zpr6iLFcXmiYHCD3iSYNYfWKZ1U8die_RnkzEyOvlXY',
+    description:
+      'The Spicy Paneer Smash Burger and the Lotus Biscoff Shake are legendary. It has that rare combination of top-tier specialty brews and serious fast food craft.',
+  },
+  {
+    id: 'rev-3',
+    title: 'Ananya Iyer',
+    role: 'Indiranagar Resident & Architect',
+    rating: 5.0,
+    tag: '5.0 ★ Verified',
+    avatar:
+      'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+    description:
+      'The botanical veranda aesthetic with shaded wooden pergolas is incredible. We host weekend design meets here over Japanese V60s and truffle mushroom sourdough toast.',
+  },
+  {
+    id: 'rev-4',
+    title: 'Vikram Shenoy',
+    role: 'Specialty Q-Grader',
+    rating: 5.0,
+    tag: '5.0 ★ Verified',
+    avatar:
+      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&auto=format&fit=crop&q=80',
+    description:
+      'Proper SCA cupping standards right in Bengaluru. The single-origin Chikmagalur pour-over has clean stone-fruit clarity, roasted in genuine sub-10kg micro-lots.',
+  },
+  {
+    id: 'rev-5',
+    title: 'Priya Nair',
+    role: 'Tech Lead & Daily Remote Pro',
+    rating: 4.9,
+    tag: '4.9 ★ Verified',
+    avatar:
+      'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80',
+    description:
+      'Quiet Creator Corner with gigabit Wi-Fi and brass desk lamps made this my everyday work haven. Plus the avocado smash sandwich and iced oat latte keep me fueled.',
+  },
+  {
+    id: 'rev-6',
+    title: 'Kabir Mehta',
+    role: 'Culinary Blogger',
+    rating: 5.0,
+    tag: '5.0 ★ Verified',
+    avatar:
+      'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&auto=format&fit=crop&q=80',
+    description:
+      '100% pure vegetarian fast food done with Michelin-level precision. Stone-baked crusts, house-churned dips, and velvety cloud cold brews. Absolutely unmatched.',
+  },
+];
 
 // 4 Signature Rotational Showcase Dishes matching the interactive culinary reference
 const HERO_ROTATIONAL_DISHES = [
@@ -187,6 +258,7 @@ export default function HomePage() {
     },
   ]);
 
+  const [activeReviewIndex, setActiveReviewIndex] = useState(0);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -1067,11 +1139,11 @@ export default function HomePage() {
       />
 
       {/* ========================================================================= */}
-      {/* 6. CUSTOMER TESTIMONIALS (HOME PAGE REVIEWS ABOUT US) */}
+      {/* 6. CUSTOMER TESTIMONIALS (ANIMATED CIRCULAR CAROUSEL) */}
       {/* ========================================================================= */}
-      <section className="w-full py-16 sm:py-20 bg-white border-b border-[#E5E2DD]">
+      <section className="w-full py-16 sm:py-20 bg-white border-b border-[#E5E2DD] overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-2xl mx-auto mb-12">
+          <div className="text-center max-w-2xl mx-auto mb-6">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C8652D]/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#C8652D]/20 mb-3">
               <Star className="w-3.5 h-3.5 fill-[#C8652D]" />
               <span>4.9 ★ Rating • 1,240+ Verified Reviews</span>
@@ -1084,61 +1156,70 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Review 1 */}
-            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
-              <div className="flex flex-col items-center shrink-0">
-                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white shadow-inner relative border border-[#E5E2DD]">
-                  <Image
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuCE1Y4JWHR4G8Novk9zPiCzyn3KI3_CAHMFq02CSRqh_FOhYOX1EyWZWM5HE3WXkMDwm3FeF4hMirvFqwx8lILgWn6FdZu5FHQyI7LVc3XxVbTNIhFl6GrHZK4TZ7H9YeFMjdh1gc19p_kWvwX-OvfL9hL9vTQDXoQPuRZY1GBpDwQSM06g1jE2rFrQyCLDKx7rYBqwEamqCZMSS7_tuLJCD9oHeeeQH5i3PuzhbB4"
-                    alt="Emma Wilson"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <span className="mt-2 text-center text-sm font-bold text-[#18120F]">Emma Wilson</span>
-                <span className="text-[11px] text-[#857D77]">Coffee &amp; Food Enthusiast</span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-1 text-[#C8652D]">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#C8652D]" />
-                  ))}
-                  <span className="text-sm text-[#18120F] font-bold ml-1">5.0</span>
-                </div>
-                <p className="text-sm sm:text-base text-[#18120F] leading-relaxed">
-                  &ldquo;The coffee is rich and calibrated, but the food blew me away! The 100% pure veg wood-fired sourdough pizza and the peri-peri fries are easily the best in Indiranagar.&rdquo;
-                </p>
-              </div>
-            </div>
-
-            {/* Review 2 */}
-            <div className="bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 flex flex-col sm:flex-row items-start sm:items-center gap-5 shadow-sm">
-              <div className="flex flex-col items-center shrink-0">
-                <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white shadow-inner relative border border-[#E5E2DD]">
-                  <Image
-                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuBbvPgWKhwNdDV4mviWxmR1SACzHj4LUbfjhwKMRdCYxAm_FFQm0k4-WC-AhfWFLOPprqlbQNb_mTtlTl9LpoXS0fgoJpHTSupv75zgBabO6r_zcRnFgCclu-t_HKZgXIRH3To1-FyvZpE_PQFfu2ZW-bUiauHX_4QV_8N_sP2CXTDNxhplI_UUbTSRP9W7Zpr6iLFcXmiYHCD3iSYNYfWKZ1U8die_RnkzEyOvlXY"
-                    alt="Rohan Kapoor"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <span className="mt-2 text-center text-sm font-bold text-[#18120F]">Rohan Kapoor</span>
-                <span className="text-[11px] text-[#857D77]">Bengaluru Foodie</span>
-              </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-1 text-[#C8652D]">
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#C8652D]" />
-                  ))}
-                  <span className="text-sm text-[#18120F] font-bold ml-1">4.9</span>
-                </div>
-                <p className="text-sm sm:text-base text-[#18120F] leading-relaxed">
-                  &ldquo;The Spicy Paneer Smash Burger and the Lotus Biscoff Shake are legendary. It has that rare combination of top-tier specialty brews and serious fast food craft.&rdquo;
-                </p>
-              </div>
-            </div>
+          {/* 3D Circular Orbit Carousel Animation */}
+          <div className="w-full max-w-4xl mx-auto mb-8">
+            <CircularCarousel
+              items={CUSTOMER_REVIEWS}
+              activeIndex={activeReviewIndex}
+              onActiveChange={setActiveReviewIndex}
+              theme="cafe"
+              autoPlay={true}
+              autoPlayInterval={4500}
+            />
           </div>
+
+          {/* Active Highlight Review Spotlight Card */}
+          {CUSTOMER_REVIEWS[activeReviewIndex] && (
+            <div className="max-w-2xl mx-auto bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 shadow-sm transition-all duration-300">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
+                <div className="flex items-center gap-4 shrink-0">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-white shadow-inner border border-[#E5E2DD]">
+                    <Image
+                      src={CUSTOMER_REVIEWS[activeReviewIndex].avatar!}
+                      alt={CUSTOMER_REVIEWS[activeReviewIndex].title}
+                      fill
+                      sizes="80px"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="sm:hidden flex flex-col">
+                    <span className="text-base font-bold text-[#18120F]">
+                      {CUSTOMER_REVIEWS[activeReviewIndex].title}
+                    </span>
+                    <span className="text-xs text-[#857D77]">
+                      {CUSTOMER_REVIEWS[activeReviewIndex].role}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="flex-1 flex flex-col gap-2 min-w-0">
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="hidden sm:flex flex-col">
+                      <span className="text-base font-bold text-[#18120F]">
+                        {CUSTOMER_REVIEWS[activeReviewIndex].title}
+                      </span>
+                      <span className="text-xs text-[#857D77]">
+                        {CUSTOMER_REVIEWS[activeReviewIndex].role}
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-1 text-[#C8652D]">
+                      {[...Array(5)].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-[#C8652D]" />
+                      ))}
+                      <span className="text-sm text-[#18120F] font-bold ml-1">
+                        {CUSTOMER_REVIEWS[activeReviewIndex].rating?.toFixed(1)}
+                      </span>
+                    </div>
+                  </div>
+
+                  <p className="text-sm sm:text-base text-[#18120F] leading-relaxed italic">
+                    &ldquo;{CUSTOMER_REVIEWS[activeReviewIndex].description}&rdquo;
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
 
           <div className="mt-10 text-center">
             <a
