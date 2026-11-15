@@ -1,13 +1,12 @@
 'use client';
 
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import {
   Coffee,
   Flame,
   Award,
-  Sparkles,
   ArrowRight,
   ShieldCheck,
   CheckCircle2,
@@ -17,26 +16,10 @@ import {
   Clock,
   Utensils,
   Store,
-  Play,
-  Pause,
 } from 'lucide-react';
 import { DEFAULT_SITE_CONFIG } from '@/config/site';
 
 export default function AboutUsPage() {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const toggleVideo = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-        setIsPlaying(false);
-      } else {
-        videoRef.current.play().catch(() => {});
-        setIsPlaying(true);
-      }
-    }
-  };
   const founders = [
     {
       name: 'Kabir Mehta',
@@ -90,7 +73,6 @@ export default function AboutUsPage() {
         {/* Background Ambient Video Stream */}
         <div className="absolute inset-0 w-full h-full overflow-hidden pointer-events-none">
           <video
-            ref={videoRef}
             autoPlay
             loop
             muted
@@ -106,35 +88,6 @@ export default function AboutUsPage() {
         </div>
 
         <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
-          {/* Badge & Video Reel Status */}
-          <div className="flex flex-wrap items-center justify-center gap-2.5 mb-5">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 text-[#C8652D] text-xs font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md shadow-sm">
-              <Sparkles className="w-3.5 h-3.5 text-[#C8652D]" />
-              <span>Our Origin &amp; Hospitality Story</span>
-            </div>
-
-            {/* Video Play/Pause toggle */}
-            <button
-              type="button"
-              onClick={toggleVideo}
-              aria-label={isPlaying ? 'Pause background video' : 'Play background video'}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-[#FAF7F2] text-xs font-bold uppercase tracking-wider border border-white/15 backdrop-blur-md transition-all cursor-pointer"
-            >
-              <span className={`w-2 h-2 rounded-full ${isPlaying ? 'bg-[#186a22] animate-ping' : 'bg-[#857D77]'}`} />
-              {isPlaying ? (
-                <>
-                  <Pause className="w-3 h-3 text-[#C8652D]" />
-                  <span>Pause Reel</span>
-                </>
-              ) : (
-                <>
-                  <Play className="w-3 h-3 text-[#C8652D]" />
-                  <span>Play Reel</span>
-                </>
-              )}
-            </button>
-          </div>
-
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-5 text-[#FAF7F2] drop-shadow-[0_4px_24px_rgba(0,0,0,0.9)]">
             Crafted for Bengaluru, Rooted in Unhurried Comfort
           </h1>
