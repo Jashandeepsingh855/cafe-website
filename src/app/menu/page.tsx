@@ -133,8 +133,29 @@ export default function MenuPage() {
         </div>
       </div>
 
-      {/* Refined Artisanal Header (Spacious & Clean) */}
-      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-14 pb-8">
+      {/* Refined Artisanal Header with Visual Art & Signatures */}
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-6">
+        {/* Subtle Decorative Botanical Coffee Art & Radial Glow */}
+        <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(200,101,45,0.12),transparent_75%)]" />
+          
+          {/* Left Coffee Botanical Art */}
+          <svg className="hidden md:block absolute -top-4 -left-10 w-44 h-44 text-[#C8652D]/15 -rotate-12" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.2">
+            <path d="M10 90 Q30 50 70 20 M70 20 Q50 15 35 30 Q20 45 30 65 M70 20 Q75 40 60 55 Q45 70 25 75" />
+            <circle cx="55" cy="35" r="5" fill="currentColor" fillOpacity="0.25" stroke="none" />
+            <circle cx="63" cy="42" r="4" fill="currentColor" fillOpacity="0.25" stroke="none" />
+            <circle cx="45" cy="50" r="4.5" fill="currentColor" fillOpacity="0.25" stroke="none" />
+          </svg>
+
+          {/* Right Coffee Botanical Art */}
+          <svg className="hidden md:block absolute -top-4 -right-10 w-44 h-44 text-[#C8652D]/15 rotate-12 scale-x-[-1]" viewBox="0 0 100 100" fill="none" stroke="currentColor" strokeWidth="1.2">
+            <path d="M10 90 Q30 50 70 20 M70 20 Q50 15 35 30 Q20 45 30 65 M70 20 Q75 40 60 55 Q45 70 25 75" />
+            <circle cx="55" cy="35" r="5" fill="currentColor" fillOpacity="0.25" stroke="none" />
+            <circle cx="63" cy="42" r="4" fill="currentColor" fillOpacity="0.25" stroke="none" />
+            <circle cx="45" cy="50" r="4.5" fill="currentColor" fillOpacity="0.25" stroke="none" />
+          </svg>
+        </div>
+
         <div className="text-center max-w-3xl mx-auto space-y-3.5">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#18120F]/5 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#E5E2DD]">
             <Sparkles className="w-3.5 h-3.5" />
@@ -163,6 +184,87 @@ export default function MenuPage() {
               <Flame className="w-3.5 h-3.5 text-[#C8652D]" />
               <span>1,350m Shade-Grown Chikmagalur</span>
             </span>
+          </div>
+        </div>
+
+        {/* Curated House Signatures Gallery (Artisanal Food & Beverage Art) */}
+        <div className="mt-8 max-w-5xl mx-auto">
+          <div className="flex items-center justify-between mb-3 px-1">
+            <div className="flex items-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#C8652D]" />
+              <span className="text-xs font-bold text-[#18120F] uppercase tracking-wider">
+                House Signatures &amp; Craft Highlights
+              </span>
+            </div>
+            <span className="text-[11px] font-semibold text-[#857D77]">
+              Tap any highlight to explore
+            </span>
+          </div>
+
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
+            {[
+              {
+                title: 'Chikmagalur V60 Pour-Over',
+                sub: 'Single-origin Arabica, stone fruit clarity',
+                tag: 'Specialty Coffee',
+                slug: 'hot-coffee',
+                image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80',
+              },
+              {
+                title: 'Artisanal Sourdough Pizza',
+                sub: '48hr cold ferment, stone hearth bake',
+                tag: 'Stone Hearth Oven',
+                slug: 'pizza-pasta',
+                image: 'https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=800&auto=format&fit=crop&q=80',
+              },
+              {
+                title: 'Ceremonial Cloud Matcha',
+                sub: 'First-harvest Uji tea, vanilla oat foam',
+                tag: 'Matcha Bar',
+                slug: 'specialty-matcha',
+                image: 'https://images.unsplash.com/photo-1536256263959-770b48d82b0a?w=800&auto=format&fit=crop&q=80',
+              },
+              {
+                title: 'Avocado & Levain Bakes',
+                sub: 'Hass avocado on toasted sourdough levain',
+                tag: 'Comfort Kitchen',
+                slug: 'burgers-sandwiches',
+                image: 'https://images.unsplash.com/photo-1525351484163-7529414344d8?w=800&auto=format&fit=crop&q=80',
+              },
+            ].map((sig) => (
+              <button
+                key={sig.slug}
+                type="button"
+                onClick={() => {
+                  setActiveCategory(sig.slug);
+                  const el = document.getElementById(sig.slug);
+                  if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
+                className="group relative flex-none w-[220px] sm:w-auto h-36 sm:h-44 rounded-2xl overflow-hidden border border-[#E5E2DD] hover:border-[#C8652D]/60 shadow-sm transition-all text-left bg-[#18120F] shrink-0 snap-start cursor-pointer"
+              >
+                <Image
+                  src={sig.image}
+                  alt={sig.title}
+                  fill
+                  sizes="(max-width: 640px) 220px, 25vw"
+                  className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
+                <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[#FFDBCB] text-[10px] font-bold uppercase tracking-wider border border-white/15">
+                  {sig.tag}
+                </span>
+                <div className="absolute inset-x-0 bottom-0 p-3">
+                  <h4 className="text-white text-xs sm:text-sm font-bold leading-tight group-hover:text-[#FFDBCB] transition-colors">
+                    {sig.title}
+                  </h4>
+                  <p className="text-[10px] sm:text-[11px] text-[#FAF7F2]/80 line-clamp-1 mt-0.5">
+                    {sig.sub}
+                  </p>
+                </div>
+              </button>
+            ))}
           </div>
         </div>
 

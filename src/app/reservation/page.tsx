@@ -34,6 +34,8 @@ export default function ReservationPage() {
   const [partySize, setPartySize] = useState('1-2');
   const [zone, setZone] = useState('veranda');
   const [timeSlot, setTimeSlot] = useState('Morning Roast 08:30 AM');
+  const [timeMode, setTimeMode] = useState<'curated' | 'custom'>('curated');
+  const [customTimeInput, setCustomTimeInput] = useState('17:00');
   const [date, setDate] = useState('2026-11-15');
   const [name, setName] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
@@ -48,6 +50,69 @@ export default function ReservationPage() {
   const [validationError, setValidationError] = useState<string | null>(null);
   const [bookingInfo, setBookingInfo] = useState<{ id: string; waUrl: string } | null>(null);
   const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
+
+  // Helper date generators for one-click selection
+  const getTodayStr = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const getTomorrowStr = () => {
+    const d = new Date();
+    d.setDate(d.getDate() + 1);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const getWeekendStr = () => {
+    const d = new Date();
+    const day = d.getDay(); // 0 is Sunday, 6 is Saturday
+    const diff = (6 - day + 7) % 7 || 7;
+    d.setDate(d.getDate() + diff);
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
+  const formatTimeTo12h = (timeStr: string): string => {
+    if (!timeStr) return '';
+    const [hourStr, minStr] = timeStr.split(':');
+    let hour = parseInt(hourStr, 10);
+    const minutes = minStr || '00';
+    const ampm = hour >= 12 ? 'PM' : 'AM';
+    hour = hour % 12;
+    if (hour === 0) hour = 12;
+    const hourPadded = hour < 10 ? `0${hour}` : `${hour}`;
+    return `${hourPadded}:${minutes} ${ampm}`;
+  };
+
+  const formatDatePretty = (dateStr: string): string => {
+    if (!dateStr) return '';
+    try {
+      const parts = dateStr.split('-');
+      if (parts.length === 3) {
+        const year = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1;
+        const day = parseInt(parts[2], 10);
+        const d = new Date(year, month, day);
+        return d.toLocaleDateString('en-IN', {
+          weekday: 'short',
+          day: 'numeric',
+          month: 'short',
+          year: 'numeric',
+        });
+      }
+    } catch {
+      // fallback
+    }
+    return dateStr;
+  };
 
   useEffect(() => {
     setSite(getClientSiteConfig());
@@ -329,60 +394,265 @@ Please confirm my table reservation. Thank you!`;
               </div>
             </div>
 
-            {/* STEP 3: Date & Curated Sensory Window */}
+            {/* STEP 3: Date & Curated Sensory Window or Custom Time */}
             <div className="flex flex-col gap-3">
-              <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-[#C8652D]" />
-                <span>3. Date &amp; Curated Sensory Window</span>
-              </label>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-[#C8652D]" />
+                  <span>3. Select Date &amp; Arrival Time</span>
+                </label>
 
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                {/* Mobile Friendly Date Picker */}
-                <div className="sm:col-span-1 flex flex-col justify-center bg-[#F6F3EE] p-3.5 rounded-2xl border border-[#E5E2DD]">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#544E49] mb-1">
-                    Select Date
-                  </span>
-                  <input
-                    type="date"
-                    value={date}
-                    min={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className="w-full bg-white border border-[#E5E2DD] px-3 py-2.5 rounded-xl text-sm font-semibold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
-                  />
-                  <span className="text-[10px] text-[#857D77] mt-1.5">Held until 10 PM</span>
+                {/* Mode Toggle Selection Buttons */}
+                <div className="flex items-center gap-1 p-1 rounded-xl bg-[#F6F3EE] border border-[#E5E2DD]">
+                  <button
+                    type="button"
+                    onClick={() => setTimeMode('curated')}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                      timeMode === 'curated'
+                        ? 'bg-[#18120F] text-white shadow-xs'
+                        : 'text-[#544E49] hover:text-[#18120F]'
+                    }`}
+                  >
+                    Curated Windows
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTimeMode('custom');
+                      setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
+                    }}
+                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
+                      timeMode === 'custom'
+                        ? 'bg-[#18120F] text-white shadow-xs'
+                        : 'text-[#544E49] hover:text-[#18120F]'
+                    }`}
+                  >
+                    <Clock className="w-3 h-3 text-[#C8652D]" />
+                    <span>Custom Time</span>
+                  </button>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
+                {/* DATE SELECTION COLUMN */}
+                <div className="lg:col-span-5 flex flex-col justify-between bg-[#F6F3EE] p-4 rounded-2xl border border-[#E5E2DD] gap-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#544E49] flex items-center gap-1.5">
+                      <Calendar className="w-3.5 h-3.5 text-[#C8652D]" />
+                      <span>Select Date</span>
+                    </span>
+                    <span className="text-[10px] text-[#857D77] font-semibold">15-min courtesy hold</span>
+                  </div>
+
+                  {/* Quick Date Selection Buttons */}
+                  <div className="grid grid-cols-3 gap-1.5">
+                    <button
+                      type="button"
+                      onClick={() => setDate(getTodayStr())}
+                      className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
+                        date === getTodayStr()
+                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                          : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
+                      }`}
+                    >
+                      Today
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDate(getTomorrowStr())}
+                      className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
+                        date === getTomorrowStr()
+                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                          : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
+                      }`}
+                    >
+                      Tomorrow
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setDate(getWeekendStr())}
+                      className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
+                        date === getWeekendStr()
+                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                          : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
+                      }`}
+                    >
+                      Weekend
+                    </button>
+                  </div>
+
+                  {/* Date Picker Input */}
+                  <div>
+                    <label className="text-[10px] font-bold text-[#857D77] uppercase tracking-wider block mb-1">
+                      Choose Calendar Date:
+                    </label>
+                    <input
+                      type="date"
+                      value={date}
+                      min={getTodayStr()}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full bg-white border border-[#E5E2DD] px-3 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+                    />
+                  </div>
+
+                  {/* Human Date Display Badge */}
+                  <div className="pt-1.5 flex items-center justify-between text-xs border-t border-[#E5E2DD]">
+                    <span className="text-[#857D77] text-[11px]">Reserved Date:</span>
+                    <span className="font-bold text-[#18120F]">{formatDatePretty(date)}</span>
+                  </div>
                 </div>
 
-                {/* Sensory Time Slots */}
-                <div className="sm:col-span-2 grid grid-cols-2 gap-2">
-                  {slots.map((s) => {
-                    const Icon = s.icon;
-                    const isSelected = timeSlot.startsWith(s.name);
-                    return (
+                {/* TIME SELECTION COLUMN */}
+                <div className="lg:col-span-7 flex flex-col justify-between bg-[#F6F3EE] p-4 rounded-2xl border border-[#E5E2DD] gap-3">
+                  {timeMode === 'curated' ? (
+                    <>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#544E49]">
+                          Curated Sensory Windows
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setTimeMode('custom');
+                            setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
+                          }}
+                          className="text-xs text-[#C8652D] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                        >
+                          <Clock className="w-3 h-3" />
+                          <span>Custom Time?</span>
+                        </button>
+                      </div>
+
+                      <div className="grid grid-cols-2 gap-2">
+                        {slots.map((s) => {
+                          const Icon = s.icon;
+                          const isSelected = timeSlot.startsWith(s.name);
+                          return (
+                            <button
+                              key={s.name}
+                              type="button"
+                              onClick={() => setTimeSlot(`${s.name} ${s.time}`)}
+                              className={`min-h-[58px] p-2.5 rounded-xl text-left flex flex-col justify-between transition-all border cursor-pointer ${
+                                isSelected
+                                  ? 'bg-[#18120F] text-white border-[#18120F] shadow-sm'
+                                  : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
+                              }`}
+                            >
+                              <div className="flex items-center justify-between w-full">
+                                <span
+                                  className={`text-[9px] uppercase font-bold tracking-wider truncate pr-1 ${
+                                    isSelected ? 'text-[#FFDBCB]' : 'text-[#544E49]'
+                                  }`}
+                                >
+                                  {s.name}
+                                </span>
+                                <Icon className="w-3.5 h-3.5 text-[#C8652D] shrink-0" />
+                              </div>
+                              <span className="text-xs sm:text-sm font-bold mt-0.5">{s.time}</span>
+                              <span className="text-[9px] opacity-75 truncate">{s.sub}</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+
+                      {/* Custom Time Option Button */}
                       <button
-                        key={s.name}
                         type="button"
-                        onClick={() => setTimeSlot(`${s.name} ${s.time}`)}
-                        className={`min-h-[64px] p-2.5 sm:p-3 rounded-2xl text-left flex flex-col justify-between transition-all border ${
-                          isSelected
-                            ? 'bg-[#18120F] text-white border-[#18120F] shadow-sm'
-                            : 'bg-[#F6F3EE] text-[#544E49] border-[#E5E2DD] hover:bg-[#EBE8E3]'
-                        }`}
+                        onClick={() => {
+                          setTimeMode('custom');
+                          setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
+                        }}
+                        className="w-full py-2 px-3 rounded-xl bg-white hover:bg-[#FAF7F2] border border-dashed border-[#C8652D]/50 text-xs font-bold text-[#C8652D] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                       >
-                        <div className="flex items-center justify-between w-full">
-                          <span
-                            className={`text-[9px] sm:text-[10px] uppercase font-bold tracking-wider truncate pr-1 ${
-                              isSelected ? 'text-[#FFDBCB]' : 'text-[#544E49]'
-                            }`}
-                          >
-                            {s.name}
-                          </span>
-                          <Icon className="w-3.5 h-3.5 text-[#C8652D] shrink-0" />
-                        </div>
-                        <span className="text-xs sm:text-sm font-bold mt-0.5">{s.time}</span>
-                        <span className="text-[9px] sm:text-[10px] opacity-75 truncate">{s.sub}</span>
+                        <Clock className="w-3.5 h-3.5" />
+                        <span>Or Pick a Custom Time (08:00 AM – 11:00 PM)</span>
                       </button>
-                    );
-                  })}
+                    </>
+                  ) : (
+                    <>
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#544E49] flex items-center gap-1.5">
+                          <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
+                          <span>Custom Table Arrival Time</span>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setTimeMode('curated')}
+                          className="text-xs text-[#544E49] font-bold hover:underline cursor-pointer"
+                        >
+                          Curated Slots
+                        </button>
+                      </div>
+
+                      {/* Quick Popular Times Chips */}
+                      <div className="space-y-1">
+                        <span className="text-[10px] font-semibold text-[#857D77] block">
+                          Popular arrival hours:
+                        </span>
+                        <div className="flex flex-wrap gap-1.5">
+                          {['09:00', '10:30', '12:00', '13:30', '16:00', '17:00', '18:30', '19:30', '20:30', '21:30'].map((t) => {
+                            const label = formatTimeTo12h(t);
+                            const isSelected = customTimeInput === t && timeSlot.includes(label);
+                            return (
+                              <button
+                                key={t}
+                                type="button"
+                                onClick={() => {
+                                  setCustomTimeInput(t);
+                                  setTimeSlot(`Custom Time (${label})`);
+                                }}
+                                className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                                    : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
+                                }`}
+                              >
+                                {label}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Interactive Time Picker & Selection Button */}
+                      <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                        <div className="relative flex-1">
+                          <input
+                            type="time"
+                            value={customTimeInput}
+                            min="08:00"
+                            max="23:00"
+                            step="900"
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setCustomTimeInput(val);
+                              setTimeSlot(`Custom Time (${formatTimeTo12h(val)})`);
+                            }}
+                            className="w-full bg-white border border-[#E5E2DD] px-3 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+                          />
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const formatted = formatTimeTo12h(customTimeInput);
+                            setTimeSlot(`Custom Time (${formatted})`);
+                          }}
+                          className="px-4 py-2 rounded-xl bg-[#C8652D] hover:bg-[#B45309] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all shrink-0 cursor-pointer"
+                        >
+                          <CheckCircle2 className="w-3.5 h-3.5" />
+                          <span>Select {formatTimeTo12h(customTimeInput)}</span>
+                        </button>
+                      </div>
+
+                      {/* Active Slot Confirmation Pill */}
+                      <div className="pt-1.5 flex items-center justify-between text-xs border-t border-[#E5E2DD]">
+                        <span className="text-[#857D77] text-[11px]">Selected Time:</span>
+                        <span className="font-bold text-[#C8652D] bg-[#C8652D]/10 px-2.5 py-0.5 rounded-full border border-[#C8652D]/20">
+                          {timeSlot}
+                        </span>
+                      </div>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
