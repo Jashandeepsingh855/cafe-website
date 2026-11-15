@@ -1157,7 +1157,7 @@ export default function HomePage() {
           </div>
 
           {/* 3D Circular Orbit Carousel Animation */}
-          <div className="w-full max-w-4xl mx-auto mb-8">
+          <div className="w-full max-w-5xl mx-auto my-4">
             <CircularCarousel
               items={CUSTOMER_REVIEWS}
               activeIndex={activeReviewIndex}
@@ -1168,60 +1168,7 @@ export default function HomePage() {
             />
           </div>
 
-          {/* Active Highlight Review Spotlight Card */}
-          {CUSTOMER_REVIEWS[activeReviewIndex] && (
-            <div className="max-w-2xl mx-auto bg-[#FAF7F2] border border-[#E5E2DD] rounded-3xl p-6 sm:p-7 shadow-sm transition-all duration-300">
-              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-                <div className="flex items-center gap-4 shrink-0">
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden bg-white shadow-inner border border-[#E5E2DD]">
-                    <Image
-                      src={CUSTOMER_REVIEWS[activeReviewIndex].avatar!}
-                      alt={CUSTOMER_REVIEWS[activeReviewIndex].title}
-                      fill
-                      sizes="80px"
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="sm:hidden flex flex-col">
-                    <span className="text-base font-bold text-[#18120F]">
-                      {CUSTOMER_REVIEWS[activeReviewIndex].title}
-                    </span>
-                    <span className="text-xs text-[#857D77]">
-                      {CUSTOMER_REVIEWS[activeReviewIndex].role}
-                    </span>
-                  </div>
-                </div>
-
-                <div className="flex-1 flex flex-col gap-2 min-w-0">
-                  <div className="flex items-center justify-between gap-2">
-                    <div className="hidden sm:flex flex-col">
-                      <span className="text-base font-bold text-[#18120F]">
-                        {CUSTOMER_REVIEWS[activeReviewIndex].title}
-                      </span>
-                      <span className="text-xs text-[#857D77]">
-                        {CUSTOMER_REVIEWS[activeReviewIndex].role}
-                      </span>
-                    </div>
-
-                    <div className="flex items-center gap-1 text-[#C8652D]">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-4 h-4 fill-[#C8652D]" />
-                      ))}
-                      <span className="text-sm text-[#18120F] font-bold ml-1">
-                        {CUSTOMER_REVIEWS[activeReviewIndex].rating?.toFixed(1)}
-                      </span>
-                    </div>
-                  </div>
-
-                  <p className="text-sm sm:text-base text-[#18120F] leading-relaxed italic">
-                    &ldquo;{CUSTOMER_REVIEWS[activeReviewIndex].description}&rdquo;
-                  </p>
-                </div>
-              </div>
-            </div>
-          )}
-
-          <div className="mt-10 text-center">
+          <div className="mt-8 text-center">
             <a
               href={site.links.googleReview}
               target="_blank"
