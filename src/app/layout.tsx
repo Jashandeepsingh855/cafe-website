@@ -50,11 +50,14 @@ export default function RootLayout({
         {/* Global Parallax Scroll Progress Indicator */}
         <div
           id="global-scroll-progress"
-          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C8652D] via-[#E8A55B] to-[#C8652D] z-50 origin-left scale-x-0 pointer-events-none shadow-[0_1px_10px_rgba(200,101,45,0.45)]"
+          className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#C8652D] via-[#E8A55B] to-[#C8652D] z-[105] origin-left scale-x-0 pointer-events-none shadow-[0_1px_10px_rgba(200,101,45,0.45)]"
+          style={{ zIndex: 105 }}
         />
         <SmoothScrollInit />
         <Header />
-        <main className="flex-1 w-full pt-16 sm:pt-20">{children}</main>
+        <main className="flex-1 w-full pt-16 sm:pt-20 relative z-0" style={{ isolation: 'isolate' }}>
+          {children}
+        </main>
         <Footer />
         <FloatingMobileBar />
       </body>

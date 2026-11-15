@@ -925,7 +925,8 @@ export default function AdminPage() {
       {/* ========================================================= */}
       {isDrawerOpen && editingItem && (
         <div
-          className="fixed inset-0 z-50 flex justify-end bg-black/60 backdrop-blur-sm animate-in fade-in"
+          className="fixed inset-0 z-[150] flex justify-end bg-black/60 backdrop-blur-sm animate-in fade-in"
+          style={{ zIndex: 150 }}
           onClick={() => {
             setIsDrawerOpen(false);
             setEditingItem(null);

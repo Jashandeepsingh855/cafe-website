@@ -61,7 +61,10 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-40 glass-nav border-b border-[#E5E2DD]/80 shadow-[0_1px_12px_rgba(24,18,15,0.03)]">
+      <header
+        className="fixed top-0 left-0 right-0 z-[100] glass-nav border-b border-[#E5E2DD]/80 shadow-[0_1px_12px_rgba(24,18,15,0.03)]"
+        style={{ zIndex: 100 }}
+      >
         <div className="h-16 sm:h-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3">
           {/* Brand Logo */}
           <div className="flex items-center gap-2.5 sm:gap-3 shrink-0 min-w-0">
@@ -148,7 +151,8 @@ export default function Header() {
       {/* Mobile Drawer Backdrop */}
       {mobileMenuOpen && (
         <div
-          className="lg:hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
+          className="lg:hidden fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
+          style={{ zIndex: 110 }}
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
@@ -156,9 +160,10 @@ export default function Header() {
       {/* Mobile Slide-Over Drawer from Right */}
       <div
         data-lenis-prevent
-        className={`lg:hidden fixed top-0 right-0 bottom-0 z-50 w-[85%] max-w-sm bg-[#FAF7F2] shadow-2xl border-l border-[#E5E2DD] flex flex-col justify-between transition-transform duration-300 ease-in-out ${
+        className={`lg:hidden fixed top-0 right-0 bottom-0 z-[120] w-[85%] max-w-sm bg-[#FAF7F2] shadow-2xl border-l border-[#E5E2DD] flex flex-col justify-between transition-transform duration-300 ease-in-out ${
           mobileMenuOpen ? 'translate-x-0' : 'translate-x-full pointer-events-none'
         }`}
+        style={{ zIndex: 120 }}
       >
         {/* Drawer Header */}
         <div className="p-5 pb-4 border-b border-[#E5E2DD] flex items-center justify-between bg-white">

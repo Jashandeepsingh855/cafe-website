@@ -1244,7 +1244,10 @@ export default function HomePage() {
       {/* ========================================================================= */}
       {/* 6. CUSTOMER TESTIMONIALS (ANIMATED CIRCULAR CAROUSEL) */}
       {/* ========================================================================= */}
-      <section className="w-full py-16 sm:py-20 bg-white border-b border-[#E5E2DD] overflow-hidden">
+      <section
+        className="w-full py-16 sm:py-20 bg-white border-b border-[#E5E2DD] overflow-hidden relative z-10"
+        style={{ isolation: 'isolate' }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-6">
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#C8652D]/10 text-[#C8652D] text-xs font-bold uppercase tracking-widest border border-[#C8652D]/20 mb-3">
@@ -1287,9 +1290,12 @@ export default function HomePage() {
       </section>
 
       {/* ========================================================================= */}
-      {/* 7. ROASTERY & CAFE PHOTO GALLERY (POLAROID LINE CAROUSEL ANIMATION) */}
+      {/* 7. CAFE PHOTO GALLERY (POLAROID LINE CAROUSEL ANIMATION) */}
       {/* ========================================================================= */}
-      <section className="w-full py-16 sm:py-20 bg-[#FAF7F2] pb-24 sm:pb-28">
+      <section
+        className="w-full py-16 sm:py-20 bg-[#FAF7F2] pb-24 sm:pb-28 overflow-hidden relative z-10"
+        style={{ isolation: 'isolate' }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
             <div>
@@ -1349,7 +1355,10 @@ export default function HomePage() {
 
       {/* Gallery Photo Upload Modal */}
       {galleryModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+        <div
+          className="fixed inset-0 z-[150] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in"
+          style={{ zIndex: 150 }}
+        >
           <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-[#E5E2DD] space-y-4 relative">
             <button
               type="button"
