@@ -57,6 +57,7 @@ export default function Header() {
     { name: 'Home', href: '/' },
     { name: 'Menu', href: '/menu' },
     { name: 'About Us', href: '/about' },
+    { name: 'Book a Table', href: '/reservation' },
   ];
 
   return (
@@ -91,8 +92,8 @@ export default function Header() {
             </div>
           </div>
 
-          {/* Desktop Navigation & Actions: Home, Menu, About Us, and Book a Table right next to each other */}
-          <div className="hidden lg:flex items-center gap-2 sm:gap-3">
+          {/* Desktop Navigation: Home, Menu, About Us, Book a Table */}
+          <div className="hidden lg:flex items-center">
             <nav className="flex items-center gap-1">
               {navLinks.map((link) => {
                 const isActive = pathname === link.href;
@@ -111,18 +112,6 @@ export default function Header() {
                 );
               })}
             </nav>
-
-            {/* Desktop Book Table CTA - sits directly alongside About Us */}
-            <Link
-              href="/reservation"
-              className={`inline-flex items-center justify-center px-5 py-2.5 rounded-full font-semibold text-sm transition-all shadow-sm ${
-                pathname === '/reservation'
-                  ? 'bg-[#C8652D] text-white shadow-md'
-                  : 'bg-[#18120F] text-[#FAF7F2] hover:bg-[#C8652D] hover:text-white'
-              }`}
-            >
-              Book a Table
-            </Link>
           </div>
 
           {/* Mobile Right Controls (< lg) */}
@@ -211,8 +200,10 @@ export default function Header() {
             Navigation Menu
           </span>
 
-          {navLinks.map((link) => {
-            const isActive = pathname === link.href;
+          {navLinks
+            .filter((link) => link.href !== '/reservation')
+            .map((link) => {
+              const isActive = pathname === link.href;
             return (
               <Link
                 key={link.name}
