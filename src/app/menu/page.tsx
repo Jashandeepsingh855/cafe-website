@@ -21,7 +21,6 @@ import {
   Cookie,
 } from 'lucide-react';
 import { MENU_ITEMS, MENU_CATEGORIES, MenuItem, getClientMenuItems } from '@/data/menu';
-import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
 import DishDetailModal from '@/components/DishDetailModal';
 
 // Artisanal category descriptions for editorial presentation
@@ -40,7 +39,6 @@ const CATEGORY_DESCRIPTIONS: Record<string, string> = {
 
 export default function MenuPage() {
   const [menuItems, setMenuItems] = useState<MenuItem[]>(MENU_ITEMS);
-  const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDietFilter, setSelectedDietFilter] = useState<'all' | 'pure-jain' | 'vegan-friendly' | 'chef-special'>('all');
   const [activeCategory, setActiveCategory] = useState<string>('all');
@@ -53,16 +51,13 @@ export default function MenuPage() {
   useEffect(() => {
     const syncData = () => {
       setMenuItems(getClientMenuItems());
-      setSite(getClientSiteConfig());
     };
     syncData();
     window.addEventListener('storage', syncData);
     window.addEventListener('dcd_menu_updated', syncData);
-    window.addEventListener('dcd_site_updated', syncData);
     return () => {
       window.removeEventListener('storage', syncData);
       window.removeEventListener('dcd_menu_updated', syncData);
-      window.removeEventListener('dcd_site_updated', syncData);
     };
   }, []);
 
@@ -120,21 +115,8 @@ export default function MenuPage() {
 
   return (
     <div className="w-full bg-[#FAF7F2] min-h-screen pb-24 md:pb-16 flex flex-col">
-      {/* Top Announcement Ribbon */}
-      <div className="w-full bg-[#EBE8E3]/80 py-2.5 px-4 sm:px-6 lg:px-8 border-b border-[#E5E2DD]">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs font-semibold text-[#544E49]">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-[#C8652D]"></span>
-            <span className="text-[#18120F] font-bold">{site.tickerText}</span>
-          </div>
-          <div className="flex items-center gap-4">
-            <span className="text-[#C8652D] font-bold">{menuItems.length} Handcrafted Offerings</span>
-          </div>
-        </div>
-      </div>
-
       {/* Refined Artisanal Header with Visual Art & Signatures */}
-      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-6">
+      <section className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 sm:pt-10 pb-6">
         {/* Subtle Decorative Botanical Coffee Art & Radial Glow */}
         <div className="absolute inset-0 pointer-events-none -z-10 overflow-hidden">
           <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[350px] bg-[radial-gradient(ellipse_60%_50%_at_50%_0%,rgba(200,101,45,0.12),transparent_75%)]" />
@@ -201,7 +183,7 @@ export default function MenuPage() {
             </span>
           </div>
 
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible">
+          <div className="flex overflow-x-auto snap-x snap-mandatory gap-3 pb-2 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:overflow-visible no-scrollbar touch-pan-x">
             {[
               {
                 title: 'Chikmagalur V60 Pour-Over',
