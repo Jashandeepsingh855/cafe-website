@@ -243,7 +243,7 @@ Please confirm my table reservation. Thank you!`;
   return (
     <div className="w-full bg-[#FAF7F2] min-h-screen pb-24 md:pb-16 flex flex-col">
       {/* Top Hero Story Ribbon with Multi-Layer Parallax Depth */}
-      <section className="relative w-full bg-[#F6F3EE] border-b border-[#E5E2DD] py-10 sm:py-12 overflow-hidden" data-parallax-layers>
+      <section className="relative w-full bg-[#F6F3EE] border-b border-[#E5E2DD] pt-24 sm:pt-28 pb-10 sm:pb-12 overflow-hidden" data-parallax-layers>
         <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
           <div data-parallax-layer="1" className="absolute -top-20 right-1/4 w-96 h-96 rounded-full bg-[#C8652D]/10 blur-3xl" />
           <div data-parallax-layer="2" className="absolute top-1/2 -left-16 w-80 h-80 rounded-full bg-[#18120F]/5 blur-2xl" />
@@ -292,12 +292,12 @@ Please confirm my table reservation. Thank you!`;
       </section>
 
       {/* Main Booking Form + Cafe Venue Info */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 w-full">
+        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8 items-start">
           {/* Left Column: 4-Step Reservation Machine */}
           <form
             onSubmit={handleSubmit}
-            className="lg:col-span-8 flex flex-col gap-6 sm:gap-7 bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-[#E5E2DD]"
+            className="xl:col-span-8 flex flex-col gap-7 sm:gap-8 bg-white p-6 sm:p-9 rounded-3xl shadow-sm border border-[#E5E2DD]"
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#E5E2DD]">
               <div className="flex items-center gap-2.5">
@@ -314,7 +314,7 @@ Please confirm my table reservation. Thank you!`;
             </div>
 
             {/* STEP 1: Party Size Selection (Sleek & Light Selector) */}
-            <div className="flex flex-col gap-2.5">
+            <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#C8652D]" />
@@ -325,12 +325,12 @@ Please confirm my table reservation. Thank you!`;
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3">
                 {[
-                  { id: '1-2', count: '1–2', label: 'Solo / Duos', hint: 'Focus & pairs' },
-                  { id: '3-4', count: '3–4', label: 'Intimate Table', hint: 'Casual meetup' },
-                  { id: '5-8', count: '5–8', label: 'Group Lounge', hint: 'Sofa circle' },
-                  { id: '8+', count: '8+', label: 'Private Salon', hint: 'Dining suite' },
+                  { id: '1-2', count: '1–2', label: 'Solo / Duo' },
+                  { id: '3-4', count: '3–4', label: 'Intimate Table' },
+                  { id: '5-8', count: '5–8', label: 'Group Lounge' },
+                  { id: '8+', count: '8+', label: 'Private Salon' },
                 ].map((item) => {
                   const isSelected = partySize === item.id;
                   return (
@@ -338,25 +338,21 @@ Please confirm my table reservation. Thank you!`;
                       key={item.id}
                       type="button"
                       onClick={() => setPartySize(item.id)}
-                      className={`p-2.5 sm:p-3 rounded-xl flex flex-col items-start justify-center gap-0.5 transition-all text-left border cursor-pointer ${
+                      className={`py-3 px-3.5 rounded-2xl flex flex-col items-center justify-center transition-all text-center border cursor-pointer ${
                         isSelected
-                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                          : 'bg-[#FAF7F2]/80 text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA] hover:border-[#C8652D]/40'
+                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-sm ring-2 ring-[#C8652D]/40'
+                          : 'bg-[#FAF7F2] text-[#18120F] border-[#E5E2DD] hover:bg-white hover:border-[#C8652D]/40'
                       }`}
                     >
-                      <div className="flex items-center justify-between w-full">
-                        <span className="text-base sm:text-lg font-bold leading-none">{item.count}</span>
-                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#C8652D]" />}
-                      </div>
+                      <span className="text-xl sm:text-2xl font-extrabold tracking-tight leading-none">
+                        {item.count}
+                      </span>
                       <span
-                        className={`text-xs font-semibold leading-tight mt-0.5 ${
-                          isSelected ? 'text-[#FFDBCB]' : 'text-[#18120F]'
+                        className={`text-xs font-semibold mt-1 ${
+                          isSelected ? 'text-[#FFDBCB]' : 'text-[#544E49]'
                         }`}
                       >
                         {item.label}
-                      </span>
-                      <span className={`text-[10px] ${isSelected ? 'text-white/70' : 'text-[#857D77]'}`}>
-                        {item.hint}
                       </span>
                     </button>
                   );
@@ -364,55 +360,60 @@ Please confirm my table reservation. Thank you!`;
               </div>
             </div>
 
-            {/* STEP 2: Preferred Dining Zone (Airy Cards with Symmetrical Proportions) */}
-            <div className="flex flex-col gap-2.5">
-              <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
-                <Store className="w-4 h-4 text-[#C8652D]" />
-                <span>2. Preferred Dining Sanctuary</span>
-              </label>
+            {/* STEP 2: Preferred Dining Zone (Spacious Cards, Complete Readable Descriptions) */}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
+                  <Store className="w-4 h-4 text-[#C8652D]" />
+                  <span>2. Preferred Dining Sanctuary</span>
+                </label>
+                <span className="text-xs font-bold text-[#C8652D]">
+                  {zones.find((z) => z.id === zone)?.name}
+                </span>
+              </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-3.5">
                 {zones.map((z) => {
                   const isSelected = zone === z.id;
                   return (
                     <div
                       key={z.id}
                       onClick={() => setZone(z.id)}
-                      className={`group relative p-2.5 sm:p-3 rounded-2xl cursor-pointer transition-all flex gap-3 items-center border ${
+                      className={`group relative p-3.5 sm:p-4 rounded-2xl cursor-pointer transition-all flex gap-3.5 items-center border ${
                         isSelected
-                          ? 'bg-[#FAF7F2] border-[#C8652D] ring-1 ring-[#C8652D] shadow-xs'
-                          : 'bg-white border-[#E5E2DD] hover:border-[#C8652D]/40 hover:bg-[#FAF7F2]/40'
+                          ? 'bg-[#FAF7F2] border-[#C8652D] ring-2 ring-[#C8652D]/30 shadow-xs'
+                          : 'bg-white border-[#E5E2DD] hover:border-[#C8652D]/40 hover:bg-[#FAF7F2]/50'
                       }`}
                     >
-                      <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD] image-zoom-frame border border-[#E5E2DD]/70">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD] border border-[#E5E2DD]/80">
                         <Image
                           src={z.image}
                           alt={z.name}
                           fill
                           className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
-                          sizes="(max-width: 640px) 64px, 72px"
+                          sizes="80px"
                         />
                       </div>
 
                       <div className="flex flex-col min-w-0 flex-1">
                         <div className="flex items-center justify-between gap-1.5">
-                          <span className="font-bold text-xs sm:text-sm text-[#18120F] truncate">
+                          <span className="font-bold text-xs sm:text-sm text-[#18120F] leading-tight">
                             {z.name}
                           </span>
                           <span
-                            className={`w-3 h-3 rounded-full flex items-center justify-center shrink-0 border ${
+                            className={`w-4 h-4 rounded-full flex items-center justify-center shrink-0 border transition-colors ${
                               isSelected
                                 ? 'border-[#C8652D] bg-[#C8652D]'
-                                : 'border-[#D4CECA] bg-white'
+                                : 'border-[#D4CECA] bg-white group-hover:border-[#C8652D]/60'
                             }`}
                           >
                             {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
                           </span>
                         </div>
-                        <span className="text-[11px] sm:text-xs text-[#544E49] mt-0.5 line-clamp-1 leading-relaxed">
+                        <p className="text-[11px] sm:text-xs text-[#544E49] mt-1 line-clamp-2 leading-relaxed">
                           {z.desc}
-                        </span>
-                        <div className="flex items-center gap-1.5 mt-1">
+                        </p>
+                        <div className="flex items-center gap-1.5 mt-1.5">
                           <span className="w-1.5 h-1.5 rounded-full bg-[#C8652D]" />
                           <span className="text-[10px] sm:text-[11px] font-semibold text-[#C8652D] truncate">
                             {z.tag}
@@ -425,191 +426,199 @@ Please confirm my table reservation. Thank you!`;
               </div>
             </div>
 
-            {/* STEP 3: Unified Date & Arrival Time (De-Crowded, Spacious, Intuitive) */}
-            <div className="flex flex-col gap-2.5">
-              <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
-                <Calendar className="w-4 h-4 text-[#C8652D]" />
-                <span>3. Date &amp; Arrival Time</span>
-              </label>
+            {/* STEP 3: Date & Arrival Time (Un-Crowded, Spacious, Full Visible Labels) */}
+            <div className="flex flex-col gap-3.5">
+              <div className="flex items-center justify-between">
+                <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
+                  <Calendar className="w-4 h-4 text-[#C8652D]" />
+                  <span>3. Date &amp; Arrival Time</span>
+                </label>
+                <span className="text-xs font-bold text-[#C8652D]">
+                  {formatDatePretty(date)} · {timeSlot}
+                </span>
+              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
-                {/* DATE SELECTION PANEL */}
-                <div className="bg-[#FAF7F2]/60 p-4 sm:p-4.5 rounded-2xl border border-[#E5E2DD]/90 flex flex-col justify-between gap-3">
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-[#C8652D]" />
-                        <span>Date of Visit</span>
-                      </span>
-                      <span className="text-xs font-bold text-[#C8652D] bg-white px-2 py-0.5 rounded-md border border-[#E5E2DD]">
-                        {formatDatePretty(date)}
-                      </span>
-                    </div>
+              {/* Sub-panel 1: Date of Visit */}
+              <div className="bg-[#FAF7F2] p-4 sm:p-5 rounded-2xl border border-[#E5E2DD] flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
+                    <Calendar className="w-3.5 h-3.5 text-[#C8652D]" />
+                    <span>Select Date of Visit</span>
+                  </span>
+                  <span className="text-xs font-bold text-[#C8652D] bg-white px-2.5 py-0.5 rounded-md border border-[#E5E2DD] w-fit">
+                    {formatDatePretty(date)}
+                  </span>
+                </div>
 
-                    {/* Quick Date Selector Pills */}
-                    <div className="grid grid-cols-3 gap-1.5 mb-2.5">
-                      {[
-                        { label: 'Today', val: getTodayStr() },
-                        { label: 'Tomorrow', val: getTomorrowStr() },
-                        { label: 'Weekend', val: getWeekendStr() },
-                      ].map((d) => (
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5">
+                  {/* Quick Date Selector Pills */}
+                  <div className="grid grid-cols-3 gap-2 flex-1">
+                    {[
+                      { label: 'Today', val: getTodayStr() },
+                      { label: 'Tomorrow', val: getTomorrowStr() },
+                      { label: 'Weekend', val: getWeekendStr() },
+                    ].map((d) => (
+                      <button
+                        key={d.label}
+                        type="button"
+                        onClick={() => setDate(d.val)}
+                        className={`py-2 px-3 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
+                          date === d.val
+                            ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                            : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
+                        }`}
+                      >
+                        {d.label}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Native Date Picker */}
+                  <div className="sm:w-52">
+                    <input
+                      type="date"
+                      value={date}
+                      min={getTodayStr()}
+                      onChange={(e) => setDate(e.target.value)}
+                      className="w-full bg-white border border-[#E5E2DD] px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D] cursor-pointer"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Sub-panel 2: Arrival Time */}
+              <div className="bg-[#FAF7F2] p-4 sm:p-5 rounded-2xl border border-[#E5E2DD] flex flex-col gap-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
+                    <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
+                    <span>Select Arrival Time</span>
+                  </span>
+
+                  {/* Mode Switcher */}
+                  <div className="inline-flex rounded-xl bg-white p-0.5 border border-[#E5E2DD] self-start sm:self-auto">
+                    <button
+                      type="button"
+                      onClick={() => setTimeMode('curated')}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        timeMode === 'curated'
+                          ? 'bg-[#18120F] text-white shadow-xs'
+                          : 'text-[#544E49] hover:text-[#18120F]'
+                      }`}
+                    >
+                      Curated Slots
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setTimeMode('custom');
+                        setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
+                      }}
+                      className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
+                        timeMode === 'custom'
+                          ? 'bg-[#18120F] text-white shadow-xs'
+                          : 'text-[#544E49] hover:text-[#18120F]'
+                      }`}
+                    >
+                      Custom Time
+                    </button>
+                  </div>
+                </div>
+
+                {timeMode === 'curated' ? (
+                  /* Curated Slots: 4 Full-Width Cards with Full Text */
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5">
+                    {slots.map((s) => {
+                      const Icon = s.icon;
+                      const isSelected = timeSlot.startsWith(s.name);
+                      return (
                         <button
-                          key={d.label}
+                          key={s.name}
                           type="button"
-                          onClick={() => setDate(d.val)}
-                          className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
-                            date === d.val
-                              ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                              : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
+                          onClick={() => setTimeSlot(`${s.name} ${s.time}`)}
+                          className={`p-3 rounded-xl text-left flex flex-col justify-between transition-all border cursor-pointer ${
+                            isSelected
+                              ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs ring-2 ring-[#C8652D]/40'
+                              : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA] hover:border-[#C8652D]/40'
                           }`}
                         >
-                          {d.label}
+                          <div className="flex items-center justify-between w-full mb-1">
+                            <span
+                              className={`text-[11px] font-bold tracking-wide ${
+                                isSelected ? 'text-[#FFDBCB]' : 'text-[#857D77]'
+                              }`}
+                            >
+                              {s.name}
+                            </span>
+                            <Icon className="w-3.5 h-3.5 text-[#C8652D] shrink-0" />
+                          </div>
+                          <span className="text-sm sm:text-base font-extrabold leading-tight">
+                            <span className={isSelected ? 'text-white' : 'text-[#18120F]'}>{s.time}</span>
+                          </span>
+                          <span
+                            className={`text-[10px] mt-1 line-clamp-1 ${
+                              isSelected ? 'text-white/70' : 'text-[#857D77]'
+                            }`}
+                          >
+                            {s.sub}
+                          </span>
                         </button>
-                      ))}
+                      );
+                    })}
+                  </div>
+                ) : (
+                  /* Custom Time Controls */
+                  <div className="space-y-2.5">
+                    <div className="flex flex-wrap gap-1.5">
+                      {['08:30', '10:00', '11:30', '13:00', '15:30', '17:00', '19:00', '20:30', '22:00'].map((t) => {
+                        const label = formatTimeTo12h(t);
+                        const isSelected = customTimeInput === t && timeSlot.includes(label);
+                        return (
+                          <button
+                            key={t}
+                            type="button"
+                            onClick={() => {
+                              setCustomTimeInput(t);
+                              setTimeSlot(`Custom Time (${label})`);
+                            }}
+                            className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                              isSelected
+                                ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                                : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
+                            }`}
+                          >
+                            {label}
+                          </button>
+                        );
+                      })}
                     </div>
-
-                    {/* Native Date Picker */}
-                    <div>
+                    <div className="flex items-center gap-3">
+                      <span className="text-xs font-semibold text-[#544E49]">Or pick custom exact time:</span>
                       <input
-                        type="date"
-                        value={date}
-                        min={getTodayStr()}
-                        onChange={(e) => setDate(e.target.value)}
-                        className="w-full bg-white border border-[#E5E2DD] px-3.5 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D] cursor-pointer"
+                        type="time"
+                        value={customTimeInput}
+                        min="07:00"
+                        max="23:00"
+                        step="900"
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          setCustomTimeInput(val);
+                          setTimeSlot(`Custom Time (${formatTimeTo12h(val)})`);
+                        }}
+                        className="bg-white border border-[#E5E2DD] px-3.5 py-1.5 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
                       />
                     </div>
                   </div>
+                )}
 
-                  <p className="text-[11px] text-[#857D77] pt-2 border-t border-[#E5E2DD]/60 flex items-center justify-between">
-                    <span>Courtesy hold window:</span>
-                    <span className="font-semibold text-[#18120F]">15 minutes from slot</span>
-                  </p>
-                </div>
-
-                {/* TIME SELECTION PANEL */}
-                <div className="bg-[#FAF7F2]/60 p-4 sm:p-4.5 rounded-2xl border border-[#E5E2DD]/90 flex flex-col justify-between gap-3">
-                  <div>
-                    {/* Header + Mode Switcher */}
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
-                        <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
-                        <span>Arrival Time</span>
-                      </span>
-
-                      <div className="inline-flex rounded-lg bg-white p-0.5 border border-[#E5E2DD]">
-                        <button
-                          type="button"
-                          onClick={() => setTimeMode('curated')}
-                          className={`px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer ${
-                            timeMode === 'curated'
-                              ? 'bg-[#18120F] text-white shadow-xs'
-                              : 'text-[#544E49] hover:text-[#18120F]'
-                          }`}
-                        >
-                          Curated Slots
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setTimeMode('custom');
-                            setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
-                          }}
-                          className={`px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer ${
-                            timeMode === 'custom'
-                              ? 'bg-[#18120F] text-white shadow-xs'
-                              : 'text-[#544E49] hover:text-[#18120F]'
-                          }`}
-                        >
-                          Custom Time
-                        </button>
-                      </div>
-                    </div>
-
-                    {timeMode === 'curated' ? (
-                      /* Curated Slots (4 Clean Balanced Chips) */
-                      <div className="grid grid-cols-2 gap-2">
-                        {slots.map((s) => {
-                          const Icon = s.icon;
-                          const isSelected = timeSlot.startsWith(s.name);
-                          return (
-                            <button
-                              key={s.name}
-                              type="button"
-                              onClick={() => setTimeSlot(`${s.name} ${s.time}`)}
-                              className={`p-2 rounded-xl text-left flex flex-col justify-between transition-all border cursor-pointer ${
-                                isSelected
-                                  ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                                  : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
-                              }`}
-                            >
-                              <div className="flex items-center justify-between w-full">
-                                <span
-                                  className={`text-[10px] uppercase font-bold tracking-wider truncate pr-1 ${
-                                    isSelected ? 'text-[#FFDBCB]' : 'text-[#857D77]'
-                                  }`}
-                                >
-                                  {s.name}
-                                </span>
-                                <Icon className="w-3.5 h-3.5 text-[#C8652D] shrink-0" />
-                              </div>
-                              <span className="text-xs sm:text-sm font-bold mt-0.5">{s.time}</span>
-                            </button>
-                          );
-                        })}
-                      </div>
-                    ) : (
-                      /* Custom Time Controls */
-                      <div className="space-y-2">
-                        <div className="flex flex-wrap gap-1">
-                          {['09:00', '11:00', '13:00', '16:00', '18:00', '19:30', '21:00'].map((t) => {
-                            const label = formatTimeTo12h(t);
-                            const isSelected = customTimeInput === t && timeSlot.includes(label);
-                            return (
-                              <button
-                                key={t}
-                                type="button"
-                                onClick={() => {
-                                  setCustomTimeInput(t);
-                                  setTimeSlot(`Custom Time (${label})`);
-                                }}
-                                className={`px-2 py-0.5 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
-                                  isSelected
-                                    ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                                    : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
-                                }`}
-                              >
-                                {label}
-                              </button>
-                            );
-                          })}
-                        </div>
-                        <input
-                          type="time"
-                          value={customTimeInput}
-                          min="08:00"
-                          max="23:00"
-                          step="900"
-                          onChange={(e) => {
-                            const val = e.target.value;
-                            setCustomTimeInput(val);
-                            setTimeSlot(`Custom Time (${formatTimeTo12h(val)})`);
-                          }}
-                          className="w-full bg-white border border-[#E5E2DD] px-3.5 py-1.5 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="pt-2 border-t border-[#E5E2DD]/60 flex items-center justify-between text-xs">
-                    <span className="text-[11px] text-[#857D77]">Selected Slot:</span>
-                    <span className="font-bold text-[#C8652D] truncate ml-2">{timeSlot}</span>
-                  </div>
+                <div className="pt-2 border-t border-[#E5E2DD]/70 flex flex-col sm:flex-row sm:items-center justify-between text-xs text-[#857D77] gap-1">
+                  <span>Courtesy hold window: <strong className="text-[#18120F]">15 minutes from slot</strong></span>
+                  <span>Active selection: <strong className="text-[#C8652D]">{timeSlot}</strong></span>
                 </div>
               </div>
             </div>
 
-            {/* STEP 4: Guest Details & Mindful Requests (Sleek Pills Replace Bulky Boxes) */}
-            <div className="flex flex-col gap-2.5">
+            {/* STEP 4: Guest Details & Mindful Requests (Sleek Inputs, Airy Pills) */}
+            <div className="flex flex-col gap-3">
               <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                 <Utensils className="w-4 h-4 text-[#C8652D]" />
                 <span>4. Guest Details &amp; Mindful Requests</span>
@@ -650,7 +659,7 @@ Please confirm my table reservation. Thank you!`;
                 </div>
               </div>
 
-              {/* Mindful Dietary & Celebration Chips (Airy, Non-Chunky) */}
+              {/* Mindful Dietary & Celebration Chips */}
               <div className="pt-2">
                 <span className="text-xs font-bold text-[#544E49] block mb-2">
                   Hospitality &amp; Kitchen Notes (Tap to specify)
@@ -774,8 +783,8 @@ Please confirm my table reservation. Thank you!`;
             )}
           </form>
 
-          {/* Right Column: Venue Info & FAQs (Unified List Layout, No Nested Gray Boxes) */}
-          <aside className="lg:col-span-4 flex flex-col gap-6 w-full lg:sticky lg:top-24">
+          {/* Right Column: Venue Info & FAQs */}
+          <aside className="xl:col-span-4 flex flex-col gap-6 w-full xl:sticky xl:top-28">
             {/* Live Cafe Hospitality Card */}
             <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-5">
               <div className="flex items-center justify-between pb-3 border-b border-[#E5E2DD]">
