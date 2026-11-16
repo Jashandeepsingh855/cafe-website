@@ -27,23 +27,48 @@ export default function DishDetailModal({ item, onClose }: DishDetailModalProps)
     if (item) {
       window.addEventListener('keydown', handleKeyDown);
       stopLenis();
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.dataset.modalScrollY = scrollY.toString();
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
+      document.documentElement.classList.add('dish-modal-open');
       document.body.classList.add('dish-modal-open');
+
+      const handleTouchMove = (e: TouchEvent) => {
+        const target = e.target as HTMLElement | null;
+        if (!target?.closest('[data-modal-scrollable]')) {
+          e.preventDefault();
+        }
+      };
+
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+      return () => {
+        window.removeEventListener('keydown', handleKeyDown);
+        window.removeEventListener('touchmove', handleTouchMove);
+        const savedScrollY = parseInt(document.body.dataset.modalScrollY || '0', 10);
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.classList.remove('dish-modal-open');
+        document.body.classList.remove('dish-modal-open');
+        delete document.body.dataset.modalScrollY;
+        window.scrollTo(0, savedScrollY);
+        startLenis();
+      };
     } else {
-      startLenis();
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('dish-modal-open');
       document.body.classList.remove('dish-modal-open');
     }
-
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-      startLenis();
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      document.body.classList.remove('dish-modal-open');
-    };
   }, [item, onClose]);
 
   if (!item) return null;
@@ -66,7 +91,7 @@ export default function DishDetailModal({ item, onClose }: DishDetailModalProps)
         </div>
 
         {/* Scrollable Modal Body */}
-        <div data-lenis-prevent className="flex-1 overflow-y-auto overscroll-contain">
+        <div data-lenis-prevent data-modal-scrollable className="flex-1 overflow-y-auto overscroll-contain">
           {/* Modal Header Image */}
           <div className="relative w-full h-44 sm:h-56 bg-[#EBE8E3] overflow-hidden shrink-0">
             <Image

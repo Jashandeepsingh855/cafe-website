@@ -272,5 +272,24 @@
   transform: scale(1.1);
 }
 
+/* Bulletproof mobile scroll lock */
+html.menu-open,
+body.menu-open,
+html.dish-modal-open,
+body.dish-modal-open {
+  overflow: hidden !important;
+  height: 100% !important;
+  overscroll-behavior: none !important;
+  touch-action: none !important;
+}
+
+/* Allow scrolling ONLY within explicitly scrollable containers */
+[data-drawer-scrollable],
+[data-modal-scrollable] {
+  overscroll-behavior: contain !important;
+  -webkit-overflow-scrolling: touch !important;
+  touch-action: pan-y !important;
+}
+
 
 

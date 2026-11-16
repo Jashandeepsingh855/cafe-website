@@ -37,25 +37,52 @@ export default function Header() {
     };
   }, []);
 
-  // Lock background scroll when mobile menu is open
+  // Lock background scroll completely when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
       stopLenis();
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.dataset.headerScrollY = scrollY.toString();
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
       document.documentElement.style.overflow = 'hidden';
+      document.documentElement.classList.add('menu-open');
       document.body.classList.add('menu-open');
+
+      // Native non-passive touchmove blocker to prevent any background scroll / rubber-band bleed
+      const handleTouchMove = (e: TouchEvent) => {
+        const target = e.target as HTMLElement | null;
+        if (!target?.closest('[data-drawer-scrollable]')) {
+          e.preventDefault();
+        }
+      };
+
+      window.addEventListener('touchmove', handleTouchMove, { passive: false });
+
+      return () => {
+        window.removeEventListener('touchmove', handleTouchMove);
+        const savedScrollY = parseInt(document.body.dataset.headerScrollY || '0', 10);
+        document.body.style.position = '';
+        document.body.style.top = '';
+        document.body.style.left = '';
+        document.body.style.right = '';
+        document.body.style.width = '';
+        document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.classList.remove('menu-open');
+        document.body.classList.remove('menu-open');
+        delete document.body.dataset.headerScrollY;
+        window.scrollTo(0, savedScrollY);
+        startLenis();
+      };
     } else {
-      startLenis();
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('menu-open');
       document.body.classList.remove('menu-open');
     }
-    return () => {
-      startLenis();
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      document.body.classList.remove('menu-open');
-    };
   }, [mobileMenuOpen]);
 
   // Close mobile drawer on route change
@@ -206,7 +233,7 @@ export default function Header() {
         </div>
 
         {/* Drawer Body - Navigation Links */}
-        <div className="p-5 flex-1 overflow-y-auto space-y-2">
+        <div data-drawer-scrollable className="p-5 flex-1 overflow-y-auto space-y-2 overscroll-contain">
           <span className="text-[11px] font-bold uppercase tracking-wider text-[#C8652D] px-1 block mb-2">
             Navigation Menu
           </span>
