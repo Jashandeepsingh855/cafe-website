@@ -55,7 +55,7 @@ export const MENU_ITEMS: MenuItem[] = [
     story: 'Blends warm notes of single-estate espresso with Belgian couverture chocolate melted in-cup.',
     prepTime: '5 mins',
     tags: ['vegetarian'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAUbgk0Hb_8_JqoyuVmyc9ZIv3Qe0KU7B6y_uF79KlSKjkQZrS-DGQ7vjqeVgNgb21k3Vm-_ybc3W7qzFHDZEV5Sdlya6wXXqzppY_PlUdm4ChdOtSKEjrxJBFpugVal3TFQ46Vxg6K_t1qCkPfEOaZKB-AGtFfioVZyBrXXgsUnU2tvOBawol9rPjK3IpT46NUTwLepo9rcAtDJYRtH8V03fUvSpvPucZ4-GukVlU',
+    image: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?w=800&auto=format&fit=crop&q=80',
     flavor: 'Chocolate',
   },
   {
@@ -446,7 +446,7 @@ export const MENU_ITEMS: MenuItem[] = [
     story: 'Directly sourced from organic tea farms in Uji, Kyoto. Rich in L-theanine and vibrant green umami.',
     prepTime: '4 mins',
     tags: ['vegetarian', 'vegan-friendly', 'pure-jain', 'chef-special'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDNZf5bnJQtigp14a1ExGO-VugRV4AXiI6aP1RJFMKMcolwGXX-GLZUpZVBzlLXegF_j942DWk-Dn3osPKQzTMTzuM98PnaYinU3XiI8fF8fW1Cv24okNaxldxGi9VmBnKaRs9U7_ZlZjYmNafrEOV523ULEau7TrOI9f2IQWmTlVNTBmvAj6TLPfWGuSfg3G6wKmOm9UB7Vh1wLS9_s1toHlg_QNCwwoCqK_l-7W4',
+    image: 'https://images.unsplash.com/photo-1515823064-d6e0c04616a7?w=800&auto=format&fit=crop&q=80',
     featured: true,
   },
   {
@@ -459,7 +459,7 @@ export const MENU_ITEMS: MenuItem[] = [
     story: 'Our most celebrated tri-color aesthetic creation. Tart berry sweetness meets calm earthy matcha.',
     prepTime: '5 mins',
     tags: ['vegetarian', 'vegan-friendly', 'chef-special'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuB_iRiO5NWNVQtaGurMnc0pBTqjH1ZUHY7dkH0Wq-lS4J0QCIl8HtruStHhmcuRrGgsXQTIwIMRTK2cWi33cAxG_KCcx_666QIzPqO7VYTydUllF4Y-ouQNstZ8f39O8AVP0Qn0LyWxbkUf3QpwMUFuRAmxzWNEig3gEiKU36EXUvmFN__6dogX5XtJBfYct2uftHqKIJz-yWdjbZlwIRNa7Ud01MnnsmHvpeR0Sao',
+    image: 'https://images.unsplash.com/photo-1785711571852-8edfd71e92ef?w=800&auto=format&fit=crop&q=80',
     featured: true,
   },
   {
@@ -472,7 +472,7 @@ export const MENU_ITEMS: MenuItem[] = [
     story: 'Seasonal Indian fruit harmonized with Kyoto tea tradition for humid sunny afternoons.',
     prepTime: '4 mins',
     tags: ['vegetarian', 'vegan-friendly', 'pure-jain'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDNZf5bnJQtigp14a1ExGO-VugRV4AXiI6aP1RJFMKMcolwGXX-GLZUpZVBzlLXegF_j942DWk-Dn3osPKQzTMTzuM98PnaYinU3XiI8fF8fW1Cv24okNaxldxGi9VmBnKaRs9U7_ZlZjYmNafrEOV523ULEau7TrOI9f2IQWmTlVNTBmvAj6TLPfWGuSfg3G6wKmOm9UB7Vh1wLS9_s1toHlg_QNCwwoCqK_l-7W4',
+    image: 'https://images.unsplash.com/photo-1631308491952-040f80133535?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'mb-4',
@@ -484,7 +484,7 @@ export const MENU_ITEMS: MenuItem[] = [
     story: 'Indulgent fusion of spiced Belgian cookie crunch with rich Kyoto matcha.',
     prepTime: '5 mins',
     tags: ['vegetarian', 'chef-special'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuCxAq6IU-bmsuJGv-R9aEnhT-sO2XS75ts2HQg-LVT0rdyJELR3EoQE58cBq113cPEmBDuA1QFJcf1gW3xzfY2ytc4-066WFtpkL97I6-bMZuCKEu-xdIMJXYK2pybf2hqzf0zYJI8ry0mYul80sAP3OvqkCKopx8nRNQirS6ZKbwYIR4G3u8Tw2GkTKp_1ApwcjK5DPQXE_FNV0M6R9OEqqd-_tB8vfg8VRLCF0Jo',
+    image: 'https://images.unsplash.com/photo-1717603545758-88cc454db69b?w=800&auto=format&fit=crop&q=80',
   },
   {
     id: 'mb-5',
@@ -496,7 +496,7 @@ export const MENU_ITEMS: MenuItem[] = [
     story: 'Pure coconut sweetness naturally complements matcha bitterness without added white sugar.',
     prepTime: '4 mins',
     tags: ['vegetarian', 'vegan-friendly'],
-    image: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDNZf5bnJQtigp14a1ExGO-VugRV4AXiI6aP1RJFMKMcolwGXX-GLZUpZVBzlLXegF_j942DWk-Dn3osPKQzTMTzuM98PnaYinU3XiI8fF8fW1Cv24okNaxldxGi9VmBnKaRs9U7_ZlZjYmNafrEOV523ULEau7TrOI9f2IQWmTlVNTBmvAj6TLPfWGuSfg3G6wKmOm9UB7Vh1wLS9_s1toHlg_QNCwwoCqK_l-7W4',
+    image: 'https://images.unsplash.com/photo-1775846933630-3c1531299e5a?w=800&auto=format&fit=crop&q=80',
   },
 
   // 4. PIZZA & PASTA (8 ITEMS)
@@ -1265,7 +1265,11 @@ export const MENU_ITEMS: MenuItem[] = [
 export function getClientMenuItems(): MenuItem[] {
   if (typeof window === 'undefined') return MENU_ITEMS;
   try {
-    const saved = localStorage.getItem('dcd_menu_items');
+    // Clear legacy v1 cache if present so clients immediately get fresh authentic images
+    if (localStorage.getItem('dcd_menu_items')) {
+      localStorage.removeItem('dcd_menu_items');
+    }
+    const saved = localStorage.getItem('dcd_menu_items_v2');
     if (saved) {
       const parsed = JSON.parse(saved);
       if (Array.isArray(parsed) && parsed.length > 0) return parsed;
@@ -1279,7 +1283,7 @@ export function getClientMenuItems(): MenuItem[] {
 export function saveClientMenuItems(items: MenuItem[]): void {
   if (typeof window === 'undefined') return;
   try {
-    localStorage.setItem('dcd_menu_items', JSON.stringify(items));
+    localStorage.setItem('dcd_menu_items_v2', JSON.stringify(items));
     window.dispatchEvent(new CustomEvent('dcd_menu_updated', { detail: items }));
     window.dispatchEvent(new Event('storage'));
   } catch (err) {

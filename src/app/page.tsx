@@ -985,57 +985,61 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right Column: Visual Collage of Food & Drinks */}
-            <div className="lg:col-span-6 grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="h-64 sm:h-72 rounded-3xl overflow-hidden relative shadow-lg border border-white/10 group">
-                  <Image
-                    src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=800&auto=format&fit=crop&q=80"
-                    alt="Wood-Fired Margherita Pizza"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-xs font-bold text-white">Wood-Fired Pizza</span>
-                  </div>
-                </div>
-
-                <div className="h-44 sm:h-52 rounded-3xl overflow-hidden relative shadow-lg border border-white/10 group">
-                  <Image
-                    src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&auto=format&fit=crop&q=80"
-                    alt="Peri Peri Fries"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-xs font-bold text-white">Peri Peri Fries</span>
-                  </div>
+            {/* Right Column: Visual Showcase of Food & Drinks (Clean Aligned 2x2 Grid) */}
+            <div className="lg:col-span-6 grid grid-cols-2 gap-3.5 sm:gap-4">
+              {/* Card 1: Pizza */}
+              <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
+                <Image
+                  src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=800&auto=format&fit=crop&q=80"
+                  alt="Wood-Fired Margherita Pizza"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-3 sm:p-4">
+                  <span className="text-xs sm:text-sm font-bold text-white">Wood-Fired Pizza</span>
                 </div>
               </div>
 
-              <div className="space-y-4 pt-6">
-                <div className="h-44 sm:h-52 rounded-3xl overflow-hidden relative shadow-lg border border-white/10 group">
-                  <Image
-                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80"
-                    alt="Paneer Smash Burger"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-xs font-bold text-white">Smash Burger</span>
-                  </div>
+              {/* Card 2: Smash Burger */}
+              <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
+                <Image
+                  src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop&q=80"
+                  alt="Paneer Smash Burger"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-3 sm:p-4">
+                  <span className="text-xs sm:text-sm font-bold text-white">Smash Burger</span>
                 </div>
+              </div>
 
-                <div className="h-64 sm:h-72 rounded-3xl overflow-hidden relative shadow-lg border border-white/10 group">
-                  <Image
-                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
-                    alt="Pour Over Coffee"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-4">
-                    <span className="text-xs font-bold text-white">Single-Origin Roast</span>
-                  </div>
+              {/* Card 3: Peri Peri Fries */}
+              <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
+                <Image
+                  src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=800&auto=format&fit=crop&q=80"
+                  alt="Peri Peri Fries"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-3 sm:p-4">
+                  <span className="text-xs sm:text-sm font-bold text-white">Peri Peri Fries</span>
+                </div>
+              </div>
+
+              {/* Card 4: Single-Origin Roast */}
+              <div className="relative aspect-[4/3] rounded-2xl sm:rounded-3xl overflow-hidden shadow-lg border border-white/10 group">
+                <Image
+                  src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
+                  alt="Pour Over Coffee"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent flex items-end p-3 sm:p-4">
+                  <span className="text-xs sm:text-sm font-bold text-white">Single-Origin Roast</span>
                 </div>
               </div>
             </div>
@@ -1110,10 +1114,10 @@ export default function HomePage() {
                     </span>
                   </div>
 
-                  <h3 className="font-bold text-base text-[#18120F] group-hover:text-[#C8652D] transition-colors">
+                  <h3 className="font-bold text-base text-[#18120F] group-hover:text-[#C8652D] transition-colors min-h-[44px] flex items-center">
                     {combo.title}
                   </h3>
-                  <p className="text-xs text-[#544E49] mt-2 leading-relaxed">
+                  <p className="text-xs text-[#544E49] mt-1 leading-relaxed min-h-[36px] line-clamp-2">
                     {combo.items}
                   </p>
                 </div>
@@ -1190,55 +1194,63 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Right: Founders & Kitchen Image Showcase */}
-            <div className="lg:w-1/2 w-full grid grid-cols-2 gap-4">
-              <div className="flex flex-col gap-4">
-                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
-                  <Image
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80"
-                    alt="Kabir Mehta - Co-Founder & Coffee Roaster"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                  />
-                  <div className="absolute bottom-2 left-2 right-2 p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-white">
-                    <p className="font-bold text-xs truncate">Kabir Mehta</p>
-                    <p className="text-[10px] text-white/70">Co-Founder &amp; Roaster</p>
-                  </div>
-                </div>
-                <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
-                  <Image
-                    src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
-                    alt="Manual V60 Pour-over brewing"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                  />
+            {/* Right: Founders & Kitchen Image Showcase (Clean 2x2 Aligned Grid) */}
+            <div className="lg:w-1/2 w-full grid grid-cols-2 gap-3.5 sm:gap-4">
+              {/* Founder 1: Kabir Mehta */}
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-sm group image-zoom-frame border border-[#E5E2DD]">
+                <Image
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&auto=format&fit=crop&q=80"
+                  alt="Kabir Mehta - Co-Founder & Coffee Roaster"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                <div className="absolute bottom-2 left-2 right-2 p-2 sm:p-2.5 rounded-xl bg-black/65 backdrop-blur-md text-white">
+                  <p className="font-bold text-xs truncate">Kabir Mehta</p>
+                  <p className="text-[10px] text-white/80">Co-Founder &amp; Roaster</p>
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4 pt-6">
-                <div className="relative aspect-video rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
-                  <Image
-                    src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=800&auto=format&fit=crop&q=80"
-                    alt="Wood-fired stone-baked sourdough pizza"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                  />
+              {/* Founder 2: Ananya Iyer */}
+              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-sm group image-zoom-frame border border-[#E5E2DD]">
+                <Image
+                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=80"
+                  alt="Ananya Iyer - Co-Founder & Executive Chef"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                <div className="absolute bottom-2 left-2 right-2 p-2 sm:p-2.5 rounded-xl bg-black/65 backdrop-blur-md text-white">
+                  <p className="font-bold text-xs truncate">Ananya Iyer</p>
+                  <p className="text-[10px] text-white/80">Co-Founder &amp; Chef</p>
                 </div>
-                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-inner group image-zoom-frame">
-                  <Image
-                    src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&auto=format&fit=crop&q=80"
-                    alt="Ananya Iyer - Co-Founder & Executive Chef"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 768px) 50vw, 25vw"
-                  />
-                  <div className="absolute bottom-2 left-2 right-2 p-2.5 rounded-xl bg-black/60 backdrop-blur-md text-white">
-                    <p className="font-bold text-xs truncate">Ananya Iyer</p>
-                    <p className="text-[10px] text-white/70">Co-Founder &amp; Chef</p>
-                  </div>
+              </div>
+
+              {/* Craft 1: Pour-Over Brewing */}
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-sm group image-zoom-frame border border-[#E5E2DD]">
+                <Image
+                  src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800&auto=format&fit=crop&q=80"
+                  alt="Manual V60 Pour-over brewing"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-2.5">
+                  <span className="text-[11px] font-bold text-white">Specialty Extraction</span>
+                </div>
+              </div>
+
+              {/* Craft 2: Wood-Fired Pizza */}
+              <div className="relative aspect-[4/3] rounded-2xl overflow-hidden bg-[#E5E2DD] shadow-sm group image-zoom-frame border border-[#E5E2DD]">
+                <Image
+                  src="https://images.unsplash.com/photo-1604382355076-af4b0eb60143?w=800&auto=format&fit=crop&q=80"
+                  alt="Wood-fired stone-baked sourdough pizza"
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent flex items-end p-2.5">
+                  <span className="text-[11px] font-bold text-white">Wood-Fired Hearth</span>
                 </div>
               </div>
             </div>

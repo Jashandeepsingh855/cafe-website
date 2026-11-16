@@ -242,21 +242,21 @@ export default function MenuPage() {
                     el.scrollIntoView({ behavior: 'smooth', block: 'start' });
                   }
                 }}
-                className="group relative flex-none w-[220px] sm:w-auto h-36 sm:h-44 rounded-2xl overflow-hidden border border-[#E5E2DD] hover:border-[#C8652D]/60 shadow-sm transition-all text-left bg-[#18120F] shrink-0 snap-start cursor-pointer"
+                className="group relative flex-none w-[250px] sm:w-auto h-36 sm:h-44 rounded-2xl overflow-hidden border border-[#E5E2DD] hover:border-[#C8652D]/60 shadow-sm transition-all text-left bg-[#18120F] shrink-0 snap-start cursor-pointer"
               >
                 <Image
                   src={sig.image}
                   alt={sig.title}
                   fill
-                  sizes="(max-width: 640px) 220px, 25vw"
+                  sizes="(max-width: 640px) 250px, 25vw"
                   className="object-cover group-hover:scale-105 transition-transform duration-500 opacity-90"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/35 to-transparent" />
-                <span className="absolute top-2.5 left-2.5 px-2 py-0.5 rounded-full bg-black/60 backdrop-blur-md text-[#FFDBCB] text-[10px] font-bold uppercase tracking-wider border border-white/15">
+                <span className="absolute top-2.5 left-2.5 px-2.5 py-0.5 rounded-full bg-black/70 backdrop-blur-md text-[#FFDBCB] text-[10px] font-bold uppercase tracking-wide border border-white/15 max-w-[calc(100%-20px)] truncate">
                   {sig.tag}
                 </span>
                 <div className="absolute inset-x-0 bottom-0 p-3">
-                  <h4 className="text-white text-xs sm:text-sm font-bold leading-tight group-hover:text-[#FFDBCB] transition-colors">
+                  <h4 className="text-white text-xs sm:text-sm font-bold leading-tight group-hover:text-[#FFDBCB] transition-colors line-clamp-1">
                     {sig.title}
                   </h4>
                   <p className="text-[10px] sm:text-[11px] text-[#FAF7F2]/80 line-clamp-1 mt-0.5">
@@ -496,11 +496,11 @@ export default function MenuPage() {
 
                         {/* Dish Name & Description */}
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center justify-between gap-2">
-                            <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors leading-snug line-clamp-2">
+                          <div className="flex items-start justify-between gap-2">
+                            <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors leading-snug line-clamp-2 min-h-[44px] sm:min-h-[48px] flex items-center">
                               {dish.name}
                             </h3>
-                            <span className="font-extrabold text-base sm:text-lg text-[#C8652D] shrink-0">
+                            <span className="font-extrabold text-base sm:text-lg text-[#C8652D] shrink-0 mt-1">
                               ₹{dish.price}
                             </span>
                           </div>
@@ -511,7 +511,7 @@ export default function MenuPage() {
                             </span>
                           )}
 
-                          <p className="text-xs text-[#544E49] mt-1.5 line-clamp-2 leading-relaxed">
+                          <p className="text-xs text-[#544E49] mt-1.5 line-clamp-2 leading-relaxed min-h-[34px]">
                             {dish.description}
                           </p>
                         </div>

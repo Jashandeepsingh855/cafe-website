@@ -148,7 +148,7 @@ export default function ReservationPage() {
       desc: 'Indoor velvet banquettes, warm acoustic hearth lighting & curated dining library.',
       tag: 'Cozy & plush ambiance',
       image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAIjQL4v5uL3wjbFMf2Jg9kkkvzM4S6OJm8UjZzKRER4gtKpODOFspYWFgGDSZIM3gbLf1zJP8BTiDNlO76Agc2bcT2BaIOG5yFSbaNABgYma6eC24KjYgSSn0YiN4dK3mP5pCylrR86SCtPwsplzzmE3sWqB5-CUF4BjKQgysEOmGuXS8kZ1MMnA8x-HRb7wyRaJpItFSWACg65jizfTdcxh2Yw55_dmIr7ICnUYc',
+        'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=80',
     },
     {
       id: 'archbar',
@@ -243,13 +243,13 @@ Please confirm my table reservation. Thank you!`;
   return (
     <div className="w-full bg-[#FAF7F2] min-h-screen pb-24 md:pb-16 flex flex-col">
       {/* Top Hero Story Ribbon with Multi-Layer Parallax Depth */}
-      <section className="relative w-full bg-[#F6F3EE] border-b border-[#E5E2DD] py-10 sm:py-14 overflow-hidden" data-parallax-layers>
+      <section className="relative w-full bg-[#F6F3EE] border-b border-[#E5E2DD] py-10 sm:py-12 overflow-hidden" data-parallax-layers>
         <div className="absolute inset-0 pointer-events-none overflow-hidden -z-10">
           <div data-parallax-layer="1" className="absolute -top-20 right-1/4 w-96 h-96 rounded-full bg-[#C8652D]/10 blur-3xl" />
           <div data-parallax-layer="2" className="absolute top-1/2 -left-16 w-80 h-80 rounded-full bg-[#18120F]/5 blur-2xl" />
           <div data-parallax-layer="float" className="absolute bottom-2 right-12 w-40 h-40 rounded-full bg-[#E8A55B]/15 blur-xl" />
         </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#C8652D]/10 text-[#C8652D] mb-3 border border-[#C8652D]/20">
             <span className="w-2 h-2 rounded-full bg-[#C8652D] animate-pulse" />
             <span className="text-[11px] font-bold uppercase tracking-wider">
@@ -257,34 +257,34 @@ Please confirm my table reservation. Thank you!`;
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#18120F] tracking-tight leading-tight mb-3">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#18120F] tracking-tight leading-tight mb-2.5">
             Reserve Your Table at Daily Coffee Drip
           </h1>
           <p className="text-sm sm:text-base text-[#544E49] max-w-2xl mx-auto leading-relaxed">
             Whether an unhurried morning espresso meeting, a deep-focus work session, or an intimate pure vegetarian weekend brunch.
           </p>
 
-          {/* Trust Badges Strip */}
-          <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mt-6 sm:mt-8 text-left">
+          {/* Clean Trust Badges Strip (Streamlined & Non-Cramped) */}
+          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mt-6">
             {[
-              { title: 'Instant Confirmation', sub: 'Via WhatsApp & SMS' },
-              { title: 'Zero Advance Deposit', sub: 'No cancellation penalty' },
-              { title: '15-Min Courtesy Hold', sub: 'Flexible arrival window' },
-              { title: '100% Pure Veg', sub: 'Mindful kitchen craft' },
+              { title: 'Instant Confirmation', sub: 'via WhatsApp' },
+              { title: 'Zero Deposit', sub: 'Free cancellation' },
+              { title: '15-Min Courtesy Hold', sub: 'Flexible window' },
+              { title: '100% Pure Veg', sub: 'Mindful kitchen' },
             ].map((badge, idx) => (
               <div
                 key={idx}
-                className="flex items-center gap-2 sm:gap-3 p-2.5 sm:p-3.5 rounded-xl bg-white border border-[#E5E2DD] shadow-sm"
+                className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white border border-[#E5E2DD] shadow-xs"
               >
-                <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0">
-                  <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                <div className="w-4 h-4 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0">
+                  <CheckCircle2 className="w-3 h-3" />
                 </div>
-                <div className="flex flex-col min-w-0">
-                  <span className="text-[11px] sm:text-sm font-bold text-[#18120F] leading-tight truncate sm:whitespace-normal">
-                    {badge.title}
-                  </span>
-                  <span className="text-[10px] sm:text-[11px] text-[#544E49] mt-0.5 truncate sm:whitespace-normal">{badge.sub}</span>
-                </div>
+                <span className="text-xs font-bold text-[#18120F] whitespace-nowrap">
+                  {badge.title}
+                </span>
+                <span className="text-[11px] text-[#857D77] hidden sm:inline whitespace-nowrap">
+                  · {badge.sub}
+                </span>
               </div>
             ))}
           </div>
@@ -292,12 +292,12 @@ Please confirm my table reservation. Thank you!`;
       </section>
 
       {/* Main Booking Form + Cafe Venue Info */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 w-full">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Left Column: 4-Step Reservation Machine */}
           <form
             onSubmit={handleSubmit}
-            className="lg:col-span-8 flex flex-col gap-8 bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-[#E5E2DD]"
+            className="lg:col-span-8 flex flex-col gap-7 bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-[#E5E2DD]"
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#E5E2DD]">
               <div className="flex items-center gap-2.5">
@@ -308,13 +308,13 @@ Please confirm my table reservation. Thank you!`;
                   Curate Your Table
                 </span>
               </div>
-              <span className="text-xs font-semibold text-[#857D77] uppercase tracking-wider">
+              <span className="text-xs font-semibold text-[#857D77] uppercase tracking-wider hidden sm:inline">
                 Step-by-Step Experience
               </span>
             </div>
 
             {/* STEP 1: Party Size Selection */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2.5">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                   <Users className="w-4 h-4 text-[#C8652D]" />
@@ -325,7 +325,7 @@ Please confirm my table reservation. Thank you!`;
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
                 {[
                   { id: '1-2', count: '1–2', label: 'Solo / Duos', hint: 'Focus & pairs' },
                   { id: '3-4', count: '3–4', label: 'Intimate Table', hint: 'Casual meetup' },
@@ -336,10 +336,10 @@ Please confirm my table reservation. Thank you!`;
                     key={item.id}
                     type="button"
                     onClick={() => setPartySize(item.id)}
-                    className={`min-h-[64px] sm:min-h-[72px] p-2.5 sm:p-3 rounded-2xl flex flex-col items-start gap-0.5 sm:gap-1 transition-all text-left border ${
+                    className={`min-h-[64px] sm:min-h-[72px] p-3 rounded-2xl flex flex-col items-start justify-center gap-0.5 transition-all text-left border cursor-pointer ${
                       partySize === item.id
-                        ? 'bg-[#18120F] text-white border-[#18120F] shadow-sm'
-                        : 'bg-[#F6F3EE] text-[#544E49] border-[#E5E2DD] hover:bg-[#EBE8E3]'
+                        ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                        : 'bg-[#FAF7F2] text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA] hover:border-[#C8652D]/40'
                     }`}
                   >
                     <span className="text-lg sm:text-xl font-bold leading-none">{item.count}</span>
@@ -350,41 +350,44 @@ Please confirm my table reservation. Thank you!`;
                     >
                       {item.label}
                     </span>
-                    <span className="text-[9px] sm:text-[10px] opacity-75">{item.hint}</span>
+                    <span className="text-[10px] opacity-75">{item.hint}</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* STEP 2: Preferred Dining Zone */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2.5">
               <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                 <Store className="w-4 h-4 text-[#C8652D]" />
                 <span>2. Preferred Dining Zone</span>
               </label>
 
-              {/* Stacked Single-Column Cards on Mobile (< 768px), 2-Col on Desktop */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {zones.map((z) => (
                   <div
                     key={z.id}
                     onClick={() => setZone(z.id)}
-                    className={`group relative p-3.5 rounded-2xl cursor-pointer transition-all duration-300 flex gap-3 items-start border-2 hover:-translate-y-1 hover:shadow-md ${
+                    className={`group relative p-3 rounded-2xl cursor-pointer transition-all flex gap-3.5 items-center border-2 ${
                       zone === z.id
-                        ? 'bg-[#FAF7F2] border-[#C8652D] shadow-sm'
-                        : 'bg-[#F6F3EE] border-transparent hover:border-[#E5E2DD]'
+                        ? 'bg-[#FAF7F2] border-[#C8652D] shadow-xs'
+                        : 'bg-white border-[#E5E2DD] hover:border-[#C8652D]/40 hover:bg-[#FAF7F2]/50'
                     }`}
                   >
                     <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD] image-zoom-frame">
-                      <Image src={z.image} alt={z.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500 ease-out" />
+                      <Image src={z.image} alt={z.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
                     </div>
 
-                    <div className="flex flex-col min-w-0">
-                      <div className="flex items-center gap-1.5">
+                    <div className="flex flex-col min-w-0 flex-1">
+                      <div className="flex items-center justify-between gap-1.5">
                         <span className="font-bold text-sm text-[#18120F] truncate">{z.name}</span>
-                        {zone === z.id && <span className="w-2 h-2 rounded-full bg-[#C8652D]" />}
+                        {zone === z.id ? (
+                          <span className="w-2.5 h-2.5 rounded-full bg-[#C8652D] shrink-0" />
+                        ) : (
+                          <span className="w-2.5 h-2.5 rounded-full border border-[#D4CECA] shrink-0" />
+                        )}
                       </div>
-                      <span className="text-xs text-[#544E49] mt-0.5 line-clamp-2 leading-relaxed">
+                      <span className="text-xs text-[#544E49] mt-0.5 line-clamp-1 leading-relaxed">
                         {z.desc}
                       </span>
                       <span className="text-[11px] font-semibold text-[#C8652D] mt-1">{z.tag}</span>
@@ -394,135 +397,108 @@ Please confirm my table reservation. Thank you!`;
               </div>
             </div>
 
-            {/* STEP 3: Date & Curated Sensory Window or Custom Time */}
-            <div className="flex flex-col gap-3">
-              <div className="flex flex-wrap items-center justify-between gap-2">
-                <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
-                  <Calendar className="w-4 h-4 text-[#C8652D]" />
-                  <span>3. Select Date &amp; Arrival Time</span>
-                </label>
+            {/* STEP 3: Unified Date & Arrival Time (Clean, Spacious, No Duplicates) */}
+            <div className="flex flex-col gap-2.5">
+              <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
+                <Calendar className="w-4 h-4 text-[#C8652D]" />
+                <span>3. Date &amp; Arrival Time</span>
+              </label>
 
-                {/* Mode Toggle Selection Buttons */}
-                <div className="flex items-center gap-1 p-1 rounded-xl bg-[#F6F3EE] border border-[#E5E2DD]">
-                  <button
-                    type="button"
-                    onClick={() => setTimeMode('curated')}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-                      timeMode === 'curated'
-                        ? 'bg-[#18120F] text-white shadow-xs'
-                        : 'text-[#544E49] hover:text-[#18120F]'
-                    }`}
-                  >
-                    Curated Windows
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setTimeMode('custom');
-                      setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
-                    }}
-                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
-                      timeMode === 'custom'
-                        ? 'bg-[#18120F] text-white shadow-xs'
-                        : 'text-[#544E49] hover:text-[#18120F]'
-                    }`}
-                  >
-                    <Clock className="w-3 h-3 text-[#C8652D]" />
-                    <span>Custom Time</span>
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5">
-                {/* DATE SELECTION COLUMN */}
-                <div className="lg:col-span-5 flex flex-col justify-between bg-[#F6F3EE] p-4 rounded-2xl border border-[#E5E2DD] gap-3">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#544E49] flex items-center gap-1.5">
-                      <Calendar className="w-3.5 h-3.5 text-[#C8652D]" />
-                      <span>Select Date</span>
-                    </span>
-                    <span className="text-[10px] text-[#857D77] font-semibold">15-min courtesy hold</span>
-                  </div>
-
-                  {/* Quick Date Selection Buttons */}
-                  <div className="grid grid-cols-3 gap-1.5">
-                    <button
-                      type="button"
-                      onClick={() => setDate(getTodayStr())}
-                      className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
-                        date === getTodayStr()
-                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                          : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
-                      }`}
-                    >
-                      Today
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDate(getTomorrowStr())}
-                      className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
-                        date === getTomorrowStr()
-                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                          : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
-                      }`}
-                    >
-                      Tomorrow
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDate(getWeekendStr())}
-                      className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
-                        date === getWeekendStr()
-                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                          : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
-                      }`}
-                    >
-                      Weekend
-                    </button>
-                  </div>
-
-                  {/* Date Picker Input */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* DATE SELECTION */}
+                <div className="bg-[#FAF7F2] p-4 sm:p-5 rounded-2xl border border-[#E5E2DD] flex flex-col justify-between gap-3">
                   <div>
-                    <label className="text-[10px] font-bold text-[#857D77] uppercase tracking-wider block mb-1">
-                      Choose Calendar Date:
-                    </label>
-                    <input
-                      type="date"
-                      value={date}
-                      min={getTodayStr()}
-                      onChange={(e) => setDate(e.target.value)}
-                      className="w-full bg-white border border-[#E5E2DD] px-3 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
-                    />
+                    <div className="flex items-center justify-between mb-2.5">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
+                        <Calendar className="w-3.5 h-3.5 text-[#C8652D]" />
+                        <span>Date of Visit</span>
+                      </span>
+                      <span className="text-[11px] font-semibold text-[#C8652D]">
+                        {formatDatePretty(date)}
+                      </span>
+                    </div>
+
+                    {/* Quick Date Pills */}
+                    <div className="grid grid-cols-3 gap-1.5 mb-3">
+                      {[
+                        { label: 'Today', val: getTodayStr() },
+                        { label: 'Tomorrow', val: getTomorrowStr() },
+                        { label: 'Weekend', val: getWeekendStr() },
+                      ].map((d) => (
+                        <button
+                          key={d.label}
+                          type="button"
+                          onClick={() => setDate(d.val)}
+                          className={`py-1.5 px-2 rounded-xl text-xs font-bold border transition-all text-center cursor-pointer ${
+                            date === d.val
+                              ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                              : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
+                          }`}
+                        >
+                          {d.label}
+                        </button>
+                      ))}
+                    </div>
+
+                    {/* Native Date Picker */}
+                    <div>
+                      <input
+                        type="date"
+                        value={date}
+                        min={getTodayStr()}
+                        onChange={(e) => setDate(e.target.value)}
+                        className="w-full bg-white border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D] cursor-pointer"
+                      />
+                    </div>
                   </div>
 
-                  {/* Human Date Display Badge */}
-                  <div className="pt-1.5 flex items-center justify-between text-xs border-t border-[#E5E2DD]">
-                    <span className="text-[#857D77] text-[11px]">Reserved Date:</span>
-                    <span className="font-bold text-[#18120F]">{formatDatePretty(date)}</span>
-                  </div>
+                  <p className="text-[11px] text-[#857D77] pt-2 border-t border-[#E5E2DD] flex items-center justify-between">
+                    <span>Courtesy hold window:</span>
+                    <span className="font-semibold text-[#18120F]">15 minutes</span>
+                  </p>
                 </div>
 
-                {/* TIME SELECTION COLUMN */}
-                <div className="lg:col-span-7 flex flex-col justify-between bg-[#F6F3EE] p-4 rounded-2xl border border-[#E5E2DD] gap-3">
-                  {timeMode === 'curated' ? (
-                    <>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#544E49]">
-                          Curated Sensory Windows
-                        </span>
+                {/* TIME SELECTION */}
+                <div className="bg-[#FAF7F2] p-4 sm:p-5 rounded-2xl border border-[#E5E2DD] flex flex-col justify-between gap-3">
+                  <div>
+                    {/* Header + Mode Switcher */}
+                    <div className="flex items-center justify-between mb-2.5">
+                      <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
+                        <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
+                        <span>Arrival Time</span>
+                      </span>
+
+                      <div className="inline-flex rounded-lg bg-white p-0.5 border border-[#E5E2DD]">
+                        <button
+                          type="button"
+                          onClick={() => setTimeMode('curated')}
+                          className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                            timeMode === 'curated'
+                              ? 'bg-[#18120F] text-white shadow-xs'
+                              : 'text-[#544E49] hover:text-[#18120F]'
+                          }`}
+                        >
+                          Curated Slots
+                        </button>
                         <button
                           type="button"
                           onClick={() => {
                             setTimeMode('custom');
                             setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
                           }}
-                          className="text-xs text-[#C8652D] font-bold hover:underline flex items-center gap-1 cursor-pointer"
+                          className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                            timeMode === 'custom'
+                              ? 'bg-[#18120F] text-white shadow-xs'
+                              : 'text-[#544E49] hover:text-[#18120F]'
+                          }`}
                         >
-                          <Clock className="w-3 h-3" />
-                          <span>Custom Time?</span>
+                          Custom Time
                         </button>
                       </div>
+                    </div>
 
+                    {timeMode === 'curated' ? (
+                      /* Curated Slots (4 Balanced Grid Options) */
                       <div className="grid grid-cols-2 gap-2">
                         {slots.map((s) => {
                           const Icon = s.icon;
@@ -532,65 +508,32 @@ Please confirm my table reservation. Thank you!`;
                               key={s.name}
                               type="button"
                               onClick={() => setTimeSlot(`${s.name} ${s.time}`)}
-                              className={`min-h-[58px] p-2.5 rounded-xl text-left flex flex-col justify-between transition-all border cursor-pointer ${
+                              className={`p-2.5 rounded-xl text-left flex flex-col justify-between transition-all border cursor-pointer ${
                                 isSelected
-                                  ? 'bg-[#18120F] text-white border-[#18120F] shadow-sm'
-                                  : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
+                                  ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                                  : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
                               }`}
                             >
                               <div className="flex items-center justify-between w-full">
                                 <span
-                                  className={`text-[9px] uppercase font-bold tracking-wider truncate pr-1 ${
-                                    isSelected ? 'text-[#FFDBCB]' : 'text-[#544E49]'
+                                  className={`text-[10px] uppercase font-bold tracking-wider truncate pr-1 ${
+                                    isSelected ? 'text-[#FFDBCB]' : 'text-[#857D77]'
                                   }`}
                                 >
                                   {s.name}
                                 </span>
                                 <Icon className="w-3.5 h-3.5 text-[#C8652D] shrink-0" />
                               </div>
-                              <span className="text-xs sm:text-sm font-bold mt-0.5">{s.time}</span>
-                              <span className="text-[9px] opacity-75 truncate">{s.sub}</span>
+                              <span className="text-xs sm:text-sm font-bold mt-1">{s.time}</span>
                             </button>
                           );
                         })}
                       </div>
-
-                      {/* Custom Time Option Button */}
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setTimeMode('custom');
-                          setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
-                        }}
-                        className="w-full py-2 px-3 rounded-xl bg-white hover:bg-[#FAF7F2] border border-dashed border-[#C8652D]/50 text-xs font-bold text-[#C8652D] flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
-                      >
-                        <Clock className="w-3.5 h-3.5" />
-                        <span>Or Pick a Custom Time (08:00 AM – 11:00 PM)</span>
-                      </button>
-                    </>
-                  ) : (
-                    <>
-                      <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-bold uppercase tracking-wider text-[#544E49] flex items-center gap-1.5">
-                          <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
-                          <span>Custom Table Arrival Time</span>
-                        </span>
-                        <button
-                          type="button"
-                          onClick={() => setTimeMode('curated')}
-                          className="text-xs text-[#544E49] font-bold hover:underline cursor-pointer"
-                        >
-                          Curated Slots
-                        </button>
-                      </div>
-
-                      {/* Quick Popular Times Chips */}
-                      <div className="space-y-1">
-                        <span className="text-[10px] font-semibold text-[#857D77] block">
-                          Popular arrival hours:
-                        </span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {['09:00', '10:30', '12:00', '13:30', '16:00', '17:00', '18:30', '19:30', '20:30', '21:30'].map((t) => {
+                    ) : (
+                      /* Custom Time Controls (Clean & Direct) */
+                      <div className="space-y-2.5">
+                        <div className="flex flex-wrap gap-1">
+                          {['09:00', '11:00', '13:00', '16:00', '18:00', '19:30', '21:00'].map((t) => {
                             const label = formatTimeTo12h(t);
                             const isSelected = customTimeInput === t && timeSlot.includes(label);
                             return (
@@ -601,10 +544,10 @@ Please confirm my table reservation. Thank you!`;
                                   setCustomTimeInput(t);
                                   setTimeSlot(`Custom Time (${label})`);
                                 }}
-                                className={`px-2.5 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                                className={`px-2 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
                                   isSelected
                                     ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                                    : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#FAF7F2]'
+                                    : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
                                 }`}
                               >
                                 {label}
@@ -612,56 +555,36 @@ Please confirm my table reservation. Thank you!`;
                             );
                           })}
                         </div>
-                      </div>
-
-                      {/* Interactive Time Picker & Selection Button */}
-                      <div className="pt-1 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-                        <div className="relative flex-1">
-                          <input
-                            type="time"
-                            value={customTimeInput}
-                            min="08:00"
-                            max="23:00"
-                            step="900"
-                            onChange={(e) => {
-                              const val = e.target.value;
-                              setCustomTimeInput(val);
-                              setTimeSlot(`Custom Time (${formatTimeTo12h(val)})`);
-                            }}
-                            className="w-full bg-white border border-[#E5E2DD] px-3 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
-                          />
-                        </div>
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const formatted = formatTimeTo12h(customTimeInput);
-                            setTimeSlot(`Custom Time (${formatted})`);
+                        <input
+                          type="time"
+                          value={customTimeInput}
+                          min="08:00"
+                          max="23:00"
+                          step="900"
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setCustomTimeInput(val);
+                            setTimeSlot(`Custom Time (${formatTimeTo12h(val)})`);
                           }}
-                          className="px-4 py-2 rounded-xl bg-[#C8652D] hover:bg-[#B45309] text-white text-xs font-bold flex items-center justify-center gap-1.5 shadow-sm transition-all shrink-0 cursor-pointer"
-                        >
-                          <CheckCircle2 className="w-3.5 h-3.5" />
-                          <span>Select {formatTimeTo12h(customTimeInput)}</span>
-                        </button>
+                          className="w-full bg-white border border-[#E5E2DD] px-3.5 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+                        />
                       </div>
+                    )}
+                  </div>
 
-                      {/* Active Slot Confirmation Pill */}
-                      <div className="pt-1.5 flex items-center justify-between text-xs border-t border-[#E5E2DD]">
-                        <span className="text-[#857D77] text-[11px]">Selected Time:</span>
-                        <span className="font-bold text-[#C8652D] bg-[#C8652D]/10 px-2.5 py-0.5 rounded-full border border-[#C8652D]/20">
-                          {timeSlot}
-                        </span>
-                      </div>
-                    </>
-                  )}
+                  <div className="pt-2 border-t border-[#E5E2DD] flex items-center justify-between text-xs">
+                    <span className="text-[11px] text-[#857D77]">Selected Slot:</span>
+                    <span className="font-bold text-[#C8652D] truncate ml-2">{timeSlot}</span>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* STEP 4: Guest Dossier & Mindful Requests */}
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-2.5">
               <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
-                <Clock className="w-4 h-4 text-[#C8652D]" />
-                <span>4. Guest Dossier &amp; Mindful Requests</span>
+                <Utensils className="w-4 h-4 text-[#C8652D]" />
+                <span>4. Guest Details &amp; Dining Requests</span>
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -673,7 +596,7 @@ Please confirm my table reservation. Thank you!`;
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Aarav Sharma"
-                    className="w-full bg-[#F6F3EE] border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+                    className="w-full bg-[#FAF7F2] border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
                   />
                 </div>
                 <div className="flex flex-col gap-1">
@@ -684,7 +607,7 @@ Please confirm my table reservation. Thank you!`;
                     value={whatsapp}
                     onChange={(e) => setWhatsapp(e.target.value)}
                     placeholder="+91 98450 12345"
-                    className="w-full bg-[#F6F3EE] border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+                    className="w-full bg-[#FAF7F2] border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
                   />
                 </div>
                 <div className="flex flex-col gap-1">
@@ -694,18 +617,18 @@ Please confirm my table reservation. Thank you!`;
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="aarav@domain.com"
-                    className="w-full bg-[#F6F3EE] border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+                    className="w-full bg-[#FAF7F2] border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
                   />
                 </div>
               </div>
 
-              {/* Dietary Checkboxes */}
+              {/* Dietary & Occasion Checkboxes */}
               <div className="pt-2">
                 <span className="text-xs font-bold text-[#544E49] block mb-2">
                   Hospitality &amp; Kitchen Notes (Optional)
                 </span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#18120F]">
-                  <label className="flex items-center gap-2.5 p-3 rounded-xl bg-[#F6F3EE] border border-[#E5E2DD] cursor-pointer">
+                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
                     <input
                       type="checkbox"
                       checked={dietaryOptions.pureVeg}
@@ -716,7 +639,7 @@ Please confirm my table reservation. Thank you!`;
                       100% Pure Vegetarian Kitchen
                     </span>
                   </label>
-                  <label className="flex items-center gap-2.5 p-3 rounded-xl bg-[#F6F3EE] border border-[#E5E2DD] cursor-pointer">
+                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
                     <input
                       type="checkbox"
                       checked={dietaryOptions.strictJain}
@@ -727,7 +650,7 @@ Please confirm my table reservation. Thank you!`;
                     />
                     <span className="text-xs sm:text-sm">Strict Jain Preparation (No root veg)</span>
                   </label>
-                  <label className="flex items-center gap-2.5 p-3 rounded-xl bg-[#F6F3EE] border border-[#E5E2DD] cursor-pointer">
+                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
                     <input
                       type="checkbox"
                       checked={dietaryOptions.nutFree}
@@ -738,7 +661,7 @@ Please confirm my table reservation. Thank you!`;
                     />
                     <span className="text-xs sm:text-sm">Nut-Free Allergy Precaution</span>
                   </label>
-                  <label className="flex items-center gap-2.5 p-3 rounded-xl bg-[#F6F3EE] border border-[#E5E2DD] cursor-pointer">
+                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
                     <input
                       type="checkbox"
                       checked={dietaryOptions.celebration}
@@ -765,12 +688,12 @@ Please confirm my table reservation. Thank you!`;
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-[#E5E2DD]">
               <div className="flex items-center gap-2 text-xs text-[#544E49]">
                 <CheckCircle2 className="w-4 h-4 text-[#C8652D]" />
-                <span>Zero advance deposit. Instant confirmation via WhatsApp.</span>
+                <span>Zero advance deposit · Instant confirmation via WhatsApp</span>
               </div>
 
               <button
                 type="submit"
-                className="w-full sm:w-auto min-h-[48px] px-8 py-3.5 rounded-full bg-[#C8652D] hover:bg-[#B45309] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2"
+                className="w-full sm:w-auto min-h-[48px] px-8 py-3.5 rounded-full bg-[#C8652D] hover:bg-[#B45309] text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <span>Confirm Unhurried Table</span>
               </button>
@@ -816,8 +739,8 @@ Please confirm my table reservation. Thank you!`;
             )}
           </form>
 
-          {/* Right Column: Venue Info & FAQs */}
-          <aside className="lg:col-span-4 flex flex-col gap-6 w-full">
+          {/* Right Column: Venue Info & FAQs (Sticky on Desktop) */}
+          <aside className="lg:col-span-4 flex flex-col gap-6 w-full lg:sticky lg:top-24">
             {/* Live Cafe Card */}
             <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-4">
               <div className="flex items-center justify-between">
@@ -837,7 +760,7 @@ Please confirm my table reservation. Thank you!`;
 
               {/* Address & Venue Highlights */}
               <div className="flex flex-col gap-2.5 text-xs text-[#544E49]">
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#F6F3EE]">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
                   <MapPin className="w-4 h-4 text-[#C8652D] shrink-0" />
                   <div>
                     <p className="font-bold text-[#18120F]">Address &amp; Location</p>
@@ -845,7 +768,7 @@ Please confirm my table reservation. Thank you!`;
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#F6F3EE]">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
                   <Clock className="w-4 h-4 text-[#C8652D] shrink-0" />
                   <div>
                     <p className="font-bold text-[#18120F]">Daily Operating Hours</p>
@@ -853,7 +776,7 @@ Please confirm my table reservation. Thank you!`;
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#F6F3EE]">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
                   <Car className="w-4 h-4 text-[#C8652D] shrink-0" />
                   <div>
                     <p className="font-bold text-[#18120F]">Valet Assistance</p>
@@ -861,7 +784,7 @@ Please confirm my table reservation. Thank you!`;
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#F6F3EE]">
+                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
                   <Wifi className="w-4 h-4 text-[#C8652D] shrink-0" />
                   <div>
                     <p className="font-bold text-[#18120F]">Creator Amenities</p>
@@ -874,7 +797,7 @@ Please confirm my table reservation. Thank you!`;
                 href={`https://wa.me/${site.contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full min-h-[44px] py-2.5 px-4 rounded-full bg-[#F0EDE9] hover:bg-[#EBE8E3] text-[#18120F] border border-[#E5E2DD] text-xs font-bold flex items-center justify-center gap-2 transition-colors"
+                className="w-full min-h-[44px] py-2.5 px-4 rounded-full bg-[#FAF7F2] hover:bg-[#F2EFEA] text-[#18120F] border border-[#E5E2DD] text-xs font-bold flex items-center justify-center gap-2 transition-colors"
               >
                 <MessageCircle className="w-4 h-4 text-[#C8652D]" />
                 <span>WhatsApp Hospitality Concierge</span>
@@ -886,7 +809,7 @@ Please confirm my table reservation. Thank you!`;
               <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider">
                 Frequently Inquired
               </span>
-              <details className="group bg-[#F6F3EE] rounded-xl p-3 border border-[#E5E2DD] cursor-pointer">
+              <details className="group bg-[#FAF7F2] rounded-xl p-3 border border-[#E5E2DD] cursor-pointer">
                 <summary className="flex items-center justify-between text-xs font-bold text-[#18120F] list-none">
                   <span>Can I linger beyond 2 hours?</span>
                   <ChevronDown className="w-4 h-4 text-[#857D77] group-open:rotate-180 transition-transform" />
@@ -896,7 +819,7 @@ Please confirm my table reservation. Thank you!`;
                 </p>
               </details>
 
-              <details className="group bg-[#F6F3EE] rounded-xl p-3 border border-[#E5E2DD] cursor-pointer">
+              <details className="group bg-[#FAF7F2] rounded-xl p-3 border border-[#E5E2DD] cursor-pointer">
                 <summary className="flex items-center justify-between text-xs font-bold text-[#18120F] list-none">
                   <span>Is the kitchen strictly vegetarian?</span>
                   <ChevronDown className="w-4 h-4 text-[#857D77] group-open:rotate-180 transition-transform" />

@@ -48,7 +48,7 @@ export default function AboutUsPage() {
       subtitle: 'Velvet Acoustic Dining Room',
       desc: 'Deep olive velvet seating, warm low-temperature acoustic stone hearth, mid-century walnut bookshelves, and soothing amber pendant fixtures.',
       image:
-        'https://lh3.googleusercontent.com/aida-public/AB6AXuAIjQL4v5uL3wjbFMf2Jg9kkkvzM4S6OJm8UjZzKRER4gtKpODOFspYWFgGDSZIM3gbLf1zJP8BTiDNlO76Agc2bcT2BaIOG5yFSbaNABgYma6eC24KjYgSSn0YiN4dK3mP5pCylrR86SCtPwsplzzmE3sWqB5-CUF4BjKQgysEOmGuXS8kZ1MMnA8x-HRb7wyRaJpItFSWACg65jizfTdcxh2Yw55_dmIr7ICnUYc',
+        'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=800&auto=format&fit=crop&q=80',
     },
     {
       title: 'Barista Bar & Open Kitchen',
@@ -146,24 +146,26 @@ export default function AboutUsPage() {
             </div>
           </div>
 
-          <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          <div className="lg:w-1/2 grid grid-cols-1 sm:grid-cols-2 gap-4 w-full items-stretch">
             {founders.map((founder, idx) => (
               <div
                 key={idx}
-                className="bg-[#FAF7F2] rounded-2xl p-5 border border-[#E5E2DD] flex flex-col gap-3 group hover:border-[#C8652D]/50 hover:shadow-md transition-all"
+                className="bg-[#FAF7F2] rounded-2xl p-5 border border-[#E5E2DD] flex flex-col justify-between group hover:border-[#C8652D]/50 hover:shadow-md transition-all"
               >
-                <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[#E5E2DD] shadow-inner">
-                  <Image
-                    src={founder.image}
-                    alt={founder.name}
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
-                  />
-                </div>
                 <div>
+                  <div className="relative w-full aspect-square rounded-xl overflow-hidden bg-[#E5E2DD] shadow-inner mb-3">
+                    <Image
+                      src={founder.image}
+                      alt={founder.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-500"
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 300px"
+                    />
+                  </div>
                   <h3 className="font-bold text-base text-[#18120F]">{founder.name}</h3>
-                  <span className="text-xs font-semibold text-[#C8652D] block mt-0.5">{founder.role}</span>
+                  <span className="text-xs font-semibold text-[#C8652D] block mt-0.5 min-h-[32px] sm:min-h-[36px] flex items-center">
+                    {founder.role}
+                  </span>
                   <p className="text-xs text-[#544E49] mt-2 leading-relaxed">{founder.bio}</p>
                 </div>
               </div>
@@ -247,11 +249,15 @@ export default function AboutUsPage() {
               </div>
               <div className="p-6 flex flex-col gap-2 flex-1 justify-between">
                 <div>
-                  <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider">
+                  <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider block">
                     {sp.subtitle}
                   </span>
-                  <h3 className="text-2xl font-bold text-[#18120F] mt-0.5">{sp.title}</h3>
-                  <p className="text-sm text-[#544E49] mt-2 leading-relaxed">{sp.desc}</p>
+                  <h3 className="text-xl sm:text-2xl font-bold text-[#18120F] mt-1 min-h-[32px] sm:min-h-[36px] flex items-center">
+                    {sp.title}
+                  </h3>
+                  <p className="text-sm text-[#544E49] mt-2 leading-relaxed min-h-[60px] sm:min-h-[72px]">
+                    {sp.desc}
+                  </p>
                 </div>
 
                 <div className="pt-4 border-t border-[#E5E2DD]/70 flex items-center justify-between">

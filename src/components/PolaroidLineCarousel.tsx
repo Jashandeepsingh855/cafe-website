@@ -134,10 +134,10 @@ const PL_CSS = `
   cursor: inherit;
 }
 .pl-print {
-  margin-top: 10px;
+  margin-top: 14px;
   background: #FFFFFF;
-  padding: 10px 10px 12px;
-  border-radius: 6px;
+  padding: 12px 12px 14px;
+  border-radius: 8px;
   border: 1px solid rgba(0,0,0,0.06);
   box-shadow: 0 4px 12px rgba(24,18,15,0.08), 0 20px 32px -12px rgba(24,18,15,0.24);
   transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.4s ease, opacity 0.4s ease;
@@ -152,7 +152,7 @@ const PL_CSS = `
   aspect-ratio: 1;
   overflow: hidden;
   background: #EBE8E3;
-  border-radius: 3px;
+  border-radius: 4px;
 }
 .pl-shot img {
   position: absolute;
@@ -169,10 +169,10 @@ const PL_CSS = `
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 6px;
+  padding: 0 8px;
   font-family: var(--font-sans, "Plus Jakarta Sans"), system-ui, -apple-system, sans-serif;
   font-weight: 700;
-  font-size: 13px;
+  font-size: clamp(11px, 1.2vw, 13px);
   letter-spacing: -0.01em;
   color: #18120F;
   white-space: nowrap;
@@ -183,9 +183,9 @@ const PL_CSS = `
 .pl-peg {
   position: absolute;
   left: 50%;
-  top: -2px;
+  top: 2px;
   width: 12px;
-  height: 28px;
+  height: 22px;
   margin-left: -6px;
   border-radius: 2px;
   background: linear-gradient(90deg, #b88b58, #e3c498 48%, #a87948);

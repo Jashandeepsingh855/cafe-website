@@ -146,6 +146,7 @@ export default function AdminPage() {
   const handleResetMenu = () => {
     if (window.confirm('Reset all menu items, custom prices, and stock statuses back to factory defaults?')) {
       localStorage.removeItem('dcd_menu_items');
+      localStorage.removeItem('dcd_menu_items_v2');
       setItems(MENU_ITEMS);
       showToast('Menu reset to factory defaults');
     }
