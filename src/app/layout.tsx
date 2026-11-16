@@ -55,7 +55,7 @@ export default function RootLayout({
         />
         <SmoothScrollInit />
         <Header />
-        <main className="flex-1 w-full pt-16 sm:pt-20 relative z-0" style={{ isolation: 'isolate' }}>
+        <main className="flex-1 w-full pt-16 sm:pt-20 relative">
           {children}
         </main>
         <Footer />

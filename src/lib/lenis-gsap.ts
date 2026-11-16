@@ -15,6 +15,12 @@ let tickerCallback: ((time: number) => void) | null = null;
 export function initSmoothScroll(options = {}) {
   if (typeof window === 'undefined') return null;
 
+  // Always reset browser scroll restoration on refresh/load so page opens at the top
+  if ('scrollRestoration' in window.history) {
+    window.history.scrollRestoration = 'manual';
+  }
+  window.scrollTo(0, 0);
+
   // Check user preference for reduced motion
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -41,6 +47,9 @@ export function initSmoothScroll(options = {}) {
     ...options,
   });
 
+  // Always ensure fresh page visits and reloads start at top
+  lenisInstance.scrollTo(0, { immediate: true });
+
   // Connect Lenis scroll events to GSAP ScrollTrigger
   lenisInstance.on('scroll', ScrollTrigger.update);
 
@@ -56,6 +65,30 @@ export function initSmoothScroll(options = {}) {
   gsap.ticker.lagSmoothing(0);
 
   return lenisInstance;
+}
+
+export function stopLenis() {
+  if (lenisInstance) {
+    lenisInstance.stop();
+  }
+}
+
+export function startLenis() {
+  if (lenisInstance) {
+    lenisInstance.start();
+  }
+}
+
+export function scrollToTop(immediate = true) {
+  if (typeof window !== 'undefined') {
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+  }
+  if (lenisInstance) {
+    lenisInstance.scrollTo(0, { immediate });
+  }
 }
 
 export function getLenis(): Lenis | null {

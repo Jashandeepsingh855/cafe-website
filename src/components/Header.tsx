@@ -16,6 +16,7 @@ import {
   Utensils,
 } from 'lucide-react';
 import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
+import { stopLenis, startLenis } from '@/lib/lenis-gsap';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -39,12 +40,21 @@ export default function Header() {
   // Lock background scroll when mobile menu is open
   useEffect(() => {
     if (mobileMenuOpen) {
+      stopLenis();
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      document.body.classList.add('menu-open');
     } else {
+      startLenis();
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.classList.remove('menu-open');
     }
     return () => {
+      startLenis();
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      document.body.classList.remove('menu-open');
     };
   }, [mobileMenuOpen]);
 
@@ -156,6 +166,7 @@ export default function Header() {
         <div
           className="lg:hidden fixed inset-0 z-[110] bg-black/60 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in"
           style={{ zIndex: 110 }}
+          onTouchMove={(e) => e.preventDefault()}
           onClick={() => setMobileMenuOpen(false)}
         />
       )}

@@ -8,6 +8,7 @@ import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/s
 
 export default function FloatingMobileBar() {
   const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
+  const [hasModalOpen, setHasModalOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -16,16 +17,30 @@ export default function FloatingMobileBar() {
     };
     syncSite();
 
+    const updateModalStatus = () => {
+      if (typeof document !== 'undefined') {
+        setHasModalOpen(
+          document.body.classList.contains('dish-modal-open') ||
+          document.body.classList.contains('menu-open')
+        );
+      }
+    };
+    updateModalStatus();
+
+    const observer = new MutationObserver(updateModalStatus);
+    observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
     window.addEventListener('storage', syncSite);
     window.addEventListener('dcd_site_updated', syncSite);
     return () => {
+      observer.disconnect();
       window.removeEventListener('storage', syncSite);
       window.removeEventListener('dcd_site_updated', syncSite);
     };
   }, []);
 
-  // When actively on the table booking page, keep the view clean and unhurried
-  if (pathname === '/reservation') {
+  // When actively on reservation page or when a modal/menu is open, hide floating bar
+  if (pathname === '/reservation' || hasModalOpen) {
     return null;
   }
 

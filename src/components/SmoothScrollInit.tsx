@@ -9,8 +9,23 @@ export default function SmoothScrollInit() {
   const ctxRef = useRef<gsap.Context | null>(null);
 
   useEffect(() => {
+    // Reset scroll to top on every fresh page load, refresh, or route change
+    if (typeof window !== 'undefined') {
+      if ('scrollRestoration' in window.history) {
+        window.history.scrollRestoration = 'manual';
+      }
+      window.scrollTo(0, 0);
+    }
+
     // 1. Initialize Lenis with snappy, responsive scroll settings
     const lenis = initSmoothScroll();
+    lenis?.scrollTo(0, { immediate: true });
+
+    const handlePageShow = () => {
+      window.scrollTo(0, 0);
+      lenis?.scrollTo(0, { immediate: true });
+    };
+    window.addEventListener('pageshow', handlePageShow);
 
     // Check user preference for reduced motion
     const prefersReducedMotion =
@@ -19,6 +34,7 @@ export default function SmoothScrollInit() {
 
     if (prefersReducedMotion) {
       return () => {
+        window.removeEventListener('pageshow', handlePageShow);
         destroySmoothScroll();
       };
     }
