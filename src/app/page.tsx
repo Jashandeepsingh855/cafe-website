@@ -1407,8 +1407,8 @@ export default function HomePage() {
           {/* Main Grid: Google Map View + Venue Details */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
             {/* Left Column: Google Map Container */}
-            <div className="lg:col-span-7 xl:col-span-8 flex flex-col">
-              <div className="relative w-full h-[380px] sm:h-[460px] rounded-3xl overflow-hidden border border-[#E5E2DD] shadow-md group bg-[#E5E2DD]">
+            <div className="lg:col-span-7 xl:col-span-8 flex flex-col lg:h-full">
+              <div className="relative w-full h-[380px] sm:h-[460px] lg:h-full min-h-[380px] sm:min-h-[460px] lg:min-h-full rounded-3xl overflow-hidden border border-[#E5E2DD] shadow-md group bg-[#E5E2DD] lg:flex-1">
                 <Image
                   src={site.address.mapEmbedUrl}
                   alt="Daily Coffee Drip Cafe &amp; Restaurant Location Map Indiranagar Bengaluru"
@@ -1465,7 +1465,7 @@ export default function HomePage() {
             </div>
 
             {/* Right Column: Venue Details & Accessibility */}
-            <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between bg-[#FAF7F2] p-6 sm:p-7 rounded-3xl border border-[#E5E2DD] shadow-sm gap-5">
+            <div className="lg:col-span-5 xl:col-span-4 flex flex-col justify-between bg-[#FAF7F2] p-6 sm:p-7 rounded-3xl border border-[#E5E2DD] shadow-sm gap-5 h-full">
               <div>
                 <span className="text-[11px] font-bold text-[#C8652D] uppercase tracking-wider block mb-1">
                   Location &amp; Visit Details
