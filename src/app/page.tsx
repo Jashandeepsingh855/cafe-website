@@ -706,7 +706,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-[#18120F] group-hover:text-[#E23744] transition-colors">
                   Order on Zomato
                 </h3>
-                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed min-h-[48px] sm:min-h-[56px]">
                   25–35 mins average delivery. 100% pure vegetarian tamper-sealed packaging for pizzas, burgers, fries &amp; brews.
                 </p>
               </div>
@@ -738,7 +738,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-[#18120F] group-hover:text-[#FC8019] transition-colors">
                   Order on Swiggy
                 </h3>
-                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed min-h-[48px] sm:min-h-[56px]">
                   Fast delivery across Indiranagar, Domlur, HAL, &amp; Koramangala. Crisp crusts &amp; chilled shakes protected.
                 </p>
               </div>
@@ -770,7 +770,7 @@ export default function HomePage() {
                 <h3 className="text-xl font-bold text-[#18120F] group-hover:text-[#186a22] transition-colors">
                   Direct Kitchen Chat
                 </h3>
-                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed">
+                <p className="text-xs sm:text-sm text-[#544E49] mt-2 leading-relaxed min-h-[48px] sm:min-h-[56px]">
                   Customize toppings, specify pure Jain / vegan preparation, and order direct takeaway packages.
                 </p>
               </div>
@@ -871,14 +871,14 @@ export default function HomePage() {
                 <div className="pt-3 flex flex-col flex-1 justify-between">
                   <div>
                     <div className="flex items-baseline justify-between gap-2">
-                      <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors line-clamp-2">
+                      <h3 className="font-bold text-base sm:text-lg text-[#18120F] group-hover:text-[#C8652D] transition-colors line-clamp-2 min-h-[44px] sm:min-h-[48px] flex items-center">
                         {item.name}
                       </h3>
                       <span className="font-extrabold text-lg text-[#C8652D] shrink-0">
                         ₹{item.price}
                       </span>
                     </div>
-                    <p className="text-xs text-[#544E49] mt-1 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-[#544E49] mt-1 line-clamp-2 leading-relaxed min-h-[34px]">
                       {item.description}
                     </p>
                   </div>

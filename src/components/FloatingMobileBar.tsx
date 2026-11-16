@@ -2,11 +2,13 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { MessageCircle, Phone, CalendarCheck } from 'lucide-react';
 import { DEFAULT_SITE_CONFIG, getClientSiteConfig, SiteConfig } from '@/config/site';
 
 export default function FloatingMobileBar() {
   const [site, setSite] = useState<SiteConfig>(DEFAULT_SITE_CONFIG);
+  const pathname = usePathname();
 
   useEffect(() => {
     const syncSite = () => {
@@ -21,6 +23,11 @@ export default function FloatingMobileBar() {
       window.removeEventListener('dcd_site_updated', syncSite);
     };
   }, []);
+
+  // When actively on the table booking page, keep the view clean and unhurried
+  if (pathname === '/reservation') {
+    return null;
+  }
 
   const whatsappUrl = `https://wa.me/${site.contact.whatsappRaw}?text=${encodeURIComponent(
     `Hello ${site.name}! I would like to order from your Indiranagar Cafe menu.`

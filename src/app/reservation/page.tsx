@@ -297,7 +297,7 @@ Please confirm my table reservation. Thank you!`;
           {/* Left Column: 4-Step Reservation Machine */}
           <form
             onSubmit={handleSubmit}
-            className="lg:col-span-8 flex flex-col gap-7 bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-[#E5E2DD]"
+            className="lg:col-span-8 flex flex-col gap-6 sm:gap-7 bg-white p-5 sm:p-8 rounded-3xl shadow-sm border border-[#E5E2DD]"
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#E5E2DD]">
               <div className="flex items-center gap-2.5">
@@ -313,7 +313,7 @@ Please confirm my table reservation. Thank you!`;
               </span>
             </div>
 
-            {/* STEP 1: Party Size Selection */}
+            {/* STEP 1: Party Size Selection (Sleek & Light Selector) */}
             <div className="flex flex-col gap-2.5">
               <div className="flex items-center justify-between">
                 <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
@@ -321,105 +321,133 @@ Please confirm my table reservation. Thank you!`;
                   <span>1. Select Party Size</span>
                 </label>
                 <span className="text-xs font-bold text-[#C8652D]">
-                  {partySize === '1-2' ? 'Solo or Duo Table' : `${partySize} Guests`}
+                  {partySize === '1-2' ? 'Solo / Duo Table' : `${partySize} Guests`}
                 </span>
               </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-2.5">
                 {[
                   { id: '1-2', count: '1–2', label: 'Solo / Duos', hint: 'Focus & pairs' },
                   { id: '3-4', count: '3–4', label: 'Intimate Table', hint: 'Casual meetup' },
                   { id: '5-8', count: '5–8', label: 'Group Lounge', hint: 'Sofa circle' },
                   { id: '8+', count: '8+', label: 'Private Salon', hint: 'Dining suite' },
-                ].map((item) => (
-                  <button
-                    key={item.id}
-                    type="button"
-                    onClick={() => setPartySize(item.id)}
-                    className={`min-h-[64px] sm:min-h-[72px] p-3 rounded-2xl flex flex-col items-start justify-center gap-0.5 transition-all text-left border cursor-pointer ${
-                      partySize === item.id
-                        ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
-                        : 'bg-[#FAF7F2] text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA] hover:border-[#C8652D]/40'
-                    }`}
-                  >
-                    <span className="text-lg sm:text-xl font-bold leading-none">{item.count}</span>
-                    <span
-                      className={`text-[11px] sm:text-xs font-semibold leading-tight ${
-                        partySize === item.id ? 'text-[#FFDBCB]' : 'text-[#18120F]'
+                ].map((item) => {
+                  const isSelected = partySize === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => setPartySize(item.id)}
+                      className={`p-2.5 sm:p-3 rounded-xl flex flex-col items-start justify-center gap-0.5 transition-all text-left border cursor-pointer ${
+                        isSelected
+                          ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                          : 'bg-[#FAF7F2]/80 text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA] hover:border-[#C8652D]/40'
                       }`}
                     >
-                      {item.label}
-                    </span>
-                    <span className="text-[10px] opacity-75">{item.hint}</span>
-                  </button>
-                ))}
+                      <div className="flex items-center justify-between w-full">
+                        <span className="text-base sm:text-lg font-bold leading-none">{item.count}</span>
+                        {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-[#C8652D]" />}
+                      </div>
+                      <span
+                        className={`text-xs font-semibold leading-tight mt-0.5 ${
+                          isSelected ? 'text-[#FFDBCB]' : 'text-[#18120F]'
+                        }`}
+                      >
+                        {item.label}
+                      </span>
+                      <span className={`text-[10px] ${isSelected ? 'text-white/70' : 'text-[#857D77]'}`}>
+                        {item.hint}
+                      </span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
 
-            {/* STEP 2: Preferred Dining Zone */}
+            {/* STEP 2: Preferred Dining Zone (Airy Cards with Symmetrical Proportions) */}
             <div className="flex flex-col gap-2.5">
               <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                 <Store className="w-4 h-4 text-[#C8652D]" />
-                <span>2. Preferred Dining Zone</span>
+                <span>2. Preferred Dining Sanctuary</span>
               </label>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                {zones.map((z) => (
-                  <div
-                    key={z.id}
-                    onClick={() => setZone(z.id)}
-                    className={`group relative p-3 rounded-2xl cursor-pointer transition-all flex gap-3.5 items-center border-2 ${
-                      zone === z.id
-                        ? 'bg-[#FAF7F2] border-[#C8652D] shadow-xs'
-                        : 'bg-white border-[#E5E2DD] hover:border-[#C8652D]/40 hover:bg-[#FAF7F2]/50'
-                    }`}
-                  >
-                    <div className="relative w-16 h-16 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD] image-zoom-frame">
-                      <Image src={z.image} alt={z.name} fill className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out" />
-                    </div>
-
-                    <div className="flex flex-col min-w-0 flex-1">
-                      <div className="flex items-center justify-between gap-1.5">
-                        <span className="font-bold text-sm text-[#18120F] truncate">{z.name}</span>
-                        {zone === z.id ? (
-                          <span className="w-2.5 h-2.5 rounded-full bg-[#C8652D] shrink-0" />
-                        ) : (
-                          <span className="w-2.5 h-2.5 rounded-full border border-[#D4CECA] shrink-0" />
-                        )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-3">
+                {zones.map((z) => {
+                  const isSelected = zone === z.id;
+                  return (
+                    <div
+                      key={z.id}
+                      onClick={() => setZone(z.id)}
+                      className={`group relative p-2.5 sm:p-3 rounded-2xl cursor-pointer transition-all flex gap-3 items-center border ${
+                        isSelected
+                          ? 'bg-[#FAF7F2] border-[#C8652D] ring-1 ring-[#C8652D] shadow-xs'
+                          : 'bg-white border-[#E5E2DD] hover:border-[#C8652D]/40 hover:bg-[#FAF7F2]/40'
+                      }`}
+                    >
+                      <div className="relative w-16 h-16 sm:w-18 sm:h-18 rounded-xl overflow-hidden shrink-0 bg-[#E5E2DD] image-zoom-frame border border-[#E5E2DD]/70">
+                        <Image
+                          src={z.image}
+                          alt={z.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                          sizes="(max-width: 640px) 64px, 72px"
+                        />
                       </div>
-                      <span className="text-xs text-[#544E49] mt-0.5 line-clamp-1 leading-relaxed">
-                        {z.desc}
-                      </span>
-                      <span className="text-[11px] font-semibold text-[#C8652D] mt-1">{z.tag}</span>
+
+                      <div className="flex flex-col min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-1.5">
+                          <span className="font-bold text-xs sm:text-sm text-[#18120F] truncate">
+                            {z.name}
+                          </span>
+                          <span
+                            className={`w-3 h-3 rounded-full flex items-center justify-center shrink-0 border ${
+                              isSelected
+                                ? 'border-[#C8652D] bg-[#C8652D]'
+                                : 'border-[#D4CECA] bg-white'
+                            }`}
+                          >
+                            {isSelected && <span className="w-1.5 h-1.5 rounded-full bg-white" />}
+                          </span>
+                        </div>
+                        <span className="text-[11px] sm:text-xs text-[#544E49] mt-0.5 line-clamp-1 leading-relaxed">
+                          {z.desc}
+                        </span>
+                        <div className="flex items-center gap-1.5 mt-1">
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#C8652D]" />
+                          <span className="text-[10px] sm:text-[11px] font-semibold text-[#C8652D] truncate">
+                            {z.tag}
+                          </span>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
-            {/* STEP 3: Unified Date & Arrival Time (Clean, Spacious, No Duplicates) */}
+            {/* STEP 3: Unified Date & Arrival Time (De-Crowded, Spacious, Intuitive) */}
             <div className="flex flex-col gap-2.5">
               <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                 <Calendar className="w-4 h-4 text-[#C8652D]" />
                 <span>3. Date &amp; Arrival Time</span>
               </label>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* DATE SELECTION */}
-                <div className="bg-[#FAF7F2] p-4 sm:p-5 rounded-2xl border border-[#E5E2DD] flex flex-col justify-between gap-3">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5 sm:gap-4">
+                {/* DATE SELECTION PANEL */}
+                <div className="bg-[#FAF7F2]/60 p-4 sm:p-4.5 rounded-2xl border border-[#E5E2DD]/90 flex flex-col justify-between gap-3">
                   <div>
-                    <div className="flex items-center justify-between mb-2.5">
+                    <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
                         <Calendar className="w-3.5 h-3.5 text-[#C8652D]" />
                         <span>Date of Visit</span>
                       </span>
-                      <span className="text-[11px] font-semibold text-[#C8652D]">
+                      <span className="text-xs font-bold text-[#C8652D] bg-white px-2 py-0.5 rounded-md border border-[#E5E2DD]">
                         {formatDatePretty(date)}
                       </span>
                     </div>
 
-                    {/* Quick Date Pills */}
-                    <div className="grid grid-cols-3 gap-1.5 mb-3">
+                    {/* Quick Date Selector Pills */}
+                    <div className="grid grid-cols-3 gap-1.5 mb-2.5">
                       {[
                         { label: 'Today', val: getTodayStr() },
                         { label: 'Tomorrow', val: getTomorrowStr() },
@@ -447,22 +475,22 @@ Please confirm my table reservation. Thank you!`;
                         value={date}
                         min={getTodayStr()}
                         onChange={(e) => setDate(e.target.value)}
-                        className="w-full bg-white border border-[#E5E2DD] px-3.5 py-2.5 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D] cursor-pointer"
+                        className="w-full bg-white border border-[#E5E2DD] px-3.5 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D] cursor-pointer"
                       />
                     </div>
                   </div>
 
-                  <p className="text-[11px] text-[#857D77] pt-2 border-t border-[#E5E2DD] flex items-center justify-between">
+                  <p className="text-[11px] text-[#857D77] pt-2 border-t border-[#E5E2DD]/60 flex items-center justify-between">
                     <span>Courtesy hold window:</span>
-                    <span className="font-semibold text-[#18120F]">15 minutes</span>
+                    <span className="font-semibold text-[#18120F]">15 minutes from slot</span>
                   </p>
                 </div>
 
-                {/* TIME SELECTION */}
-                <div className="bg-[#FAF7F2] p-4 sm:p-5 rounded-2xl border border-[#E5E2DD] flex flex-col justify-between gap-3">
+                {/* TIME SELECTION PANEL */}
+                <div className="bg-[#FAF7F2]/60 p-4 sm:p-4.5 rounded-2xl border border-[#E5E2DD]/90 flex flex-col justify-between gap-3">
                   <div>
                     {/* Header + Mode Switcher */}
-                    <div className="flex items-center justify-between mb-2.5">
+                    <div className="flex items-center justify-between mb-2">
                       <span className="text-xs font-bold uppercase tracking-wider text-[#18120F] flex items-center gap-1.5">
                         <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
                         <span>Arrival Time</span>
@@ -472,7 +500,7 @@ Please confirm my table reservation. Thank you!`;
                         <button
                           type="button"
                           onClick={() => setTimeMode('curated')}
-                          className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                          className={`px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer ${
                             timeMode === 'curated'
                               ? 'bg-[#18120F] text-white shadow-xs'
                               : 'text-[#544E49] hover:text-[#18120F]'
@@ -486,7 +514,7 @@ Please confirm my table reservation. Thank you!`;
                             setTimeMode('custom');
                             setTimeSlot(`Custom Time (${formatTimeTo12h(customTimeInput)})`);
                           }}
-                          className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
+                          className={`px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold transition-all cursor-pointer ${
                             timeMode === 'custom'
                               ? 'bg-[#18120F] text-white shadow-xs'
                               : 'text-[#544E49] hover:text-[#18120F]'
@@ -498,7 +526,7 @@ Please confirm my table reservation. Thank you!`;
                     </div>
 
                     {timeMode === 'curated' ? (
-                      /* Curated Slots (4 Balanced Grid Options) */
+                      /* Curated Slots (4 Clean Balanced Chips) */
                       <div className="grid grid-cols-2 gap-2">
                         {slots.map((s) => {
                           const Icon = s.icon;
@@ -508,7 +536,7 @@ Please confirm my table reservation. Thank you!`;
                               key={s.name}
                               type="button"
                               onClick={() => setTimeSlot(`${s.name} ${s.time}`)}
-                              className={`p-2.5 rounded-xl text-left flex flex-col justify-between transition-all border cursor-pointer ${
+                              className={`p-2 rounded-xl text-left flex flex-col justify-between transition-all border cursor-pointer ${
                                 isSelected
                                   ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
                                   : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
@@ -524,14 +552,14 @@ Please confirm my table reservation. Thank you!`;
                                 </span>
                                 <Icon className="w-3.5 h-3.5 text-[#C8652D] shrink-0" />
                               </div>
-                              <span className="text-xs sm:text-sm font-bold mt-1">{s.time}</span>
+                              <span className="text-xs sm:text-sm font-bold mt-0.5">{s.time}</span>
                             </button>
                           );
                         })}
                       </div>
                     ) : (
-                      /* Custom Time Controls (Clean & Direct) */
-                      <div className="space-y-2.5">
+                      /* Custom Time Controls */
+                      <div className="space-y-2">
                         <div className="flex flex-wrap gap-1">
                           {['09:00', '11:00', '13:00', '16:00', '18:00', '19:30', '21:00'].map((t) => {
                             const label = formatTimeTo12h(t);
@@ -544,7 +572,7 @@ Please confirm my table reservation. Thank you!`;
                                   setCustomTimeInput(t);
                                   setTimeSlot(`Custom Time (${label})`);
                                 }}
-                                className={`px-2 py-1 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
+                                className={`px-2 py-0.5 rounded-lg text-xs font-bold border transition-all cursor-pointer ${
                                   isSelected
                                     ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
                                     : 'bg-white text-[#544E49] border-[#E5E2DD] hover:bg-[#F2EFEA]'
@@ -566,13 +594,13 @@ Please confirm my table reservation. Thank you!`;
                             setCustomTimeInput(val);
                             setTimeSlot(`Custom Time (${formatTimeTo12h(val)})`);
                           }}
-                          className="w-full bg-white border border-[#E5E2DD] px-3.5 py-2 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
+                          className="w-full bg-white border border-[#E5E2DD] px-3.5 py-1.5 rounded-xl text-sm font-bold text-[#18120F] focus:outline-none focus:ring-2 focus:ring-[#C8652D]"
                         />
                       </div>
                     )}
                   </div>
 
-                  <div className="pt-2 border-t border-[#E5E2DD] flex items-center justify-between text-xs">
+                  <div className="pt-2 border-t border-[#E5E2DD]/60 flex items-center justify-between text-xs">
                     <span className="text-[11px] text-[#857D77]">Selected Slot:</span>
                     <span className="font-bold text-[#C8652D] truncate ml-2">{timeSlot}</span>
                   </div>
@@ -580,11 +608,11 @@ Please confirm my table reservation. Thank you!`;
               </div>
             </div>
 
-            {/* STEP 4: Guest Dossier & Mindful Requests */}
+            {/* STEP 4: Guest Details & Mindful Requests (Sleek Pills Replace Bulky Boxes) */}
             <div className="flex flex-col gap-2.5">
               <label className="text-sm font-bold text-[#18120F] flex items-center gap-2">
                 <Utensils className="w-4 h-4 text-[#C8652D]" />
-                <span>4. Guest Details &amp; Dining Requests</span>
+                <span>4. Guest Details &amp; Mindful Requests</span>
               </label>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -622,56 +650,63 @@ Please confirm my table reservation. Thank you!`;
                 </div>
               </div>
 
-              {/* Dietary & Occasion Checkboxes */}
+              {/* Mindful Dietary & Celebration Chips (Airy, Non-Chunky) */}
               <div className="pt-2">
                 <span className="text-xs font-bold text-[#544E49] block mb-2">
-                  Hospitality &amp; Kitchen Notes (Optional)
+                  Hospitality &amp; Kitchen Notes (Tap to specify)
                 </span>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-[#18120F]">
-                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={dietaryOptions.pureVeg}
-                      readOnly
-                      className="accent-[#C8652D] w-4 h-4 rounded"
-                    />
-                    <span className="font-semibold text-xs sm:text-sm">
-                      100% Pure Vegetarian Kitchen
-                    </span>
-                  </label>
-                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={dietaryOptions.strictJain}
-                      onChange={(e) =>
-                        setDietaryOptions({ ...dietaryOptions, strictJain: e.target.checked })
-                      }
-                      className="accent-[#C8652D] w-4 h-4 rounded"
-                    />
-                    <span className="text-xs sm:text-sm">Strict Jain Preparation (No root veg)</span>
-                  </label>
-                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={dietaryOptions.nutFree}
-                      onChange={(e) =>
-                        setDietaryOptions({ ...dietaryOptions, nutFree: e.target.checked })
-                      }
-                      className="accent-[#C8652D] w-4 h-4 rounded"
-                    />
-                    <span className="text-xs sm:text-sm">Nut-Free Allergy Precaution</span>
-                  </label>
-                  <label className="flex items-center gap-2.5 p-2.5 rounded-xl bg-[#FAF7F2] border border-[#E5E2DD] cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={dietaryOptions.celebration}
-                      onChange={(e) =>
-                        setDietaryOptions({ ...dietaryOptions, celebration: e.target.checked })
-                      }
-                      className="accent-[#C8652D] w-4 h-4 rounded"
-                    />
-                    <span className="text-xs sm:text-sm">Celebration (Birthday / Anniversary)</span>
-                  </label>
+                <div className="flex flex-wrap gap-2 text-xs">
+                  {/* Pure Veg Assurance (Always active) */}
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#186a22]/10 text-[#186a22] border border-[#186a22]/25 font-bold">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-[#186a22]" />
+                    <span>100% Pure Vegetarian</span>
+                  </div>
+
+                  {/* Strict Jain Preparation */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setDietaryOptions({ ...dietaryOptions, strictJain: !dietaryOptions.strictJain })
+                    }
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-bold transition-all border cursor-pointer ${
+                      dietaryOptions.strictJain
+                        ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                        : 'bg-[#FAF7F2] text-[#544E49] border-[#E5E2DD] hover:border-[#C8652D]'
+                    }`}
+                  >
+                    <span>{dietaryOptions.strictJain ? '✓' : '+'} Strict Jain (No root veg)</span>
+                  </button>
+
+                  {/* Nut-Free Allergy Precaution */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setDietaryOptions({ ...dietaryOptions, nutFree: !dietaryOptions.nutFree })
+                    }
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-bold transition-all border cursor-pointer ${
+                      dietaryOptions.nutFree
+                        ? 'bg-[#18120F] text-white border-[#18120F] shadow-xs'
+                        : 'bg-[#FAF7F2] text-[#544E49] border-[#E5E2DD] hover:border-[#C8652D]'
+                    }`}
+                  >
+                    <span>{dietaryOptions.nutFree ? '✓' : '+'} Nut-Free Precaution</span>
+                  </button>
+
+                  {/* Special Celebration */}
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setDietaryOptions({ ...dietaryOptions, celebration: !dietaryOptions.celebration })
+                    }
+                    className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full font-bold transition-all border cursor-pointer ${
+                      dietaryOptions.celebration
+                        ? 'bg-[#C8652D] text-white border-[#C8652D] shadow-xs'
+                        : 'bg-[#FAF7F2] text-[#544E49] border-[#E5E2DD] hover:border-[#C8652D]'
+                    }`}
+                  >
+                    <Sparkles className="w-3 h-3 text-[#C8652D]" />
+                    <span>{dietaryOptions.celebration ? '✓' : '+'} Celebration (Birthday / Anniversary)</span>
+                  </button>
                 </div>
               </div>
             </div>
@@ -739,14 +774,14 @@ Please confirm my table reservation. Thank you!`;
             )}
           </form>
 
-          {/* Right Column: Venue Info & FAQs (Sticky on Desktop) */}
+          {/* Right Column: Venue Info & FAQs (Unified List Layout, No Nested Gray Boxes) */}
           <aside className="lg:col-span-4 flex flex-col gap-6 w-full lg:sticky lg:top-24">
-            {/* Live Cafe Card */}
-            <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-4">
-              <div className="flex items-center justify-between">
+            {/* Live Cafe Hospitality Card */}
+            <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-5">
+              <div className="flex items-center justify-between pb-3 border-b border-[#E5E2DD]">
                 <div>
-                  <span className="text-[11px] font-bold text-[#C8652D] uppercase tracking-wider">
-                    Cafe &amp; Restaurant Presence
+                  <span className="text-[11px] font-bold text-[#C8652D] uppercase tracking-wider block">
+                    Hospitality &amp; Venue
                   </span>
                   <h3 className="text-lg font-bold text-[#18120F]">{site.name}</h3>
                 </div>
@@ -754,41 +789,49 @@ Please confirm my table reservation. Thank you!`;
                   site.hours.isOpenNow ? 'bg-[#CaEcc0] text-[#186a22]' : 'bg-red-100 text-red-700'
                 }`}>
                   <span className={`w-1.5 h-1.5 rounded-full ${site.hours.isOpenNow ? 'bg-[#186a22] animate-ping' : 'bg-red-500'}`} />
-                  {site.hours.isOpenNow ? 'Open Now' : 'Closed for Today'}
+                  {site.hours.isOpenNow ? 'Open Now' : 'Closed Today'}
                 </span>
               </div>
 
-              {/* Address & Venue Highlights */}
-              <div className="flex flex-col gap-2.5 text-xs text-[#544E49]">
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
-                  <MapPin className="w-4 h-4 text-[#C8652D] shrink-0" />
+              {/* Unified List with Dividers (Clean & Light) */}
+              <div className="divide-y divide-[#E5E2DD]/70 text-xs text-[#544E49]">
+                <div className="flex items-start gap-3 py-3 first:pt-0">
+                  <div className="w-8 h-8 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <MapPin className="w-4 h-4" />
+                  </div>
                   <div>
                     <p className="font-bold text-[#18120F]">Address &amp; Location</p>
-                    <p className="text-[11px]">{site.address.line1}, {site.address.area}</p>
+                    <p className="text-[11px] text-[#544E49] mt-0.5">{site.address.line1}, {site.address.area}</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
-                  <Clock className="w-4 h-4 text-[#C8652D] shrink-0" />
+                <div className="flex items-start gap-3 py-3">
+                  <div className="w-8 h-8 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <Clock className="w-4 h-4" />
+                  </div>
                   <div>
                     <p className="font-bold text-[#18120F]">Daily Operating Hours</p>
-                    <p className="text-[11px]">{site.hours.openTime} – {site.hours.closingTime} ({site.hours.days})</p>
+                    <p className="text-[11px] text-[#544E49] mt-0.5">{site.hours.openTime} – {site.hours.closingTime} ({site.hours.days})</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
-                  <Car className="w-4 h-4 text-[#C8652D] shrink-0" />
+                <div className="flex items-start gap-3 py-3">
+                  <div className="w-8 h-8 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <Car className="w-4 h-4" />
+                  </div>
                   <div>
                     <p className="font-bold text-[#18120F]">Valet Assistance</p>
-                    <p className="text-[11px]">Complimentary valet parking at front portico</p>
+                    <p className="text-[11px] text-[#544E49] mt-0.5">Complimentary valet parking at front portico</p>
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-[#FAF7F2]">
-                  <Wifi className="w-4 h-4 text-[#C8652D] shrink-0" />
+                <div className="flex items-start gap-3 py-3 last:pb-0">
+                  <div className="w-8 h-8 rounded-full bg-[#C8652D]/10 flex items-center justify-center text-[#C8652D] shrink-0 mt-0.5">
+                    <Wifi className="w-4 h-4" />
+                  </div>
                   <div>
                     <p className="font-bold text-[#18120F]">Creator Amenities</p>
-                    <p className="text-[11px]">Gigabit 500Mbps Wi-Fi &amp; Type-C charging hubs</p>
+                    <p className="text-[11px] text-[#544E49] mt-0.5">Gigabit 500Mbps Wi-Fi &amp; Type-C charging hubs</p>
                   </div>
                 </div>
               </div>
@@ -797,34 +840,34 @@ Please confirm my table reservation. Thank you!`;
                 href={`https://wa.me/${site.contact.whatsappRaw}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full min-h-[44px] py-2.5 px-4 rounded-full bg-[#FAF7F2] hover:bg-[#F2EFEA] text-[#18120F] border border-[#E5E2DD] text-xs font-bold flex items-center justify-center gap-2 transition-colors"
+                className="w-full min-h-[44px] py-2.5 px-4 rounded-full bg-[#FAF7F2] hover:bg-[#F2EFEA] text-[#18120F] border border-[#E5E2DD] text-xs font-bold flex items-center justify-center gap-2 transition-colors mt-1"
               >
-                <MessageCircle className="w-4 h-4 text-[#C8652D]" />
+                <MessageCircle className="w-4 h-4 text-[#25D366]" />
                 <span>WhatsApp Hospitality Concierge</span>
               </a>
             </div>
 
-            {/* Curated FAQs */}
+            {/* Curated FAQs (Clean & Minimalist) */}
             <div className="bg-white p-5 sm:p-6 rounded-3xl shadow-sm border border-[#E5E2DD] flex flex-col gap-3">
               <span className="text-xs font-bold text-[#C8652D] uppercase tracking-wider">
                 Frequently Inquired
               </span>
-              <details className="group bg-[#FAF7F2] rounded-xl p-3 border border-[#E5E2DD] cursor-pointer">
+              <details className="group border-b border-[#E5E2DD] pb-3 cursor-pointer">
                 <summary className="flex items-center justify-between text-xs font-bold text-[#18120F] list-none">
                   <span>Can I linger beyond 2 hours?</span>
                   <ChevronDown className="w-4 h-4 text-[#857D77] group-open:rotate-180 transition-transform" />
                 </summary>
-                <p className="text-xs text-[#544E49] mt-2 pt-2 border-t border-[#E5E2DD] leading-relaxed">
+                <p className="text-xs text-[#544E49] mt-2 leading-relaxed">
                   Yes! While peak weekends have courtesy holds, guests in our Quiet Creator Corner and Hearth Salon are warmly welcomed to linger with unhurried refills.
                 </p>
               </details>
 
-              <details className="group bg-[#FAF7F2] rounded-xl p-3 border border-[#E5E2DD] cursor-pointer">
+              <details className="group pt-1 cursor-pointer">
                 <summary className="flex items-center justify-between text-xs font-bold text-[#18120F] list-none">
                   <span>Is the kitchen strictly vegetarian?</span>
                   <ChevronDown className="w-4 h-4 text-[#857D77] group-open:rotate-180 transition-transform" />
                 </summary>
-                <p className="text-xs text-[#544E49] mt-2 pt-2 border-t border-[#E5E2DD] leading-relaxed">
+                <p className="text-xs text-[#544E49] mt-2 leading-relaxed">
                   100% egg-free and meat-free pure vegetarian kitchen, with extensive Jain and oat-milk vegan friendly adaptations.
                 </p>
               </details>
