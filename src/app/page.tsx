@@ -498,7 +498,7 @@ export default function HomePage() {
 
                   {/* 1-Tap Overlay Cue */}
                   <div className="absolute bottom-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity px-4 py-1.5 rounded-full bg-white/95 text-[#18120F] text-xs font-bold shadow-lg whitespace-nowrap">
-                    Tap to view craft story
+                    Tap to order now
                   </div>
                 </div>
               </div>
@@ -526,21 +526,21 @@ export default function HomePage() {
               </h1>
 
               {/* Clean, Subtle Action Links */}
-              <div className="flex items-center gap-5 text-xs sm:text-sm font-bold text-[#18120F] mb-5 sm:mb-6">
+              <div className="flex items-center gap-4 text-xs sm:text-sm font-bold text-[#18120F] mb-5 sm:mb-6">
                 <button
                   type="button"
                   onClick={() => handleOpenDishModal(currentHeroDish.dishRefId)}
-                  className="flex items-center gap-1.5 hover:text-[#C8652D] transition-colors group cursor-pointer"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#18120F] text-white hover:bg-[#C8652D] transition-colors shadow-xs group cursor-pointer"
                 >
-                  <span className="text-[#C8652D] text-xs">▷</span>
-                  <span className="group-hover:underline">View Craft Story</span>
+                  <span>Order Now</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                 </button>
 
                 <Link
                   href="/menu"
-                  className="flex items-center gap-1.5 text-[#544E49] hover:text-[#C8652D] transition-colors"
+                  className="flex items-center gap-1.5 text-[#544E49] hover:text-[#C8652D] transition-colors px-2 py-2"
                 >
-                  <span>◬ Explore Full Menu</span>
+                  <span>Explore Full Menu</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
               </div>
@@ -888,9 +888,17 @@ export default function HomePage() {
                       <Clock className="w-3.5 h-3.5 text-[#C8652D]" />
                       {item.prepTime}
                     </span>
-                    <span className="text-[#C8652D] font-bold group-hover:underline">
-                      View Craft Story ↗
-                    </span>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedDish(item);
+                      }}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#18120F] group-hover:bg-[#C8652D] text-[#FAF7F2] text-xs font-bold transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+                    >
+                      <span>Order Now</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </button>
                   </div>
                 </div>
               </div>

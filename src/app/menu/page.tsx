@@ -539,7 +539,7 @@ export default function MenuPage() {
                           )}
                         </div>
 
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 shrink-0">
                           <button
                             type="button"
                             onClick={(e) => toggleLike(e, dish.id)}
@@ -550,10 +550,17 @@ export default function MenuPage() {
                               className={`w-4 h-4 ${likedDishes[dish.id] ? 'fill-[#C8652D] text-[#C8652D]' : ''}`}
                             />
                           </button>
-                          <span className="text-xs font-bold text-[#C8652D] group-hover:underline flex items-center gap-1">
-                            <span>Craft Story</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </span>
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setSelectedDish(dish);
+                            }}
+                            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#18120F] group-hover:bg-[#C8652D] text-[#FAF7F2] text-xs font-bold transition-all shadow-xs hover:scale-105 active:scale-95 cursor-pointer shrink-0"
+                          >
+                            <span>Order Now</span>
+                            <ArrowRight className="w-3 h-3" />
+                          </button>
                         </div>
                       </div>
                     </div>
