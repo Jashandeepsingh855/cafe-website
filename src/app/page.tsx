@@ -1391,12 +1391,12 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto shrink-0">
               <a
                 href={site.address.mapUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-xs hover:bg-[#C8652D] transition-colors shadow-sm"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#18120F] text-[#FAF7F2] font-semibold text-xs hover:bg-[#C8652D] transition-colors shadow-sm text-center"
               >
                 <Compass className="w-3.5 h-3.5 text-[#C8652D]" />
                 <span>Get Directions (Google Maps)</span>
@@ -1404,7 +1404,7 @@ export default function HomePage() {
               </a>
               <Link
                 href="/reservation"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C8652D] text-white font-semibold text-xs hover:bg-[#B45309] transition-all shadow-sm"
+                className="inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-full bg-[#C8652D] text-white font-semibold text-xs hover:bg-[#B45309] transition-all shadow-sm text-center"
               >
                 <span>Book a Table</span>
                 <ArrowRight className="w-3.5 h-3.5" />
@@ -1425,37 +1425,41 @@ export default function HomePage() {
                   sizes="(max-width: 1024px) 100vw, 66vw"
                 />
 
-                {/* Top Overlay Badge: Live Cafe Identity */}
-                <div className="absolute top-4 left-4 z-10 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-md border border-[#E5E2DD] flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-[#18120F] flex items-center justify-center text-[#FAF7F2] shrink-0">
-                    <Coffee className="w-4 h-4 text-[#C8652D]" />
+                {/* Top Overlay Strip: Live Cafe Identity & Status */}
+                <div className="absolute top-3 sm:top-4 left-3 sm:left-4 right-3 sm:right-4 z-10 flex items-center justify-between gap-2 pointer-events-none">
+                  {/* Live Cafe Identity Badge */}
+                  <div className="pointer-events-auto bg-white/95 backdrop-blur-md px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl shadow-md border border-[#E5E2DD] flex items-center gap-2.5 sm:gap-3 max-w-[calc(100%-110px)] sm:max-w-none min-w-0">
+                    <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#18120F] flex items-center justify-center text-[#FAF7F2] shrink-0">
+                      <Coffee className="w-4 h-4 text-[#C8652D]" />
+                    </div>
+                    <div className="min-w-0">
+                      <h3 className="font-extrabold text-xs sm:text-sm text-[#18120F] leading-tight truncate">
+                        {site.name}
+                      </h3>
+                      <p className="text-[10px] sm:text-[11px] text-[#544E49] flex items-center gap-1 mt-0.5 truncate">
+                        <MapPin className="w-3 h-3 text-[#C8652D] shrink-0" />
+                        <span className="truncate">{site.address.line1}, {site.address.area}</span>
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h3 className="font-extrabold text-xs sm:text-sm text-[#18120F] leading-tight">
-                      {site.name}
-                    </h3>
-                    <p className="text-[11px] text-[#544E49] flex items-center gap-1 mt-0.5">
-                      <MapPin className="w-3 h-3 text-[#C8652D]" />
-                      <span>{site.address.line1}, {site.address.area}</span>
-                    </p>
-                  </div>
-                </div>
 
-                {/* Top Right: Open Status Pill */}
-                <div className="absolute top-4 right-4 z-10">
-                  <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold shadow-md backdrop-blur-md ${
-                    site.hours.isOpenNow
-                      ? 'bg-white/95 text-[#186a22] border border-[#186a22]/30'
-                      : 'bg-white/95 text-red-700 border border-red-200'
-                  }`}>
-                    <span className={`w-2 h-2 rounded-full ${site.hours.isOpenNow ? 'bg-[#186a22] animate-ping' : 'bg-red-500'}`} />
-                    {site.hours.isOpenNow ? 'Open Now • Until 11:00 PM' : 'Closed for Today'}
-                  </span>
+                  {/* Open Status Pill */}
+                  <div className="pointer-events-auto shrink-0">
+                    <span className={`inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full text-[11px] sm:text-xs font-bold shadow-md backdrop-blur-md ${
+                      site.hours.isOpenNow
+                        ? 'bg-white/95 text-[#186a22] border border-[#186a22]/30'
+                        : 'bg-white/95 text-red-700 border border-red-200'
+                    }`}>
+                      <span className={`w-2 h-2 rounded-full ${site.hours.isOpenNow ? 'bg-[#186a22] animate-ping' : 'bg-red-500'}`} />
+                      <span className="hidden sm:inline">{site.hours.isOpenNow ? 'Open Now • Until 11:00 PM' : 'Closed for Today'}</span>
+                      <span className="sm:hidden">{site.hours.isOpenNow ? 'Open • 11 PM' : 'Closed'}</span>
+                    </span>
+                  </div>
                 </div>
 
                 {/* Bottom Center / Floating Location Bar */}
-                <div className="absolute bottom-4 left-4 right-4 z-10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 bg-white/95 backdrop-blur-md p-3.5 rounded-2xl shadow-lg border border-[#E5E2DD]">
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#18120F] truncate min-w-0">
+                <div className="absolute bottom-3 sm:bottom-4 left-3 sm:left-4 right-3 sm:right-4 z-10 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2.5 sm:gap-3 bg-white/95 backdrop-blur-md p-3 sm:p-3.5 rounded-2xl shadow-lg border border-[#E5E2DD]">
+                  <div className="flex items-center gap-2 text-xs font-semibold text-[#18120F] min-w-0">
                     <MapPin className="w-4 h-4 text-[#C8652D] shrink-0" />
                     <span className="truncate">{site.address.full}</span>
                   </div>
@@ -1463,7 +1467,7 @@ export default function HomePage() {
                     href={site.address.mapUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="shrink-0 px-4 py-2 rounded-xl bg-[#18120F] hover:bg-[#C8652D] text-white text-xs font-bold flex items-center gap-1.5 transition-colors shadow-sm"
+                    className="shrink-0 w-full sm:w-auto px-4 py-2 rounded-xl bg-[#18120F] hover:bg-[#C8652D] text-white text-xs font-bold flex items-center justify-center gap-1.5 transition-colors shadow-sm text-center"
                   >
                     <span>View on Google Maps</span>
                     <ExternalLink className="w-3 h-3" />
